@@ -1,0 +1,36 @@
+.music-header {
+  display: flex;
+  justify-content: center;
+
+  span {
+    font-size: 18px;
+  }
+}
+
+.music-img {
+  width: 100%;
+  height: 100px;
+  overflow: hidden;
+  margin-top: 25px;
+  border-radius: 15px;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.music-info {
+  text-align: center;
+  margin: 15px 0;
+
+  .song {
+    font-size: 16px;
+  }
+
+  .artist {
+    font-size: 12px;
+    line-height: 30px;
+  }
+}

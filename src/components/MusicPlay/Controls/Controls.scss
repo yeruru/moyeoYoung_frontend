@@ -1,0 +1,46 @@
+@import "../../../variables.scss";
+.css-57q61r-MuiSvgIcon-root {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  width: 0.5em !important;
+  margin: 0 !important;
+}
+.css-1lrr7yx-MuiSvgIcon-root {
+  font-size: 15px !important;
+}
+.control-area {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 20px 0 5px 0;
+
+  .volume-container {
+    display: flex;
+    align-items: center;
+
+    input {
+      &[type="range"] {
+        width: 65px;
+        -webkit-appearance: none;
+        height: 4px;
+        background-color: $green;
+        outline-color: transparent;
+      }
+
+      &:focus {
+        outline-color: transparent;
+      }
+
+      &::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        width: 10px;
+        height: 10px;
+        background-color: $green;
+        border-radius: 12px;
+        overflow: visible;
+      }
+    }
+  }
+}

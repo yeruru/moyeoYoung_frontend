@@ -1,0 +1,22 @@
+
+* {margin: 0; padding: 0;}
+body {min-height: 300px; font-size: 16px; line-height: 1em; font-family: "NanumSquareNeo-Variable", sans-serif; color: #393939;}
+a {text-decoration: none; color: #393939;}
+em {font: inherit; vertical-align: baseline;}
+img {width: 100%;}
+button {cursor: pointer;}
+ul,li {list-style: none;}
+
+/* 글씨체 */
+/* 나눔네오 */
+@font-face {
+  font-family: 'NanumSquareNeo-Variable';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_11-01@1.0/NanumSquareNeo-Variable.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+/* 나눔손글씨 */
+@import url(//fonts.googleapis.com/earlyaccess/nanumpenscript.css);
+.nanumpenscript * {
+  font-family: 'Nanum Pen Script', cursive;
+}
