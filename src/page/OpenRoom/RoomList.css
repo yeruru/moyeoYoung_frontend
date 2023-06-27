@@ -1,3 +1,206 @@
-.dd{
-    color:var(-mo-o);
+#room-list button:active,
+#room-list button:focus {
+    outline: none;
+}
+
+#room-list input:focus,
+#room-list input:active {
+    outline: none; 
+    border: 1px solid rgb(182, 195, 190);
+}
+
+#room-list .wrap {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+#room-list .center-img {
+    width: 350px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+#room-list .search-position {
+    width: 550px;
+    position: relative;
+    margin: 0 auto;
+}
+
+#room-list .search-text {
+    width: 100%;
+    height: 50px;
+    background-color: rgba(228, 247, 239, 1);
+    border-radius: 50px;
+    border: 1px solid rgb(215, 231, 225);
+    box-shadow: 0px 0px 3px 2px rgb(215, 231, 225);
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #72817a;
+    padding-left: 30px;
+    /* 9CB4AA */
+
+}
+
+#room-list .search-icon {
+    position: absolute;
+    right: 0;
+    top: 14px;
+    color: #72817a;
+}
+
+#room-list .tag-box {
+    display: flex;
+    margin: 0 auto;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 25px; 
+}
+#room-list .tags{ 
+   margin-bottom:25px;
+}
+#room-list .tag {
+border: none;
+background-color: transparent ;
+font-size: 14px;
+width: 95px; 
+}
+#room-list .head-box{
+display: flex;  
+justify-content: space-between; 
+width: 85%;
+margin: 0 auto;
+margin-top: 50px;
+border-bottom: 1px solid rgb(228, 228, 228);
+padding-bottom: 20px; 
+padding-left: 10px;
+padding-right: 10px;
+}
+
+#room-list .list-head{ 
+}
+
+#room-list .h1 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-top: 10px; 
+    margin-bottom: 10px;   
+}
+#room-list .p1 {
+    font-size: 13px;  
+}
+#room-list .make-btn {
+    width: 150px;
+    height: 40px;
+    margin-top: 10px;
+    border-radius: 5px;
+    background-color:#1DC078;
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+#room-list .make-btn :hover{ 
+    cursor: pointer;
+}
+#room-list .list-box{  
+    width: 85%; 
+    margin: 0 auto;
+    padding: 10px;
+ 
+}
+#room-list .card-ul{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 30px;
+}
+#room-list .card-li{
+    width: 220px;
+    height: 260px; 
+    border-radius: 22px;
+    background: #FFF;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+    
+}
+#room-list .card-img{
+    border-radius: 22px 22px 0px 0px ;
+    width: 100%;
+    height: 160px;
+    display: inline-block;
+}
+
+#room-list .p2{
+    padding: 12px;
+    font-size: 13px;
+    line-height : 1.4em;
+}
+#room-list .p3{ 
+    display: flex;
+    font-size: 9px;
+    padding: 10px;
+    width: 60px;
+    height: 3px; 
+    background-color: #d7e5ff; 
+    border-radius: 50px; 
+    margin-left: 10px; 
+    align-items: center;
+    justify-content: center;
+}
+#room-list .material-symbols-outlined.group-icon{ 
+    font-size: 23px !important; 
+    color: gray;
+    padding-top: 10px;  
+    position: absolute;
+    right: 39px;
+    bottom: 0px; 
+    
+}
+#room-list .p4{
+    font-size: 13px; 
+    color: gray;  
+    height: 20px;  
+    position: absolute;
+    right: 15px;
+    bottom: 0px;
+} 
+#room-list .mini-sec{
+    display: flex;
+    justify-content: space-between;
+   
+}
+#room-list .mini-sec2{
+    position:relative;
+    width: 60px;  
+}
+
+#room-list .a-mark{
+    position: relative; 
+    z-index: 1;
+}
+
+#room-list .bookmark{ 
+    position: absolute;
+    z-index: 10;
+    width: 30px;
+    height: 30px;
+    background-color: white;
+    border-radius: 50%;  
+    right: 10px; 
+    top: -135px;
+    border: none;
+}
+
+#room-list .mark-icon{   
+    border: none;
+    color: #1DC078;
+    margin-top: 3px;  
+}
+
+#room-list .material-symbols-outlined.click{
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48 
 }
