@@ -1,0 +1,190 @@
+#make-room input:focus{
+    outline: none; 
+}
+#make-room .wrap{
+    width: 1200px;
+    margin: 0 auto;   
+}
+#make-room .content{
+    /* width: 70%; */
+    border-top: 2px solid rgb(196, 196, 196); 
+    border-bottom: 2px solid  rgb(196, 196, 196); 
+   
+    padding-top: 50px;
+    padding-bottom: 20px;
+    margin: 50px auto 50px auto;
+}
+#make-room .txt1{
+    margin-top:20px;
+    margin-bottom: 33px;
+    font-size: 18px;
+}
+
+#make-room .ipbox{
+   
+    border: none;
+    border-bottom: 1px solid rgb(190, 190, 190);
+    padding: 10px;  
+    width: 100%;
+    margin: 0 auto; 
+    margin-bottom:20px;
+    font-size: 15px;
+
+}
+
+#make-room .tbox{   
+    margin: 0 auto; 
+    width: 80%;
+    margin-bottom: 50px;
+}
+
+#make-room .select-img{ 
+    width: 350px;
+    height: 250px;
+    border: 1px solid rgb(190, 190, 190);
+    background-color: pink;
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+    float: left;
+    margin-right: 10px;
+}
+#make-room .plus{ 
+    font-size: 70px;
+    color: rgb(57, 57, 57);
+} 
+#make-room .imgs{ 
+    display: flex;  
+}
+#make-room .img{  
+    padding: 3px;
+    width: 180px;
+    height: 120px;
+    background-color: gray;
+}
+
+#make-room .public-box{
+    width: 65%; 
+    /* background-color: lightblue; */
+    border: 1px solid rgb(204, 204, 204);
+    margin: 0 auto;
+    display: flex;
+
+}
+#make-room .pbox{
+ padding: 20px;
+ margin: 20px auto 20px auto;
+   
+ height: 80%;
+}
+
+#make-room .txt2{
+    font-size: 16px;
+    font-weight: bold;
+
+}
+#make-room .txt3{
+    margin-top: 20px;
+    font-size: 14px;
+    line-height : 2em;
+
+}
+
+#make-room .radio{
+    width: 22px;
+    height: 22px; 
+    appearance: none;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-bottom: -6px;
+    border: 2px solid rgb(179, 179, 179);
+
+}
+
+#make-room .radio:checked{
+    background-color: rgb(255, 115, 115);
+} 
+/* 
+#make-room .radio{
+    width: 23px;
+    height: 23px; 
+    appearance: none;
+    background-color: rgb(255, 255, 255);
+    border-radius: 50%;
+    margin-right: 10px;
+    margin-bottom: -7px;
+    border: 2px solid rgb(179, 179, 179);
+
+}
+
+#make-room .radio:checked{
+    background-color: rgb(163, 163, 163);
+} */ 
+
+#make-room .cate-btns{
+    display: flex;
+    justify-content: center;
+}
+#make-room .cate-btn{
+    margin: 10px;
+    width: 120px;
+    height: 130px;
+    border-radius: 7px;
+    border: none;
+    background-color: transparent;
+    box-shadow : 0px 0px 4px 1px rgb(207, 207, 207);
+}
+
+#make-room .sm-btns{
+   display: flex; 
+   justify-content: center; 
+   margin-bottom: 50px;
+}
+#make-room .smb{
+    margin-left: 10px;
+    margin-right: 10px; 
+    width: 150px;
+    height: 60px;
+    border-radius: 7px;  
+    font-size: 15px;
+}
+#make-room .smb:focus{
+    outline: none;
+}
+ 
+#make-room .back-btn{
+    background-color: white;
+    color: #adadad;
+    font-weight: bold;
+    border: 0.14em solid #d8d8d8;
+}
+#make-room .submit-btn{
+    background-color:#1DC078;
+    color: white;
+    border: 1px solid #1DC078;
+}
+
+
+
+
+#make-room .back-btn:hover{
+    background-color: rgb(246, 246, 246); 
+    cursor: pointer;
+}
+
+#make-room .submit-btn:hover{
+    background-color:#1bb16e; 
+    cursor: pointer;
+}
+
+#make-room .back-btn:active{
+    background-color:rgb(235, 235, 235); 
+}
+
+#make-room .submit-btn:active{
+    background-color:#19a164; 
+}
+
+
+
