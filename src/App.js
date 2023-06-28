@@ -6,10 +6,12 @@ import RoomFeed from "./page/Room/RoomContent/Feed/RoomFeed";
 import RoomAnno from "./page/Room/RoomContent/Announcements/RoomAnno";
 import RoomList from "./page/OpenRoom/RoomList";
 import MakeRoom from "./page/OpenRoom/MakeRoom";
+import { YouthSpaceList } from "./page/YouthSpace/YouthSpaceList";
 function App() {
   return (
     <Router>
       <Routes>
+        <Route exact path="/youthspacelist" element={<YouthSpaceList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
         <Route exact path="/roomlist" element={<RoomList/>}/>
         <Route path="/roomMain/*" element={<RoomMain />} />
