@@ -6,6 +6,7 @@ import RoomFeed from "./page/Room/RoomContent/Feed/RoomFeed";
 import RoomAnno from "./page/Room/RoomContent/Announcements/RoomAnno";
 import Header from "./page/Main/Header";
 import Main from "./page/Main/Main";
+import Footer from "./page/Main/Footer";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/" element={<Main />} />
         <Route path="/roomMain/*" element={<RoomMain />} />
       </Routes>
+      <Footer/>
     </Router>
   );
 }

@@ -1,0 +1,20 @@
+:root {
+  --swiper-theme-color: #3a4a5b;
+}
+.main .banner-wrap { max-width: 1200px; margin: 0 auto;}
+.main .swiper { height: 400px; box-sizing: border-box; width: 100%;}
+.main .swiper img { width: 500px;}
+.main .swiper a { display: flex; justify-content: space-between; align-items: center; height: 400px;}
+.main .swiper h2 { line-height: 1.2em; padding: 28px 0; font-size: 30px; font-weight: bolder;}
+.main .swiper em { padding: 10px; background-color: #414141; font-size: 12px; border-radius: 10px; color: #fff; font-weight: 700;}
+.main .swiper p {line-height: 1.2em;}
+.main .content .box { height: 400px; margin-bottom: 80px;}
+.main .content .box em { margin-bottom: 20px; display: block;}
+.main .content .youth {display: flex; justify-content: space-between; align-items: center;}
+.main .content h4 { font-size: 30px; line-height: 1.2em; margin-bottom: 20px;}
+.main .content .youth p { margin-bottom: 20px; color: #484848; line-height: 1.2em; font-size: 18px;}
+.main .content .youth a.youth-btn { background-color: var(--mo-o); width: 200px; height: 50px; display: flex; align-items: center; justify-content: center; font-weight: 700; border-radius: 10px; transition: all .3s;}
+.main .content .youth a.youth-btn:hover { background-color: rgb(63 63 63); color:#fff;}
+.main .title { display: flex; justify-content: space-between; align-items: center;}
+.main .title a { font-size: 18px;}
+.main .title a:hover { color: var(--mo);}

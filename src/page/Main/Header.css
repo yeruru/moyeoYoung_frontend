@@ -1,6 +1,4 @@
-.mo-header { position: fixed;
-  top: 0;
-  width: 100%; z-index: 10000; height: 85px; box-sizing: border-box; border-bottom: 1px solid #eeeaea;}
+.mo-header { position: fixed; top: 0; width: 100%; z-index: 10000; height: 85px; box-sizing: border-box; border-bottom: 1px solid #eeeaea; background-color: #fff;}
 .mo-header .header-wrap { max-width: 1200px; margin: 0 auto;  display: flex; justify-content: space-between; align-items: center; height: 100%;}
 .mo-header .logo { width: 200px;}
 

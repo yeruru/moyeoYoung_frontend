@@ -1,0 +1,5 @@
+.footer { margin-top: 240px; background-color: #303740; height: 140px;}
+.footer-wrap { padding: 35px 0; height: 100%; box-sizing: border-box; max-width: 1200px; margin: 0 auto;}
+.footer .logo { display: flex; justify-content: space-between; width: 100%; align-items: center; height: 100%;}
+.footer .logo img { width: 200px;}
+.footer p { color: #dbdbdb; font-size: 12px;}
