@@ -1,0 +1,50 @@
+#youth-space-list .center-img{
+    width: 350px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+#youth-space-list button:focus, button:active{
+    outline: none;
+}
+#youth-space-list input:focus, input:active{
+    outline: none;
+    border: 1px solid rgb(182, 195, 190);
+}
+
+#youth-space-list .center-img {
+    width: 350px;
+    height: auto;
+    display: block;
+    margin: 0 auto;
+}
+
+#youth-space-list .search-position {
+    width: 550px;
+    position: relative;
+    margin: 0 auto;
+}
+
+#youth-space-list .search-text {
+    width: 100%;
+    height: 50px;
+    background-color: rgba(228, 247, 239, 1);
+    border-radius: 50px;
+    border: 1px solid rgb(215, 231, 225);
+    box-shadow: 0px 0px 3px 2px rgb(215, 231, 225);
+    margin: 0 auto;
+    display: block;
+    margin-top: 20px;
+    font-size: 16px;
+    color: #72817a;
+    padding-left: 30px;
+    /* 9CB4AA */
+
+}
+
+#youth-space-list .search-icon {
+    position: absolute;
+    right: 0;
+    top: 14px;
+    color: #72817a;
+}
