@@ -1,6 +1,11 @@
 /* color */
-body {
-  -mo: rgba(29, 192, 120, 1);
-  -mo-o: rgba(255, 199, 0, 1);
+:root {
+  --mo: rgba(29, 192, 120, 1);
+  --mo-o: rgba(255, 199, 0, 1);
 }
+
+
+
+/* wrap */
+.wrap { max-width: 1200px; margin: 85px auto;}
 
