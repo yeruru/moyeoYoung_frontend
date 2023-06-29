@@ -1,5 +1,6 @@
 import React from 'react'
 import './RoomList.css'
+import { RoomCard } from '../../components/RoomCard/RoomCard'
 
 function RoomList() {
   return (

@@ -1,18 +1,41 @@
-#make-room input:focus{
+#make-room input:focus,
+#make-room input:active{
     outline: none; 
 }
-#make-room .wrap{
-    width: 1200px;
-    margin: 0 auto;   
+#make-room button:focus,
+#make-room button:active{
+    outline: none; 
 }
+ #make-room .wrap{
+    /* width: 1200px;
+    margin: 0 auto;    */
+    margin-top:150px;
+} 
 #make-room .content{
     /* width: 70%; */
-    border-top: 2px solid rgb(196, 196, 196); 
-    border-bottom: 2px solid  rgb(196, 196, 196); 
-   
-    padding-top: 50px;
+    /* border-top: 2px solid rgb(230, 230, 230);  */
+    border-bottom: 1px solid   rgb(208, 208, 208);   
     padding-bottom: 20px;
     margin: 50px auto 50px auto;
+}
+
+#make-room .h1{
+    font-size: 25px;
+    color: var(--mo);
+    text-align: center;
+    background-color: white;
+    width: 200px;
+    height: 50px;
+    margin: 0 auto;
+}
+#make-room .bar{
+    width: 1100px;
+    position: relative;
+    z-index: -999;
+    top:8px;
+    display: block;
+    margin: 0 auto;
+    border-bottom: 1px solid  rgb(208, 208, 208);  
 }
 #make-room .txt1{
     margin-top:20px;
@@ -21,16 +44,62 @@
 }
 
 #make-room .ipbox{
-   
+    height: 30px;
     border: none;
     border-bottom: 1px solid rgb(190, 190, 190);
     padding: 10px;  
-    width: 100%;
+    padding-left: 20px;
+    width: 93%;
+    margin: 0 auto; 
+    margin-bottom:20px; 
+    transition: 0.5s all linear;
+    font-size: 15px;
+    font-weight: 100;
+    font-family: 'NanumSquareNeo-Variable';
+    color:rgb(75, 75, 75);
+}
+#make-room .ipbox-area{
+    font-size: 15px;
+    font-weight: 100;
+    font-family: 'NanumSquareNeo-Variable';
+    height: 100px;
+    border: none;
+    border-bottom: 1px solid rgb(190, 190, 190);
+    padding: 10px;  
+    padding-left: 20px;
+    width: 93%;
     margin: 0 auto; 
     margin-bottom:20px;
-    font-size: 15px;
+    transition: 0.2s all linear;
+    line-height: 1.5em;
+    resize:none;
+    color:rgb(75, 75, 75);
+    letter-spacing:0.05em;
+}
+
+#make-room .ipbox:focus,
+#make-room .ipbox:hover{  
+   box-shadow: 0px 0px 2px 1px rgb(224, 224, 224);
+   border-radius: 100px;
 
 }
+#make-room .ipbox-area:focus,
+#make-room .ipbox-area:hover{ 
+    outline: none;
+   box-shadow: 0px 0px 2px 1px rgb(224, 224, 224);
+   border-radius: 10px;
+
+}
+
+#make-room .txt-length{   
+    color:rgb(160, 160, 160);
+    font-size: 14px;
+    text-align: right;
+    position:relative;  
+    right: 46px;
+    bottom: 53px;
+}
+
 
 #make-room .tbox{   
     margin: 0 auto; 
@@ -41,26 +110,52 @@
 #make-room .select-img{ 
     width: 350px;
     height: 250px;
-    border: 1px solid rgb(190, 190, 190);
-    background-color: pink;
+    /* border: 1px dashed rgb(190, 190, 190); 
+    border-width: 2px; */
     display: flex; 
     justify-content: center;
-    align-items: center;
-    float: left;
+    align-items: center; 
     margin-right: 10px;
 }
+#make-room .icon-size{
+    font-size: 40px; 
+    color:rgb(91, 91, 91);
+}
+
 #make-room .plus{ 
-    font-size: 70px;
+    font-size: 45px;
     color: rgb(57, 57, 57);
+    margin-bottom: 10px;
 } 
+
+#make-room .img-box{
+    display: flex;
+}
 #make-room .imgs{ 
-    display: flex;  
+    display: flex; 
+    flex-wrap: wrap;
+    width: 500px; 
 }
 #make-room .img{  
-    padding: 3px;
-    width: 180px;
+    width: 160px;
+    margin: 3px; 
     height: 120px;
-    background-color: gray;
+}
+#make-room .img2{   
+    border: 1px dashed rgb(190, 190, 190); 
+    border-width: 1px; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;  
+    cursor: pointer;
+} 
+#make-room .upload{  
+    position:absolute;
+    display: none;
+}
+#make-room .selectable{
+    cursor: pointer;
 }
 
 #make-room .public-box{
@@ -68,13 +163,12 @@
     /* background-color: lightblue; */
     border: 1px solid rgb(204, 204, 204);
     margin: 0 auto;
-    display: flex;
-
+    display: flex; 
 }
+
 #make-room .pbox{
  padding: 20px;
- margin: 20px auto 20px auto;
-   
+ margin: 20px auto 20px auto; 
  height: 80%;
 }
 
@@ -103,7 +197,8 @@
 }
 
 #make-room .radio:checked{
-    background-color: rgb(255, 115, 115);
+    background-color: rgb(232, 232, 232);
+    padding: 4px;
 } 
 /* 
 #make-room .radio{
@@ -136,6 +231,20 @@
     box-shadow : 0px 0px 4px 1px rgb(207, 207, 207);
 }
 
+#make-room .change{
+    background-color: #92bca9;
+    /* background-color: rgb(236, 236, 236); */
+    border: 1px solid   #dadada;
+    /* color: black; */
+    color: white;
+    /* color: white; */
+}
+ 
+#make-room .cate-btn:hover{
+    box-shadow : 0px 0px 4px 1px #52a881;
+    /* box-shadow : 0px 0px 4px 1px rgb(172, 172, 172); */
+    /* box-shadow : 0px 0px 4px 1px var(--mo); */
+}
 #make-room .sm-btns{
    display: flex; 
    justify-content: center; 
@@ -185,6 +294,14 @@
 #make-room .submit-btn:active{
     background-color:#19a164; 
 }
-
+#make-room .cate-icon{
+    width: 50px;
+    margin-bottom: 10px;
+}
+#make-room .p5{
+    font-size: 9px;
+    color: rgb(148, 148, 148);
+    margin-top: 5px;
+}
 
 

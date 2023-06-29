@@ -3,16 +3,21 @@
     outline: none;
 }
 
-#room-list input:focus,
-#room-list input:active {
-    outline: none; 
-    border: 1px solid rgb(182, 195, 190);
+#room-list input:active, 
+#room-list input:hover{
+    outline: none;
+    box-shadow: 0px 0px 4px 2px rgb(160, 179, 173); 
+}
+
+#room-list input:focus{
+    outline: none;
+    background-color: rgb(247, 255, 252);
+    box-shadow: 0px 0px 4px 2px rgb(160, 179, 173); 
 }
 
 #room-list .wrap {
-    width: 1200px;
-    margin: 0 auto;
-}
+   padding-top: 100px;
+} 
 
 #room-list .center-img {
     width: 350px;
@@ -28,6 +33,7 @@
 }
 
 #room-list .search-text {
+    transition: 0.1s all linear;
     width: 100%;
     height: 50px;
     background-color: rgba(228, 247, 239, 1);
