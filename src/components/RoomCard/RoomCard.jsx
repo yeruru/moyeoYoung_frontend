@@ -4,7 +4,7 @@ export const RoomCard = () => {
   return ( 
               <li className='card-li'>
                 <a href="#" className='a-mark'>
-                <button className='bookmark'><span class="material-symbols-outlined mark-icon click">
+                <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
                   bookmark
                 </span></button>
                 <img src='/image/test.jpg' className='card-img' />
@@ -13,7 +13,7 @@ export const RoomCard = () => {
                   <div className='mini-sec'>
                     <p className='p3 pink'>#취업스터디</p>
                     <div className='mini-sec2'>
-                      <span class="material-symbols-outlined group-icon">
+                      <span className="material-symbols-outlined group-icon">
                         group
                       </span><span className='p4'>20</span>
                     </div>
