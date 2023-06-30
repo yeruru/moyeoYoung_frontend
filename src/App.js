@@ -18,7 +18,7 @@ import WhatYouth from "./page/YouthSpace/WhatYouth";
 
 function App() {
   return (
-    <Router>
+    <>
       <Header/>
       <Routes>
         <Route exact path="/" element={<Main />} />
@@ -27,9 +27,9 @@ function App() {
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
         <Route exact path="/roomlist" element={<RoomList/>}/>
         <Route path="/roomMain/*" element={<RoomMain />} />
-      </Routes>
+      <Routes/>
       <Footer/>
-    </Router>
+    </>
   );
 }
 
