@@ -9,7 +9,7 @@ function RoomList() {
         <div className='search-box'>
           <img src='/image/Group 14.svg' className='center-img' />
           <div className='search-position'><input type='text' className='search-text' name='word' placeholder='모임을 검색해 보세요.' />
-            <button type='submit'><span class="material-symbols-outlined search-icon">
+            <button type='submit'><span className="material-symbols-outlined search-icon">
               search
             </span></button></div>
 
@@ -41,7 +41,7 @@ function RoomList() {
             <ul className='card-ul'>
               <li className='card-li'>
                 <a href="#" className='a-mark'>
-                <button className='bookmark'><span class="material-symbols-outlined mark-icon click">
+                <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
                   bookmark
                 </span></button>
                 <img src='/image/test.jpg' className='card-img' />
@@ -50,7 +50,7 @@ function RoomList() {
                   <div className='mini-sec'>
                     <p className='p3 pink'>#취업스터디</p>
                     <div className='mini-sec2'>
-                      <span class="material-symbols-outlined group-icon">
+                      <span className="material-symbols-outlined group-icon">
                         group
                       </span><span className='p4'>20</span>
                     </div>
@@ -60,7 +60,7 @@ function RoomList() {
               </li>
               <li className='card-li'>
                 <a href="#" className='a-mark'>
-                <button className='bookmark'><span class="material-symbols-outlined mark-icon click">
+                <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
                   bookmark
                 </span></button>
                 <img src='/image/test.jpg' className='card-img' />
@@ -69,7 +69,7 @@ function RoomList() {
                   <div className='mini-sec'>
                     <p className='p3 pink'>#취업스터디</p>
                     <div className='mini-sec2'>
-                      <span class="material-symbols-outlined group-icon">
+                      <span className="material-symbols-outlined group-icon">
                         group
                       </span><span className='p4'>20</span>
                     </div>
@@ -79,7 +79,7 @@ function RoomList() {
               </li>
               <li className='card-li'>
                 <a href="#" className='a-mark'>
-                <button className='bookmark'><span class="material-symbols-outlined mark-icon click">
+                <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
                   bookmark
                 </span></button>
                 <img src='/image/test.jpg' className='card-img' />
@@ -88,7 +88,7 @@ function RoomList() {
                   <div className='mini-sec'>
                     <p className='p3 pink'>#취업스터디</p>
                     <div className='mini-sec2'>
-                      <span class="material-symbols-outlined group-icon">
+                      <span className="material-symbols-outlined group-icon">
                         group
                       </span><span className='p4'>20</span>
                     </div>
@@ -98,7 +98,7 @@ function RoomList() {
               </li>
               <li className='card-li'>
                 <a href="#" className='a-mark'>
-                <button className='bookmark'><span class="material-symbols-outlined mark-icon click">
+                <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
                   bookmark
                 </span></button>
                 <img src='/image/test.jpg' className='card-img' />
@@ -107,7 +107,7 @@ function RoomList() {
                   <div className='mini-sec'>
                     <p className='p3 pink'>#취업스터디</p>
                     <div className='mini-sec2'>
-                      <span class="material-symbols-outlined group-icon">
+                      <span className="material-symbols-outlined group-icon">
                         group
                       </span><span className='p4'>20</span>
                     </div>
@@ -120,7 +120,7 @@ function RoomList() {
             <ul className='card-ul'>
             <li className='card-li'>
                 <a href="#" className='a-mark'>
-                <button className='bookmark'><span class="material-symbols-outlined mark-icon click">
+                <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
                   bookmark
                 </span></button>
                 <img src='/image/test.jpg' className='card-img' />
@@ -129,7 +129,7 @@ function RoomList() {
                   <div className='mini-sec'>
                     <p className='p3 pink'>#취업스터디</p>
                     <div className='mini-sec2'>
-                      <span class="material-symbols-outlined group-icon">
+                      <span className="material-symbols-outlined group-icon">
                         group
                       </span><span className='p4'>20</span>
                     </div>
@@ -139,7 +139,7 @@ function RoomList() {
               </li>
               <li className='card-li'>
                 <a href="#" className='a-mark'>
-                <button className='bookmark'><span class="material-symbols-outlined mark-icon click">
+                <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
                   bookmark
                 </span></button>
                 <img src='/image/test.jpg' className='card-img' />
@@ -148,7 +148,7 @@ function RoomList() {
                   <div className='mini-sec'>
                     <p className='p3 pink'>#취업스터디</p>
                     <div className='mini-sec2'>
-                      <span class="material-symbols-outlined group-icon">
+                      <span className="material-symbols-outlined group-icon">
                         group
                       </span><span className='p4'>20</span>
                     </div>
@@ -158,7 +158,7 @@ function RoomList() {
               </li>
               <li className='card-li'>
                 <a href="#" className='a-mark'>
-                <button className='bookmark'><span class="material-symbols-outlined mark-icon click">
+                <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
                   bookmark
                 </span></button>
                 <img src='/image/test.jpg' className='card-img' />
@@ -167,7 +167,7 @@ function RoomList() {
                   <div className='mini-sec'>
                     <p className='p3 pink'>#취업스터디</p>
                     <div className='mini-sec2'>
-                      <span class="material-symbols-outlined group-icon">
+                      <span className="material-symbols-outlined group-icon">
                         group
                       </span><span className='p4'>20</span>
                     </div>
@@ -177,7 +177,7 @@ function RoomList() {
               </li>
               <li className='card-li'>
                 <a href="#" className='a-mark'>
-                <button className='bookmark'><span class="material-symbols-outlined mark-icon click">
+                <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
                   bookmark
                 </span></button>
                 <img src='/image/test.jpg' className='card-img' />
@@ -186,7 +186,7 @@ function RoomList() {
                   <div className='mini-sec'>
                     <p className='p3 pink'>#취업스터디</p>
                     <div className='mini-sec2'>
-                      <span class="material-symbols-outlined group-icon">
+                      <span className="material-symbols-outlined group-icon">
                         group
                       </span><span className='p4'>20</span>
                     </div>

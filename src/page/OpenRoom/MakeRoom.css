@@ -107,15 +107,22 @@
     margin-bottom: 50px;
 }
 
-#make-room .select-img{ 
+#make-room .select-img-div{ 
+    object-fit: contain;
+    overflow: hidden;
     width: 350px;
     height: 250px;
+    margin-right: 10px;
+}
+#make-room .select-img{ 
+    width: 100%;
+    height: 100%;
     /* border: 1px dashed rgb(190, 190, 190); 
     border-width: 2px; */
-    display: flex; 
+    /* display: flex; 
     justify-content: center;
     align-items: center; 
-    margin-right: 10px;
+    margin-right: 10px; */
 }
 #make-room .icon-size{
     font-size: 40px; 
@@ -134,7 +141,7 @@
 #make-room .imgs{ 
     display: flex; 
     flex-wrap: wrap;
-    width: 500px; 
+    width: 510px; 
 }
 #make-room .img{  
     width: 160px;
