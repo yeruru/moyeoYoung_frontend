@@ -8,7 +8,10 @@
 
 /* wrap */
 .wrap { max-width: 1200px; margin: 85px auto;}
+.room-box { background-color: #fff; width: 100%; border-radius: 20px; padding: 25px; box-sizing: border-box;}
 
-
-
+::selection {
+  background: var(--mo);
+  color: #fff;
+}
 
