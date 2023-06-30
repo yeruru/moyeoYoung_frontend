@@ -2,22 +2,19 @@ import React from 'react'
 import './MakeRoom.css'
 import { useState, useRef } from 'react';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
-import axios from 'axios';
+import axios from 'axios'; 
 
 function MakeRoom() {
-    const [activeCate, setActiveCate] = useState('');
-    const [checkCateVal, setCheckCateVal] = useState(''); 
+    const [activeCate, setActiveCate] = useState(''); 
     const [txtLength, settxtLength] = useState('0');
     const [imgSrc, setImgSrc] = useState('/image/room_basic1.jpg');
     const inputRef = useRef();
-
+    const [room, setRoom] = useState({roomTitle:'', roomContent:'', roomImage:'room_basic1.jpg', roomType:'open', roomCategory:''})
+    const [file,setFile] = useState();
+    
     //소개글 글자수
-    let changeLength = (e) => {
+    const changeLength = (e) => {
         settxtLength(e.target.value.length);
-    }
-    //기본이미지선택
-    const changeImg = (e) => {
-         setImgSrc(e.target.src);
     }
     //사진클릭>input실행
     const clickImg = () => {
@@ -38,39 +35,123 @@ function MakeRoom() {
             
     }
 
+    //room만들기 =======================================================
+    const title=(e)=>{
+        changeLength(e);
+        changeRoom(e);
+    }
+    const content=(e)=>{
+        changeRoom(e);
+        changeLength(e);
+    }
+    //기본이미지선택
+    const basicImg=(e)=>{
+        setImgSrc(e.target.src); //이미지 출력 프론트
+        //백엔드 이름 넘겨주기
+        if(e.target.src ==='/image/room_basic1.jpg'){
+            setRoom({...room, 'roomImage':'room_basic1.jpg'}); 
+        }else{
+            setRoom({...room, 'roomImage':e.target.name});  
+        } 
+    }
+    //사용자설정이미지
+    const inputImg=(e)=>{
+        selectImg(e); //이미지 출력 프론트
+        //백엔드 이름 넘겨주기
+        setRoom({...room, 'roomImage':e.target.files[0].name});
+        setFile(e.target.files[0]);
+    }
+    const type=(e)=>{ 
+        changeRoom(e);
+    }    
+
+    const changeRoom =(e)=>{ //제목/내용 설정
+        const name = e.target.name;
+        const value = e.target.value;
+
+        setRoom({...room,[name]:value}); 
+    }
+
+
+    //==================================================================
+  
+
+
     //submit
-    const submit=()=>{ 
+    const submit=(e)=>{    
+        e.preventDefault();   
+        if (
+          room.roomTitle.trim() === '' ||
+          room.roomContent.trim() === '' ||
+          room.roomImage.trim() === '' ||
+          room.roomCategory.trim() === ''||
+          room.roomType.trim() === ''
+          ) {
+              // 필수 값 중 하나라도 비어있는 경우, 다음 페이지로의 이동을 막음
+            alert('모든 필드를 입력해주세요.');
+          return;
+        } 
+        const formData = new FormData(); 
+        formData.append('roomTitle', room.roomTitle); 
+        formData.append('roomContent', room.roomContent); 
+        formData.append('roomImage', room.roomImage); 
+        formData.append('roomCategory', room.roomCategory); 
+        formData.append('roomType', room.roomType); 
+        formData.append('file', file);  
+
+        axios.post('http://localhost:8090/makeRoom',formData)
+        .then(res=>{
+            // document.location.href="/roomMain";
+            console.log(res);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
     }
   
     //카테고리 선택시 색변경+값
-    const changeColor = (e) => {
-        setActiveCate(e.target.id);
-        setCheckCateVal(e.target.value);
-        console.log(checkCateVal);
+    const cateBtn = (e) => {
+        const id = e.target.id;
+        setActiveCate(id);   
+        switchCateVal(id); 
+    }
+
+    const switchCateVal=(id)=>{ 
+        switch(id){
+            case 'b1': setRoom({...room,'roomCategory':'취업준비'});  break;
+            case 'b2':  setRoom({...room,'roomCategory':'스터디'});  break;
+            case 'b3':  setRoom({...room,'roomCategory':'과외'});  break;
+            case 'b4':  setRoom({...room,'roomCategory':'자기개발'}); break;
+            case 'b5':  setRoom({...room,'roomCategory':'프로젝트'});  break;
+            case 'b6': setRoom({...room,'roomCategory':'동아리'});  break;
+            case 'b7':  setRoom({...room,'roomCategory':'친목'}); break;
+            case 'b8':  setRoom({...room,'roomCategory':'기타'});  break; 
+        }  
+        
     }
 
     return (
         <div id='make-room'>
-            <div className='wrap'>
+            <div className='wrap'> 
                 <span className='bar'></span>
                 <h1 className='h1'>모임방 개설</h1>
                 <ul className="content">
                     <li className="tbox">
                         <p className="txt1">모임명</p>
-                        <input type='text' className='ipbox' maxLength={40} accept='image/*' name='roomTitle' id='room-title' placeholder='모임명을 입력해 주세요' required />
+                        <input type='text' className='ipbox' maxLength={40} accept='image/*' name='roomTitle' id='room-title' placeholder='모임명을 입력해 주세요' onChange={title} required />
                     </li>
                     <li className="tbox">
                         <p className="txt1">소개글</p>
                         {/* <input type='text' className='ipbox' name='roomName' id='room-name' placeholder='모임에 대해 간략한 소개를 작성해 주세요(200자 제한)' /> */}
-                        <textarea maxLength={300} className='ipbox-area' name='roomContent' id='room-intro' onChange={changeLength} placeholder='모임에 대해 간략한 소개를 작성해 주세요(300자 제한)' required ></textarea>
+                        <textarea maxLength={300} className='ipbox-area' name='roomContent' id='room-intro' onChange={content} placeholder='모임에 대해 간략한 소개를 작성해 주세요(300자 제한)' required ></textarea>
                         <p className="txt-length">( {txtLength} / 300 )</p>
 
                     </li>
                     <li className="tbox">
                         <p className="txt1">대표사진 선택</p> 
                         <div className='img-box'> 
-                        <div>
-                            <img src={imgSrc} className='select-img' name="roomImage" required />
+                        <div className='select-img-div'>
+                            <img src={imgSrc} className='select-img' name="roomImage" accept="image/**" required/>
                         </div>
                         <ul className='imgs'>
                             {/* <div className='imgs'> */}
@@ -78,14 +159,14 @@ function MakeRoom() {
                                 <CenterFocusWeakIcon className='icon-size'/>
                                 <p className='p5'>사진을 업로드 하세요.</p>
                             </li>
-                            <input type='file' className='upload' name="file" ref={inputRef} id='file' onChange={selectImg}/>
-                            <li><img src="/image/room_basic2.jpg" alt="" className='img selectable' onClick={changeImg} /></li>
-                            <li><img src="/image/room_basic3.jpg" alt="" className='img selectable' onClick={changeImg} /></li>
+                            <input type='file' className='upload' name="roomImage" ref={inputRef} id='file' onChange={inputImg}/>
+                            <li><img src="/image/room_basic2.jpg" alt="" className='img selectable' name='room_basic2.jpg' onClick={basicImg} /></li>
+                            <li><img src="/image/room_basic3.jpg" alt="" className='img selectable' name='room_basic3.jpg'  onClick={basicImg} /></li>
                             {/* </div> */}
                             {/* <div className='imgs'> */}
-                            <li><img src="/image/room_basic4.jpg" alt="" className='img selectable' onClick={changeImg} /></li>
-                            <li><img src="/image/room_basic5.jpg" alt="" className='img selectable' onClick={changeImg} /></li>
-                            <li><img src="/image/room_basic6.jpg" alt="" className='img selectable' onClick={changeImg} /></li>
+                            <li><img src="/image/room_basic4.jpg" alt="" className='img selectable' name='room_basic4.jpg'  onClick={basicImg} /></li>
+                            <li><img src="/image/room_basic5.jpg" alt="" className='img selectable' name='room_basic5.jpg'  onClick={basicImg} /></li>
+                            <li><img src="/image/room_basic6.jpg" alt="" className='img selectable' name='room_basic6.jpg'  onClick={basicImg} /></li>
                             {/* </div> */}
                         </ul>
                         </div> 
@@ -94,14 +175,14 @@ function MakeRoom() {
                         <p className="txt1">모임방 공개설정</p>
                         <div className='public-box'>
                             <div className='pbox'>
-                                <input type='radio' name='setting' id="setting-label1" className='radio txt2' defaultChecked/><label htmlFor="setting-label1" >공개방</label>
+                                <input type='radio' name='roomType' id="setting-label1" className='radio' onClick={type} defaultChecked value='open'/><label htmlFor="setting-label1" className='txt2'>공개방</label>
                                 <p className='txt3'>누구나 모임을 검색할 수 있고,<br />
                                     모임 소개와 게시글을 볼 수 있습니다. <br />
                                     별도의 가입 절차가 필요하지 않습니다.</p>
                             </div>
                             <div className='pbox'>
 
-                                <input type='radio' name='setting' id="setting-label2" className='radio txt2' /><label htmlFor="setting-label2" >비공개방</label>
+                                <input type='radio' name='roomType' id="setting-label2" className='radio' onClick={type} value='close'/><label htmlFor="setting-label2" className='txt2'>비공개방</label>
                                 <p className='txt3'>누구나 모임을 검색할 수 있지만<br />
                                     모임과 게시글이 공개되지 않습니다.<br />
                                     가입신청시 방장의 수락이 필요합니다.</p>
@@ -113,48 +194,48 @@ function MakeRoom() {
                         <p className="txt1">카테고리를 선택하세요</p>
                         <div className='cate-box'>
                             <div className='cate-btns'>
-                                <button id='b1' className={`cate-btn ${activeCate == 'b1' ? 'change' : ''}`} onClick={changeColor} value="취업준비">
-                                    <img id='b1' src="/image/icon/icon1.png" className="cate-icon" onClick={changeColor} />
-                                    <p id='b1' className='txt4' onClick={changeColor}>취업준비</p>
+                                <button id='b1' className={`cate-btn ${activeCate == 'b1' ? 'change' : ''}`} onClick={cateBtn} value="취업준비">
+                                    <img id='b1' src="/image/icon/icon1.png" className="cate-icon" onClick={cateBtn}/>
+                                    <p id='b1' className='txt4' onClick={cateBtn}>취업준비</p>
                                 </button>
 
-                                <button id='b2' className={`cate-btn ${activeCate == 'b2' ? 'change' : ''}`} onClick={changeColor} value="스터디">
-                                    <img id='b2' src="/image/icon/icon2.png" className="cate-icon" onClick={changeColor} />
-                                    <p id='b2' className='txt4' onClick={changeColor}>스터디</p>
+                                <button id='b2' className={`cate-btn ${activeCate == 'b2' ? 'change' : ''}`} onClick={cateBtn} value="스터디">
+                                    <img id='b2' src="/image/icon/icon2.png" className="cate-icon" onClick={cateBtn} />
+                                    <p id='b2' className='txt4' onClick={cateBtn}>스터디</p>
                                 </button>
 
-                                <button id='b3' className={`cate-btn ${activeCate == 'b3' ? 'change' : ''}`} onClick={changeColor} value="과외">
-                                    <img id='b3' src="/image/icon/icon3.png" className="cate-icon" />
-                                    <p id='b3' className='txt4'>과외/멘토</p>
+                                <button id='b3' className={`cate-btn ${activeCate == 'b3' ? 'change' : ''}`} onClick={cateBtn} value="과외">
+                                    <img id='b3' src="/image/icon/icon3.png" className="cate-icon" onClick={cateBtn}/>
+                                    <p id='b3' className='txt4' onClick={cateBtn}>과외/멘토</p>
                                 </button>
 
-                                <button id='b4' className={`cate-btn ${activeCate == 'b4' ? 'change' : ''}`} onClick={changeColor} value="자기개발">
-                                    <img id='b4' src="/image/icon/icon4.png" className="cate-icon" />
-                                    <p id='b4' className='txt4'>자기개발</p>
+                                <button id='b4' className={`cate-btn ${activeCate == 'b4' ? 'change' : ''}`} onClick={cateBtn} value="자기개발">
+                                    <img id='b4' src="/image/icon/icon4.png" className="cate-icon" onClick={cateBtn}/>
+                                    <p id='b4' className='txt4' onClick={cateBtn}>자기개발</p>
                                 </button>
                             </div>
 
                             <div className='cate-btns'>
-                                <button id='b5' className={`cate-btn ${activeCate == 'b5' ? 'change' : ''}`} onClick={changeColor} value="프로젝트">
-                                    <img id='b5' src="/image/icon/icon5.png" className="cate-icon" />
-                                    <p id='b5' className='txt4'>프로젝트</p>
+                                <button id='b5' className={`cate-btn ${activeCate == 'b5' ? 'change' : ''}`} onClick={cateBtn} value="프로젝트">
+                                    <img id='b5' src="/image/icon/icon5.png" className="cate-icon" onClick={cateBtn}/>
+                                    <p id='b5' className='txt4' onClick={cateBtn}>프로젝트</p>
                                 </button>
 
-                                <button id='b6' className={`cate-btn ${activeCate == 'b6' ? 'change' : ''}`} onClick={changeColor} value="동아리">
-                                    <img id='b6' src="/image/icon/icon6.png" className="cate-icon" />
-                                    <p id='b6' className='txt4'>동아리</p>
+                                <button id='b6' className={`cate-btn ${activeCate == 'b6' ? 'change' : ''}`} onClick={cateBtn} value="동아리">
+                                    <img id='b6' src="/image/icon/icon6.png" className="cate-icon" onClick={cateBtn}/>
+                                    <p id='b6' className='txt4' onClick={cateBtn}>동아리</p>
                                 </button>
 
-                                <button id='b7' className={`cate-btn ${activeCate == 'b7' ? 'change' : ''}`} onClick={changeColor} value="친목">
-                                    <img id='b7' src="/image/icon/icon7.png" className="cate-icon" />
-                                    <p id='b7' className='txt4'>친목</p>
+                                <button id='b7' className={`cate-btn ${activeCate == 'b7' ? 'change' : ''}`} onClick={cateBtn} value="친목">
+                                    <img id='b7' src="/image/icon/icon7.png" className="cate-icon" onClick={cateBtn}/>
+                                    <p id='b7' className='txt4' onClick={cateBtn}>친목</p>
                                 </button>
 
-                                <button id='b8' className={`cate-btn ${activeCate == 'b8' ? 'change' : ''}`} onClick={changeColor} value="기타">
-                                    <span id='b8' className="material-symbols-outlined plus" onClick={changeColor}>
+                                <button id='b8' className={`cate-btn ${activeCate == 'b8' ? 'change' : ''}`} onClick={cateBtn} value="기타">
+                                    <span id='b8' className="material-symbols-outlined plus" onClick={cateBtn}>
                                         add
                                     </span>
-                                    <p id='b8' className='txt4' onClick={changeColor} >기타</p>
+                                    <p id='b8' className='txt4' onClick={cateBtn}>기타</p>
                                 </button>
                             </div>
                         </div>
@@ -164,6 +245,7 @@ function MakeRoom() {
                 <div className='sm-btns'>
                     <input type='button' className='back-btn smb' value='돌아가기' />
                     <input type='submit' className='submit-btn smb' value='모임개설' onClick={submit}/>
+                    {/* <input type='submit' className='submit-btn smb' value='모임개설' onClick={submit}/> */}
                 </div>
 
             </div>
@@ -171,4 +253,4 @@ function MakeRoom() {
     )
 }
 
-export default MakeRoom;
+export default MakeRoom;       
