@@ -1,0 +1,146 @@
+.roomfeed .feed{
+    width : 550px;
+    height : 460px;
+    background-color: white;
+    border: 1.5px solid #EEEEEE;
+    border-radius: 15px;
+    margin : 0 auto;
+    padding-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.roomfeed .feedHeader{
+    display : flex;
+    padding : 15px 15px;
+    align-items: center;
+}
+
+.roomfeed .userheader{
+    display: flex;
+    align-items: center;
+    margin-right: auto;
+}
+
+.roomfeed  .username{
+    font-size : 13px;
+    padding: 0 13px;
+    font-family: 'NanumSquareNeo-Variable';
+}
+
+.roomfeed  .vartical{
+    line-height: 50px;
+}
+
+.roomfeed .userProfile{
+    height: 50px;
+    width: 50px;
+    background-image: url("../../../../../public/image/feed/hello.jpg");
+    background-repeat : no-repeat;
+    background-size : cover;
+    background-position: center;
+    border-radius: 30px;
+    border: 1.5px solid #EEEEEE;
+    margin-left : 5px;
+}
+
+.roomfeed .bigimg{
+    height : 240px;
+    width : 360px;
+    background-image: url("../../../../../public/image/feed/1.jpg");
+    background-repeat : no-repeat;
+    background-size : cover;
+    background-position: center;
+}
+
+.roomfeed .smallimg{
+    height : 117.5px;
+    width : 134px;
+    background-image: url("../../../../../public/image/feed/2.jpg");
+    background-repeat : no-repeat;
+    background-size : cover;
+    background-position: center;
+    margin-bottom: 5px;
+
+}
+.roomfeed .otherimg {
+    height : 117.5px;
+    width : 134px;
+    background-image: url("../../../../../public/image/feed/3.jpg");
+    background-repeat : no-repeat;
+    background-size : cover;
+    background-position: center;
+    position: relative;
+}
+
+.roomfeed .otherimg::before {
+    position: absolute;
+    top:0;
+    left: 0;
+    content: '';
+    width: 100%;
+    height: 100%;
+    background-color: black;
+    opacity: .6;
+}
+
+.roomfeed .num {
+    position: absolute;
+    color: #EEEEEE;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.roomfeed .Content{
+    padding : 0 26px;
+    line-height: 22px;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow:hidden;
+    font-size: 13px;
+    color : gray;
+}
+
+.roomfeed .Title{
+    padding : 13px 26px;    
+    font-size : 23px;
+    font-weight: 500;
+}
+
+.roomfeed .feedimg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.roomfeed .feedimg2{
+    margin-left : 5px;
+}
+
+.roomfeed .feedfooter{
+    margin-top: 10px;
+    padding : 0 23px;
+    display: flex;
+    align-items: center;
+}
+.roomfeed .drop-box { position: relative;}
+
+.roomfeed .droppage{
+    position: absolute;
+    width : 100px;
+    height: 100px;
+    top: 20;
+
+    font-size: 12px;
+    background-color: white;
+    border: 1.4px solid #EEEEEE;
+    border-radius: 10px;
+
+    display : none;
+}
+
+.roomfeed .show{
+    display : block
+}

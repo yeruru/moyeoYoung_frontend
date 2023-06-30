@@ -17,20 +17,17 @@ import Footer from "./page/Main/Footer";
 
 function App() {
   return (
-    <Router>
+    <>
       <Header/>
       <Routes>
-
         <Route exact path="/youthspacelist" element={<YouthSpaceList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
         <Route exact path="/roomlist" element={<RoomList/>}/>
-
         <Route exact path="/" element={<Main />} />
-
         <Route path="/roomMain/*" element={<RoomMain />} />
       </Routes>
       <Footer/>
-    </Router>
+    </>
   );
 }
 
