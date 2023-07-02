@@ -311,4 +311,105 @@
     margin-top: 5px;
 }
 
+/* 모달 */ 
 
+#make-Room-modal{ 
+    position:fixed;
+    top:0;
+    right: 0;
+    width:100vw;
+    height: 100vw;
+    background-color: rgb(0, 0, 0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+
+}
+#make-Room-modal.hidden{
+    visibility: hidden;
+}
+#make-Room-modal.hidden.play{
+    visibility: visible;
+}
+
+
+#make-Room-modal .modal-box{
+    width: 460px;
+    height: 320px; 
+    top:0;
+    bottom:0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    position:fixed;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    cursor: pointer;
+} 
+
+#make-Room-modal #icon{
+    position:absolute;
+    right: 0;
+    top:0;
+    margin-right: 15px;
+    margin-top:15px;
+    width:35px;
+}
+#make-Room-modal .txt{
+    margin-top: 10px;
+    font-size: 18px;
+    font-weight: bold;
+}
+#make-Room-modal .modal-imgdiv{
+    margin-top:35px;
+    margin-bottom: 20px;
+    width: 200px; 
+} 
+#make-Room-modal .modal-btns{
+    margin-top: 10px;
+    display: flex;
+}
+#make-Room-modal .btn{
+    width: 160px;
+    height: 50px;
+    border-radius: 5px;
+  
+}
+#make-Room-modal .btn1{
+    margin-right: 10px;
+    background: white; 
+    color:#8C8C8C;
+    border:1px solid #ababab;
+}
+#make-Room-modal .btn2{
+    margin-left: 10px;
+    background: #1DC078;
+    color:white;
+    border:none;
+
+}
+
+#make-Room-modal .btn:focus,
+#make-Room-modal .btn:active{
+    outline: none;
+}
+#make-Room-modal .btn1:hover{
+    cursor: pointer;
+    background: rgb(245, 245, 245); 
+}
+#make-Room-modal .btn2:hover{
+    cursor: pointer;
+    background: #1aac6a;  
+}
+#make-Room-modal .btn1:active{
+    background: rgb(240, 240, 240);  
+}
+#make-Room-modal .btn2:active{
+    background: rgb(22, 158, 97);
+ 
+}
