@@ -11,7 +11,7 @@ function Footer() {
                 <a href='/'>
                   <img src={logo} alt='모여영로고' />
                 </a>
-                <p class="copy">COPYRIGHT© 2023 팀이름. All Right Reserved</p>
+                <p className="copy">COPYRIGHT© 2023 팀이름. All Right Reserved</p>
             </div>
         </div>
       </div>

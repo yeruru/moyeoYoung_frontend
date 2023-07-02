@@ -1,7 +1,7 @@
 .mo-header { position: fixed; top: 0; width: 100%; z-index: 10000; height: 85px; box-sizing: border-box; border-bottom: 1px solid #eeeaea; background-color: #fff;}
 .mo-header .header-wrap { max-width: 1200px; margin: 0 auto;  display: flex; justify-content: space-between; align-items: center; height: 100%;}
 .mo-header .logo { width: 200px;}
-
+.mo-header li { cursor: pointer;}
 .mo-header .logo a { line-height: 85px;}
 .mo-header .nav { display: flex; color: #636363; height: 100%; align-items: center;}
 .mo-header .nav > li.nav-item { padding: 0 37px;}
@@ -10,6 +10,8 @@
 
 .mo-header .nav > li {padding: 0 10px;}
 .mo-header .nav > li:first-child { position: relative;}
+.mo-header .nav > li svg { font-size: 28px;}
+
 .mo-header .nav-box { height: 100%;}
 .mo-header .dropdown { display: none; position: absolute; top: 90%; left: -10px; z-index: 1; width: 100%; padding: 20px; border: 1px solid #b8b8b8; background-color: #fff; border-radius: 10px;}
 .mo-header .nav-item:hover .dropdown { display: block;}
@@ -26,3 +28,8 @@
 
 .login:hover { border: 1px solid rgb(63 63 63);}
 .login:hover, .join:hover { background-color: rgb(63 63 63); color: #fff;}
+
+
+/* 쪽지 */
+.noteLi { position: relative; height: 100%; display: flex; align-items: center;}
+
