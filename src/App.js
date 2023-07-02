@@ -11,7 +11,7 @@ import { YouthSpaceList } from "./page/YouthSpace/YouthSpaceList";
 
 import Header from "./page/Main/Header";
 import Main from "./page/Main/Main";
-import Footer from "./page/Main/Footer";
+import Footer from "./page/Main/Footer"; 
 
 
 
@@ -23,7 +23,7 @@ function App() {
 
         <Route exact path="/youthspacelist" element={<YouthSpaceList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
-        <Route exact path="/roomlist" element={<RoomList/>}/>
+        <Route exact path="/roomlist" element={<RoomList/>}/> 
 
         <Route exact path="/" element={<Main />} />
 
