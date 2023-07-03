@@ -1,0 +1,140 @@
+#room-card{
+    width: 220px;
+    height: 260px; 
+    border-radius: 22px;
+    background: #FFF;
+    box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);
+    margin:10px;
+    margin-bottom: 20px;
+    padding-bottom: 5px;
+    
+}
+#room-card .card-img{
+    border-radius: 22px 22px 0px 0px ;
+    width: 100%;
+    height: 160px;
+    display: inline-block;
+}
+
+#room-card .p2{
+    padding: 12px;
+    padding-bottom: 5px;
+    font-size: 14px;
+    line-height : 1.4em;
+}
+
+#room-card .intro{
+    width:90%;
+    overflow: hidden;
+    text-overflow: ellipsis; 
+    white-space: nowrap;
+    font-size: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+    padding-bottom: 12px;
+}
+#room-card .p3{ 
+    display: flex;
+    font-size: 9px;
+    padding: 10px;
+    padding-right: 15px;
+    padding-left: 15px; 
+    height: 3px;  
+    border-radius: 50px; 
+    margin-left: 10px; 
+    align-items: center;
+    justify-content: center;
+}
+#room-card .material-symbols-outlined.group-icon{ 
+    font-size: 23px !important; 
+    color: gray;
+    padding-top: 10px;  
+    position: absolute;
+    right: 39px;
+    bottom: 0px; 
+    
+}
+#room-card .p4{
+    font-size: 13px; 
+    color: gray;  
+    height: 20px;  
+    position: absolute;
+    right: 15px;
+    bottom: 0px;
+} 
+#room-card .mini-sec{
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 10px;
+   
+}
+#room-card .mini-sec2{
+    position:relative;
+    width: 60px;  
+}
+
+#room-card .a-mark{
+    position: relative; 
+    z-index: 1;
+}
+
+#room-card .bookmark{ 
+    position: absolute;
+    z-index: 10;
+    width: 33px;
+    height: 33px;
+    background-color: white;
+    border-radius: 50%;  
+    right: 10px; 
+    top: -135px;
+    border: 1px solid rgb(209, 209, 209); 
+}
+
+#room-card .mark-icon{   
+    border: none;
+    color: #1DC078;
+    margin-top: 4px;   
+}
+  
+#room-card .material-symbols-outlined.click{
+    font-variation-settings:
+    'FILL' 1,
+    'wght' 400,
+    'GRAD' 0,
+    'opsz' 48 
+}
+
+/* 카테고리 색 */
+
+#room-card .pink{
+    background-color: rgb(255, 217, 223);
+}
+
+#room-card .green{
+    background-color: rgb(192, 255, 196);
+}
+
+#room-card .orange{
+    background-color: rgb(255, 238, 208);
+}
+
+#room-card .yellow{
+    background-color: rgb(255, 252, 211);
+}
+
+#room-card .purple{
+    background-color: rgb(246, 235, 255);
+}
+
+#room-card .lblue{
+    background-color: rgb(201, 241, 255);
+}
+
+#room-card .blue{
+    background-color: rgb(208, 217, 255);
+}
+
+#room-card .gray{
+    background-color: rgb(212, 212, 212);
+}
+ 
