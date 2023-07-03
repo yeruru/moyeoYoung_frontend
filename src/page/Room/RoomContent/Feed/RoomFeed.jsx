@@ -10,10 +10,8 @@ function RoomFeed() {
   const [modalClicked, setModalClicked] = useState(false);
   const [member, setmember] = useState("승현");
   const modalRef = useRef(null);
-
-  console.log(modalClicked);
-  
-    const handleClickOutsideModal = (event) => {
+  useEffect(()=>{
+    const handleClickOutsideModal = (event) => { 
       if (!modalRef.current.contains(event.target)) {
           setModalClicked(false);
       }else{
@@ -23,11 +21,11 @@ function RoomFeed() {
 
     window.addEventListener('click', handleClickOutsideModal);
 
-    // return () => {
-    //   window.removeEventListener('click', handleClickOutsideModal);
-    // };
+    return () => {
+      window.removeEventListener('click', handleClickOutsideModal);
+    };
+  },[])
 
-  
   const modal = () => {
     setModalClicked(!modalClicked);
   };

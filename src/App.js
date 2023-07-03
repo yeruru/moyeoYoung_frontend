@@ -25,11 +25,9 @@ function App() {
         <Route exact path="/whatyouth" element={<WhatYouth />} />
         <Route exact path="/youthspacelist" element={<YouthSpaceList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
- 
         <Route exact path="/roomlist" element={<RoomList/>}/>
- 
         <Route path="/roomMain/*" element={<RoomMain />} />
-      <Routes/>
+      </Routes>
       <Footer/>
     </>
   );
