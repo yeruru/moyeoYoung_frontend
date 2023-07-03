@@ -29,7 +29,7 @@ function App() {
         <Route exact path="/roomlist" element={<RoomList/>}/>
  
         <Route path="/roomMain/*" element={<RoomMain />} />
-      <Routes/>
+      </Routes>
       <Footer/>
     </>
   );
