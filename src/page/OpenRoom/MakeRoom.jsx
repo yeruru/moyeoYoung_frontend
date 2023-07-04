@@ -81,7 +81,6 @@ function MakeRoom() {
 
     //submit
     const submit = () => {
-
         const formData = new FormData();
         formData.append('roomTitle', room.roomTitle);
         formData.append('roomContent', room.roomContent);

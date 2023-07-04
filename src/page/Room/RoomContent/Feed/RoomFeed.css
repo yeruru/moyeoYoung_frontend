@@ -129,18 +129,32 @@
 
 .roomfeed .droppage{
     position: absolute;
-    width : 100px;
-    height: 100px;
+    width : 40px;
+    height: 33px;
     top: 20;
 
     font-size: 12px;
     background-color: white;
     border: 1.4px solid #EEEEEE;
     border-radius: 10px;
+    padding : 10px 10px;
+    font-size : 13px;
 
     display : none;
 }
 
 .roomfeed .show{
     display : block
+}
+
+.roomfeed .writeFeed{
+    width : 100px;
+    height: 40px;
+    text-align: center;
+    background-color: #1DC078;
+    line-height: 40px;
+    border-radius: 3px;
+    margin-bottom: 20px;
+    color : white;
+    margin-left : 455px;
 }

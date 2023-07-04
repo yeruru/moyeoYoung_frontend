@@ -6,7 +6,9 @@ import RoomHeader from './Main/RoomHeader/RoomHeader';
 import RoomFeed from './RoomContent/Feed/RoomFeed';
 import RoomAnno from './RoomContent/Announcements/RoomAnno';
 import Dashboard from './RoomContent/dashboard/Dashboard';
-import test from '../../images/illust/test.jpg'
+import test from '../../images/illust/test.jpg';
+import WriteFeed from './RoomContent/Feed/WriteFeed';
+
 function RoomMain() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,6 +26,7 @@ function RoomMain() {
   };
 
   return (
+    
     <div className='roomh'>
       <div className='flex-box'>
         <div className='room-header'>
@@ -35,9 +38,10 @@ function RoomMain() {
           <RoomHeader onContentChange={handleContentChange} />
         </div>
         <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box'}}>
-          {selectedContent === 'dashboard' && <Dashboard />} {/* 대시보드 컴포넌트 추가 */}
-          {selectedContent === 'roomFeed' && <RoomFeed />}
-          {selectedContent === 'roomAnno' && <RoomAnno />}
+          {selectedContent === 'dashboard' && <Dashboard/>} {/* 대시보드 컴포넌트 추가 */}
+          {selectedContent === 'roomFeed' && <RoomFeed onContentChange={handleContentChange}/>}
+          {selectedContent === 'roomAnno' && <RoomAnno/>}
+          {selectedContent === 'writefeed' && <WriteFeed/>}
         </div>
         <div className='play'>
           <RoomPlay />
