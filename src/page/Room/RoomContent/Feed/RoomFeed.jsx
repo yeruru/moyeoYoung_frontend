@@ -1,15 +1,17 @@
-import React, { useState, useEffect, useRef} from 'react'
+import React, { useState, useEffect, useRef} from 'react';
 import "./RoomFeed.css";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
+import RoomMain from '../../RoomMain';
 
-function RoomFeed() {
+function RoomFeed({onContentChange}) {
   const [isClicked, setIsClicked] = useState(false);
   const [modalClicked, setModalClicked] = useState(false);
   const [member, setmember] = useState("승현");
   const modalRef = useRef(null);
+
   useEffect(()=>{
     const handleClickOutsideModal = (event) => { 
       if (!modalRef.current.contains(event.target)) {
@@ -18,7 +20,6 @@ function RoomFeed() {
         setModalClicked(true);
       }
     };
-
     window.addEventListener('click', handleClickOutsideModal);
 
     return () => {
@@ -38,8 +39,6 @@ function RoomFeed() {
       decreaseLikeCount();
     }
   };
-
- 
 
   // const MyComponent = () => {
   //   if(member == '승현'){
@@ -61,10 +60,15 @@ function RoomFeed() {
     document.getElementById("likecount").innerHTML = Count;
   }
 
+  const location = (content) => {
+    onContentChange(content);
+    console.log(content);
+  }
 
   return (
     <div className='roomfeed'>
       <div className='room-box'>
+        <div className='writeFeed' style={{cursor:'pointer'}} onClick={() => location('writefeed')} >작성하기</div> 
         <div className='feed'>      
           <div className='feedHeader'>
             <div className='userheader'>
@@ -110,7 +114,6 @@ function RoomFeed() {
               <div style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '3px'}}>31</div>
           </div>
         </div>
-        
       </div>
     </div>
   )

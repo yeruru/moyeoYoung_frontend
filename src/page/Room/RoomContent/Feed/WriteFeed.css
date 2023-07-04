@@ -1,0 +1,133 @@
+.writefeed .feedwrite {
+    height: 1000px;
+    width: 600px;
+    border : 1.3px solid #EEEEEE;
+    background-color: white;
+    margin: 0 auto;
+}
+
+.writefeed .fileimage {
+    display:none;
+}
+
+.writefeed .photes{
+    cursor: pointer;
+    position : relative;
+    width : 500px;
+    height: 300px;
+    background-color: white;
+    border : 2px solid #d7d7d7;
+    opacity: .6;
+    border-radius: 30px;
+    margin: 30px auto;
+}
+.writefeed .plus{
+    width : 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--mo);
+}
+
+.writefeed .plusfont{
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 60px;
+    color: #fff;
+}
+
+.writefeed .feedTitle{
+    width : 500px;
+    margin : 10px auto;
+}
+
+.writefeed .feedContent{
+    width : 500px;
+    margin : 10px auto;
+}
+
+.writefeed .title {
+    width : 500px;
+    height: 40px;
+    margin : 10px auto;
+    font-size: 13px;
+    font-weight: 100;
+    font-family: 'NanumSquareNeo-Variable';
+    border : 2px solid #d7d7d7;
+    border-radius: 10px; 
+    padding: 0 10px 0 10px;
+    box-sizing: border-box;
+    
+}
+.writefeed .content {
+    width : 500px;
+    height: 100px;
+    margin : 10px auto;
+    resize : none;
+    line-height: 1.7em;
+    font-size: 13px;
+    font-weight: 100;
+    font-family: 'NanumSquareNeo-Variable';
+    border : 2px solid #d7d7d7;
+    border-radius: 10px;
+    padding: 5px 10px 0 10px;
+    box-sizing: border-box;
+}
+
+.writefeed .feedbutton{
+    width : 500px;
+    height : 40px;   
+    margin : 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.writefeed .btn {
+    width : 80px;
+    height : 34px;
+    margin : 7px 0 0 15px;
+    cursor: pointer;
+}
+
+.writefeed .btn1{
+    background-color : white;
+    font-family: 'NanumSquareNeo-Variable';
+    font-weight: 100;
+    font-size: 14px;
+    border : 1px solid #d7d7d7;
+    border-radius: 5px;
+}
+.writefeed .btn2{
+    background-color : var(--mo);
+    font-family: 'NanumSquareNeo-Variable';
+    font-weight: 100;
+    font-size: 14px;
+    border : 1px solid #EEEEEE;
+    border-radius: 5px;
+    color : white;
+}
+
+.writefeed .txt-length{
+    font-size: 11px;
+}
+
+.writefeed .noshow{
+    display: none;
+}.writefeed .show{
+    display : block;
+}
+
+.writefeed .feedImg{
+    width : 600px;
+    height: 300px;
+    margin : 0 auto;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+}
