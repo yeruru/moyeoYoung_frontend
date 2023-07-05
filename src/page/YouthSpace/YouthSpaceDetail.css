@@ -1,0 +1,32 @@
+#space-detail .wrap {
+  
+}
+
+#space-detail .detail-head {
+    margin-top: 100px;
+    width: 80%;
+    height: 40px;
+    margin: 0 auto;
+    background-color: antiquewhite;
+
+}
+
+#space-detail .space-title {
+    width: 400px;
+    height: 50px;
+    border-radius: 26.5px;
+    border: 1px solid #B4E9D2;
+    background: #E4F7EF;
+    box-shadow: 1px 1px 1px 0px rgba(0, 0, 0, 0.25);
+    margin: 0 auto;
+    text-align: center;
+    color: #284727;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+}
+
+#space-detail {}
+
+#space-detail {}

@@ -4,6 +4,7 @@ import { useState, useRef } from 'react';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function MakeRoom() {
     const [activeCate, setActiveCate] = useState('');
@@ -39,8 +40,7 @@ function MakeRoom() {
     }
 
     //room만들기 =======================================================
-    const title = (e) => {
-        changeLength(e);
+    const title = (e) => { 
         changeRoom(e);
     }
     const content = (e) => {
@@ -111,7 +111,7 @@ function MakeRoom() {
         switch (id) {
             case 'b1': setRoom({ ...room, 'roomCategory': '취업준비' }); break;
             case 'b2': setRoom({ ...room, 'roomCategory': '스터디' }); break;
-            case 'b3': setRoom({ ...room, 'roomCategory': '과외' }); break;
+            case 'b3': setRoom({ ...room, 'roomCategory': '과외/멘토' }); break;
             case 'b4': setRoom({ ...room, 'roomCategory': '자기개발' }); break;
             case 'b5': setRoom({ ...room, 'roomCategory': '프로젝트' }); break;
             case 'b6': setRoom({ ...room, 'roomCategory': '동아리' }); break;
@@ -148,7 +148,7 @@ function MakeRoom() {
                     <ul className="content">
                         <li className="tbox">
                             <p className="txt1">모임명</p>
-                            <input type='text' className='ipbox' maxLength={40} accept='image/*' name='roomTitle' id='room-title' placeholder='모임명을 입력해 주세요' onChange={title} required />
+                            <input type='text' className='ipbox' maxLength={15} accept='image/*' name='roomTitle' id='room-title' placeholder='모임명을 입력해 주세요' onChange={title} required />
                         </li>
                         <li className="tbox">
                             <p className="txt1">소개글</p>
@@ -214,7 +214,7 @@ function MakeRoom() {
                                         <p id='b2' className='txt4' onClick={cateBtn}>스터디</p>
                                     </button>
 
-                                    <button id='b3' className={`cate-btn ${activeCate == 'b3' ? 'change' : ''}`} onClick={cateBtn} value="과외">
+                                    <button id='b3' className={`cate-btn ${activeCate == 'b3' ? 'change' : ''}`} onClick={cateBtn} value="과외/멘토">
                                         <img id='b3' src="/image/icon/icon3.png" className="cate-icon" onClick={cateBtn} />
                                         <p id='b3' className='txt4' onClick={cateBtn}>과외/멘토</p>
                                     </button>
@@ -251,9 +251,9 @@ function MakeRoom() {
                             </div>
                         </li>
                     </ul>
-
-                    <div className='sm-btns'> 
-                        <input type='button' className='back-btn smb' value='돌아가기' />
+                    
+                    <div className='sm-btns'>
+                    <Link to="/roomlist"><input type='button' className='back-btn smb' value='돌아가기' /></Link>
                         <input type='submit' className='submit-btn smb' value='모임개설' onClick={onModal} />
                         {/* <input type='submit' className='submit-btn smb' value='모임개설' onClick={submit}/> */}
                     </div>
@@ -269,7 +269,7 @@ function MakeRoom() {
                             <img src="/image/group 67.svg" className='modal-img' alt='메세지 보내는 그림' />
                         </div>
                         <div className="modal-btns">
-                            <button type='button' className="btn btn1" onClick={offModal}>취소하기</button>
+                          <button type='button' className="btn btn1" onClick={offModal}>취소하기</button>
                             <button type='submit' className="btn btn2" onClick={submit}>개설하기</button>
                         </div>
                     </div>
