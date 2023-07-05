@@ -13,10 +13,11 @@ import Header from "./page/Main/Header";
 import Main from "./page/Main/Main"; 
 import Footer from "./page/Main/Footer";
 import WhatYouth from "./page/YouthSpace/WhatYouth"; 
+ 
+import { YouthSpaceDetail } from "./page/YouthSpace/YouthSpaceDetail"; 
 import Login from "./page/Login/Login";
 import SignUp from "./page/Login/SignUp";
-import MyPage from "./page/MyPage/MyPage";
-
+import MyPage from "./page/MyPage/MyPage"; 
 
 
 
@@ -28,6 +29,9 @@ function App() {
         <Route exact path="/" element={<Main />} />
         <Route exact path="/whatyouth" element={<WhatYouth />} />
         <Route exact path="/youthspacelist" element={<YouthSpaceList/>}/>
+ 
+        <Route exact path="/roomlist/:page" element={<RoomList/>}/>
+ 
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
         <Route exact path="/roomlist" element={<RoomList/>}/>
 
@@ -37,7 +41,10 @@ function App() {
         <Route exact path="/mypage" element={<MyPage />} />
         
 
+ 
         <Route path="/roomMain/*" element={<RoomMain />} />
+        <Route exact path="/youthspacedetail" element={<YouthSpaceDetail/>}/>
+        {/* <Route exact path="/youthspacedetail:spaceid" element={<MakeRoom/>}/> */}
       </Routes>
       <Footer/>
     </>

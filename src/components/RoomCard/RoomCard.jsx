@@ -1,45 +1,18 @@
-// import React from 'react'
-// import './RoomCard.css';
-// import { useState, useEffect } from 'react';
-// export const RoomCard = ({room}) => { 
-//   useEffect(()=>{
-//     console.log('Enter at RoomCard : ');
-//   },[])
-//   return (
-//     <div id='room-card'>
-//       <a href="#" className='a-mark'>
-//         <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
-//           bookmark
-//         </span></button>
-//         <img src='/image/test.jpg' className='card-img' />
-//         <p className='p2'>{room.roomTitle}</p>
-//         <div>
-//           <div className='mini-sec'>
-//             <p className='p3 pink'>#{room.roomCategory}</p>
-//             <div className='mini-sec2'>
-//               <span className="material-symbols-outlined group-icon">
-//                 group
-//               </span><span className='p4'>{room.roomUserCnt}</span>
-//             </div>
-//           </div>
-//         </div>
-//       </a>
-//     </div>
 
-//   )
-// }
 import React from 'react'
 import './RoomCard.css';
 import { useState, useEffect } from 'react';
+import axios from 'axios';
 
-export const RoomCard = ({ title, memCnt, category, content, imgName }) => {
+export const RoomCard = ({ isBookmark, item }) => {
+// export const RoomCard = ({ isBookmark, roomId, title, memCnt, category, content, imgName }) => {
   const [backColor, setBackColor] = useState('');
-  // const instance = axios.create({
-  //   baseURL: 'https://localhost:8090', // 기본 경로 설정
-  // });
-
+  const instance = axios.create({
+    baseURL: 'http://localhost:8090', // 기본 경로 설정
+  });
+  const [bookmark, setBookmark] = useState(isBookmark); 
   useEffect(() => { 
-    switch (category) {
+    switch (item.roomCategory) {
       case '취업준비': setBackColor('blue'); break;
       case '스터디': setBackColor('lblue'); break;
       case '과외/멘토': setBackColor('orange'); break;
@@ -51,23 +24,40 @@ export const RoomCard = ({ title, memCnt, category, content, imgName }) => {
     }
  
   }, [])
+
+ 
+  const callBookmark=(e)=>{
+    e.preventDefault();    
+    instance.get(`/bookmark/${e.target.id}`,{
+      params: {
+        status: bookmark
+      }
+    })
+    .then(res=>{  
+      setBookmark(!bookmark);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+
+  }
   return (
 
     <div id='room-card'>
       <a href="#" className='a-mark'>
-        <button className='bookmark'><span className="material-symbols-outlined mark-icon">
+        <button className='bookmark'><span id={item.roomId} className={`material-symbols-outlined mark-icon ${bookmark? 'click':''}`} onClick={callBookmark}>
           bookmark
         </span></button>
-        <img src={`http://localhost:8090/view/${imgName}`} className='card-img' />
-        <p className='p2'>{title}</p>
-        <p className="intro">{content}</p>
+        <img src={`http://localhost:8090/view/${item.roomImage}`} className='card-img' />
+        <p className='p2'>{item.roomTitle}</p>
+        <p className="intro">{item.roomContent}</p>
 
         <div className='mini-sec'>
-          <p className={`p3 ${backColor}`}>#{category}</p>
+          <p className={`p3 ${backColor}`}>#{item.roomCategory}</p>
           <div className='mini-sec2'>
             <span className="material-symbols-outlined group-icon">
               group
-            </span><span className='p4'>{memCnt}</span>
+            </span><span className='p4'>{item.roomUserCnt}</span>
           </div>
         </div>
       </a>

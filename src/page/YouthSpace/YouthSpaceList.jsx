@@ -1,8 +1,39 @@
 import './YouthSpaceList.css'
 import React from 'react'
 import { SpaceCard } from '../../components/RoomCard/SpaceCard'
-
+import { useEffect,useState } from 'react';
+import axios from 'axios';
 export const YouthSpaceList = () => {
+    const [spaceList,setSpaceList] =useState([]);
+    const [curPage,setCurPage] =useState();
+    const [allPage,setAllPage] =useState();
+    const axiosURL = axios.create({
+        baseURL: 'http://localhost:8090', // 기본 경로 설정
+      }); 
+    useEffect(()=>{
+        getSpaceList(1);
+    },[])
+    const getSpaceList=(p_page)=>{
+        axiosURL.get(`/allYouthSpaceList/${p_page}`)
+        .then(res=>{
+            const list = res.data.list;
+            console.log(list);
+            if(p_page===1){ 
+                setSpaceList([...list]);
+            }else{
+                setSpaceList([...spaceList, ...list]); 
+            }
+            const pageInfo = res.data.pageInfo;
+            setCurPage(pageInfo.curPage);
+            setAllPage(pageInfo.allPage); 
+        })
+    }
+
+    const plusPage=()=>{
+        setCurPage(curPage+1);
+        getSpaceList(curPage+1);
+    }
+
     return (
         <div id="youth-space-list">
             <div className='wrap'>
@@ -16,20 +47,20 @@ export const YouthSpaceList = () => {
 
                 <div className='content'>
                     <ul className='card-list'>
-                        <li><SpaceCard/></li>
-                        <li><SpaceCard/></li>
-                        <li><SpaceCard/></li>
-                        <li><SpaceCard/></li>
-                        <li><SpaceCard/></li>
-                        <li><SpaceCard/></li>
-                        <li><SpaceCard/></li>
-                        <li><SpaceCard/></li>
-                        <li><SpaceCard/></li>
-                        <li><SpaceCard/></li> 
+                        {
+                            spaceList.map((item,index)=>(
+                                <li><SpaceCard key={index} space={item}/></li>  
+                            ))
+                            // spaceList.map((item,index)=>(
+                            //     <li><SpaceCard key={index} place={item.place}/></li>  
+                            // ))
+                        }
                     </ul>
                 </div>
-
-                <button type='button' className='plus-btn'>더보기</button>
+                        {
+                            curPage < allPage &&
+                            <button type='button' className='plus-btn' onClick={plusPage}>더보기</button>
+                        }
             </div>
         </div>
     )
