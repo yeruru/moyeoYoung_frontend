@@ -12,6 +12,7 @@ function MakeRoom() {
     const [imgSrc, setImgSrc] = useState('/image/room_basic1.jpg');
     const inputRef = useRef();
     const [room, setRoom] = useState({ roomTitle: '', roomContent: '', roomImage: 'room_basic1.jpg', roomType: 'open', roomCategory: '' })
+    const [roomId, setRoomId] = useState(0);
     const [file, setFile] = useState();
     const [modal, setModal] = useState(false);
 
@@ -88,11 +89,11 @@ function MakeRoom() {
         formData.append('roomCategory', room.roomCategory);
         formData.append('roomType', room.roomType);
         formData.append('file', file);
-         
+        
         axios.post('http://localhost:8090/makeRoom', formData)
             .then(res => {
-                // document.location.href="/roomMain";
-                console.log(res);
+                setRoomId(res.data);
+                document.location.href=`/roomMain/${res.data}`; 
             })
             .catch(err => {
                 console.log(err);
@@ -250,7 +251,7 @@ function MakeRoom() {
                             </div>
                         </li>
                     </ul>
-
+                    
                     <div className='sm-btns'>
                     <Link to="/roomlist"><input type='button' className='back-btn smb' value='돌아가기' /></Link>
                         <input type='submit' className='submit-btn smb' value='모임개설' onClick={onModal} />
