@@ -1,13 +1,14 @@
 import React from 'react';
 import LoginForm from '../../components/Member/LoginForm';
 import Social from '../../components/Member/Social';
-    
+import './Login.css';
 const Login = () => {
     return (
-        <div className='wrap'>
-            <p>로그인페이지</p>
-            <LoginForm/>
-            <Social/>
+        <div className='Login wrap'>
+            <div className='login-component'>
+                <LoginForm/>
+                <Social/>
+            </div>
         </div>
     );
 };

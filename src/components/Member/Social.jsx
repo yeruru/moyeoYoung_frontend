@@ -1,8 +1,6 @@
 import React from 'react';
 import KakaoLogin from 'react-kakao-login';
 import { KAKAO_AUTH_URL } from './KakaoAuth';
-import kakao from '../../images/kakao.png'
-
 
 
 const Social = () => {
@@ -23,8 +21,8 @@ const Social = () => {
         console.info('로그아웃되었습니다.');
       };
     return (
-        <div>
-            <form >
+        <div style={{display:'flex', justifyContent:'center', marginTop:'30px'}}>
+            <form className='social-form'>
             <KakaoLogin  href={KAKAO_AUTH_URL}
                 token=""
                 onSuccess={responseKakao}

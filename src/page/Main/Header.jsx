@@ -21,7 +21,7 @@ function Header() {
   //로그인 부분
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 여부
 
-  const token = useSelector((state) => state.Authorization);
+  // const token = useSelector((state) => state.Authorization);
   const userid = useSelector((state) => state.UserId);
   const dispatch = useDispatch();
 

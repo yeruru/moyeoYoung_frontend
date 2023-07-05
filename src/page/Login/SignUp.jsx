@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
 import { TextField, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import axios from 'axios';
+import './SignUp.css';
 
-const SignUpForm = () => {
+const SignUp = () => {
   const [formData, setFormData] = useState({
     email: '',
     password: '',
@@ -70,7 +71,7 @@ const SignUpForm = () => {
       // 회원가입 성공 시 처리할 로직을 작성합니다.
       console.log('회원가입 성공:', response.data);
       alert('회원가입이 완료되었습니다.');
-      document.location.href = '/';
+      document.location.href = '/login';
     })
     .catch((error) => {
       // 회원가입 실패 시 처리할 로직을 작성합니다.
@@ -86,18 +87,20 @@ const SignUpForm = () => {
           name="email"
           label="Email"
           value={formData.email}
+          color='success'
           onChange={handleChange}
           fullWidth
           margin="normal"
           helperText={isEmailDuplicated ? '중복된 이메일입니다.' : ''}
           error={isEmailDuplicated}
         />
-        <Button variant="outlined" onClick={handleEmailCheck}>이메일 중복 확인</Button>
+        <Button variant="outlined" onClick={handleEmailCheck} >이메일 중복 확인</Button>
         <TextField
           name="password"
           label="Password"
           type="password"
           value={formData.password}
+          color='success'
           onChange={handleChange}
           fullWidth
           margin="normal"
@@ -106,6 +109,7 @@ const SignUpForm = () => {
           name="nickname"
           label="Nickname"
           value={formData.nickname}
+          color='success'
           onChange={handleChange}
           fullWidth
           margin="normal"
@@ -119,6 +123,7 @@ const SignUpForm = () => {
           multiline
           rows={4}
           value={formData.profileContent}
+          color='success'
           onChange={handleChange}
           fullWidth
           margin="normal"
@@ -134,7 +139,7 @@ const SignUpForm = () => {
             <FormControlLabel value="moyoung" control={<Radio />} label="Moyoung" />
           </RadioGroup>
         </FormControl>
-        <Button type="submit" variant="contained" color="primary" fullWidth>
+        <Button type="submit" variant="contained" color="primary" fullWidth style={{ backgroundColor:'rgba(29, 192, 120, 1)'}}>
           회원가입
         </Button>
       </form>
@@ -142,4 +147,4 @@ const SignUpForm = () => {
   );
 };
 
-export default SignUpForm;
+export default SignUp;
