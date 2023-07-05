@@ -21,10 +21,23 @@
   color: var(--mo);
   border: 1px solid var(--mo);
 }
+
+/* 현윤로그인 */
+
+.logout {
+  color: #fff;
+  margin-bottom: 15px;
+  background-color: var(--mo); 
+}
+
 .join {
   background-color: var(--mo);
   color: #fff;
 }
 
+.mypage{
+  background-color: var(--mo);
+  color: #fff;
+}
 .login:hover { border: 1px solid rgb(63 63 63);}
 .login:hover, .join:hover { background-color: rgb(63 63 63); color: #fff;}
