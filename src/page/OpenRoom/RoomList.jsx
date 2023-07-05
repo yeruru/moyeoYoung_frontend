@@ -8,8 +8,7 @@ import nothing from '../../images/Group 153.svg'
 
 function RoomList() {
   const { page } = useParams();
-  // const [nextPage,setNextPage] = useState();
-  const [lastPage, setLastPage] = useState();
+  // const [nextPage,setNextPage] = useState(); 
   const [searchBasic, setSearchBasic] = useState(true);
   const [searchCate, setSearchCate] = useState(false);
   const [searchWord, setSearchWord] = useState(false);
@@ -22,8 +21,8 @@ function RoomList() {
   const emptyRoomCnt = 4 - containRoomCnt;
   const instance = axios.create({
     baseURL: 'http://localhost:8090', // 기본 경로 설정
-  });
-
+  }); 
+  const [isBookmarks, setIsBookmarks] = useState([]);
 
   useEffect(() => {
     getRoomList(page);
@@ -35,17 +34,21 @@ function RoomList() {
     setSearchBasic(true);
     instance.get(`/roomList/${p_page}`)
       .then((res) => {
-        if (roomList.length === 0) {
-          setRoomList(res.data.list);
+        if (p_page === 1) {
+          setRoomList([...res.data.list]);
         } else {
           setRoomList([...roomList, ...res.data.list]);
         }
         const pageInfo = res.data.pageInfo;
         setCurPage(pageInfo.curPage);
         setAllPage(pageInfo.allPage); 
+        setIsBookmarks([...res.data.isBookmarks]); 
       })
       .catch(err => {
         console.log(err);
+      })
+      .finally(()=> {
+        
       })
   }
 
@@ -167,9 +170,12 @@ function RoomList() {
                 </div>
               }
               {roomList.map((item, index) => {
+                const isBookmark = isBookmarks.some((roomId) => roomId === item.roomId);
+                // console.log(item.roomId, isBookmark);
+                console.log(isBookmark ? item.roomId : null);
                 return (
-                  <li key={index}>
-                    <RoomCard key={item.roomId} title={item.roomTitle} memCnt={item.roomUserCnt} category={item.roomCategory} content={item.roomContent} imgName={item.roomImage} />
+                  <li key={index}>                     
+                    <RoomCard key={item.roomId} isBookmark = {isBookmark} roomId={item.roomId} title={item.roomTitle} memCnt={item.roomUserCnt} category={item.roomCategory} content={item.roomContent} imgName={item.roomImage} />
                   </li>
                 )
               })}

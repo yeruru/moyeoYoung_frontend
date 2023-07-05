@@ -80,7 +80,7 @@
 
 #room-card .bookmark{ 
     position: absolute;
-    z-index: 10;
+    z-index: 998;
     width: 33px;
     height: 33px;
     background-color: white;
@@ -93,7 +93,11 @@
 #room-card .mark-icon{   
     border: none;
     color: #1DC078;
-    margin-top: 4px;   
+    margin-top: 4px;    
+    position: absolute;
+    top:0;
+    z-index:999;
+    right: 3px;
 }
   
 #room-card .material-symbols-outlined.click{

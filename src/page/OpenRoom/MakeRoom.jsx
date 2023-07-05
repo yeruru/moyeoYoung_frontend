@@ -39,8 +39,7 @@ function MakeRoom() {
     }
 
     //room만들기 =======================================================
-    const title = (e) => {
-        changeLength(e);
+    const title = (e) => { 
         changeRoom(e);
     }
     const content = (e) => {
