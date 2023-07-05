@@ -5,15 +5,14 @@ import RoomPlay from "./page/Room/RoomPlay";
 import RoomFeed from "./page/Room/RoomContent/Feed/RoomFeed";
 import RoomAnno from "./page/Room/RoomContent/Announcements/RoomAnno";
 
-import RoomList from "./page/MyPage/OpenRoom/RoomList";
-import MakeRoom from "./page/MyPage/OpenRoom/MakeRoom";
+import RoomList from "./page/OpenRoom/RoomList";
+import MakeRoom from "./page/OpenRoom/MakeRoom";
 import { YouthSpaceList } from "./page/YouthSpace/YouthSpaceList";
 
 import Header from "./page/Main/Header";
 import Main from "./page/Main/Main"; 
 import Footer from "./page/Main/Footer";
 import WhatYouth from "./page/YouthSpace/WhatYouth"; 
-import Main from "./page/Main/Main";
 import Login from "./page/Login/Login";
 import SignUp from "./page/Login/SignUp";
 import MyPage from "./page/MyPage/MyPage";
