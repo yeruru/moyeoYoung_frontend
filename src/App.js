@@ -13,6 +13,7 @@ import Header from "./page/Main/Header";
 import Main from "./page/Main/Main"; 
 import Footer from "./page/Main/Footer";
 import WhatYouth from "./page/YouthSpace/WhatYouth"; 
+import { YouthSpaceDetail } from "./page/YouthSpace/YouthSpaceDetail";
 
 
 
@@ -24,9 +25,10 @@ function App() {
         <Route exact path="/" element={<Main />} />
         <Route exact path="/whatyouth" element={<WhatYouth />} />
         <Route exact path="/youthspacelist" element={<YouthSpaceList/>}/>
-        <Route exact path="/makeroom" element={<MakeRoom/>}/>
         <Route exact path="/roomlist/:page" element={<RoomList/>}/>
         <Route path="/roomMain/*" element={<RoomMain />} />
+        <Route exact path="/youthspacedetail" element={<YouthSpaceDetail/>}/>
+        {/* <Route exact path="/youthspacedetail:spaceid" element={<MakeRoom/>}/> */}
       </Routes>
       <Footer/>
     </>

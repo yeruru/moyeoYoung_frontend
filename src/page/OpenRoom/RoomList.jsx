@@ -170,12 +170,11 @@ function RoomList() {
                 </div>
               }
               {roomList.map((item, index) => {
-                const isBookmark = isBookmarks.some((roomId) => roomId === item.roomId);
-                // console.log(item.roomId, isBookmark);
-                console.log(isBookmark ? item.roomId : null);
+                const isBookmark = isBookmarks.some((roomId) => roomId === item.roomId); 
                 return (
                   <li key={index}>                     
-                    <RoomCard key={item.roomId} isBookmark = {isBookmark} roomId={item.roomId} title={item.roomTitle} memCnt={item.roomUserCnt} category={item.roomCategory} content={item.roomContent} imgName={item.roomImage} />
+                    <RoomCard key={item.roomId} isBookmark = {isBookmark} item={item} />
+                    {/* <RoomCard key={item.roomId} isBookmark = {isBookmark} roomId={item.roomId} title={item.roomTitle} memCnt={item.roomUserCnt} category={item.roomCategory} content={item.roomContent} imgName={item.roomImage} /> */}
                   </li>
                 )
               })}
