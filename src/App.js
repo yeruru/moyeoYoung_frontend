@@ -4,6 +4,7 @@ import RoomMain from "./page/Room/RoomMain";
 import RoomPlay from "./page/Room/RoomPlay";
 import RoomFeed from "./page/Room/RoomContent/Feed/RoomFeed";
 import RoomAnno from "./page/Room/RoomContent/Announcements/RoomAnno";
+import Dashboard from "./page/Room/RoomContent/dashboard/Dashboard";
 
 import RoomList from "./page/OpenRoom/RoomList";
 import MakeRoom from "./page/OpenRoom/MakeRoom";
@@ -26,7 +27,11 @@ function App() {
         <Route exact path="/youthspacelist" element={<YouthSpaceList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
         <Route exact path="/roomlist" element={<RoomList/>}/>
-        <Route path="/roomMain/*" element={<RoomMain />} />
+
+        <Route exact path="/roomMain/:roomId" element={<RoomMain />} />
+        <Route  path="/roomMain/dashboard/:roomId" element={<RoomMain />} />
+        <Route  path="/roomMain/roomFeed/:roomId" element={<RoomMain />} />
+        <Route  path="/roomMain/roomAnno/:roomId" element={<RoomMain />} />
       </Routes>
       <Footer/>
     </>
