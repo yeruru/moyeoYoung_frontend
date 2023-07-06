@@ -1,17 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import 'swiper/css';
 import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './WriteFeed.css';
+import axios from 'axios';
 function WriteFeed ({roomId}){
     const [textCount, setTextCount] = useState(0);
     const [photos, setPhotos] = useState([]);
     const [photosName, setPhotosName] = useState([]);
     const [show, setShow] = useState(false);
+    const [files, setfiles] = useState([]);
     const [feed, setFeed] = useState({title:'', content:'' ,userId : 0, roomId:0, filename : []});
-    console.log(roomId);
 
     const text = (e) => {
         setTextCount(e.target.value.length);
@@ -23,13 +23,13 @@ function WriteFeed ({roomId}){
     const change = (e) => {
         const name = e.target.name;
         const value = e.target.value;
-        console.log(value);
         setFeed({...feed, [name]:value})    
     }
 
     const filechange = (e) => {
         const files = e.target.files;
         Array.from(files).forEach(file => {
+            setfiles((prevFiles)=> [...prevFiles, file]);
             const reader = new FileReader();
             setPhotosName((prevPhotosName)=> [...prevPhotosName, file.name]);
             reader.readAsDataURL(file);
@@ -40,14 +40,41 @@ function WriteFeed ({roomId}){
         setShow(!show);
     };
 
+    useEffect(() => {
+        setFeed(prevFeed => ({
+          ...prevFeed,
+          filename: photosName,
+          roomId : roomId
+        }));
+    }, [photosName, roomId]);
+
+
     const submit = (e) => {
+        if(feed.title == ''){
+            alert("제목을 입력해주세요")
+        }else if(feed.content=='')(
+            alert("내용을 입력해주세요")
+        )
         e.preventDefault();
         const formData = new FormData();
         formData.append('title', feed.title);
         formData.append('content', feed.content);
         formData.append('userId', feed.userId);
         formData.append('roomId', feed.roomId);
-        formData.append('filename', photosName);
+        formData.append('filename', feed.filename);
+        formData.append('files', files);
+        Object.values(files).forEach((file)=> formData.append("files", file));
+        axios.post(`http://localhost:8090/feed/writefeed/${feed.roomId}`, formData,{
+            headers: {
+                "Content-Type": `multipart/form-data; `,
+            }
+        })
+        .then(res => {
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     }
     return(
         <div className='writefeed'>
