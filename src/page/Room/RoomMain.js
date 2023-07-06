@@ -20,15 +20,13 @@ function RoomMain() {
   useEffect(() => {
     const path = location.pathname;
     const content = path.split('/')[path.split('/').length-2];
-    console.log("content: " + content)
     setSelectedContent(content);
   }, [location]);
 
   useEffect(()=>{
-    axios.get(`http://localhost:8090/getroomMain/${roomId}`)
+    axios.get(`http://localhost:8090/room/getroomMain/${roomId}`)
     .then(res => {
       setRoom(res.data);
-      console.log(res.data);
     })
     .catch(err => {
       console.log(err);
@@ -46,7 +44,7 @@ function RoomMain() {
       <div className='flex-box'>
         <div className='room-header'>
           <div className='title-box'>
-            <div className='img-box'><img src={`http://localhost:8090/view${room.roomImage}`} alt='모임방 프로필 사진'/></div>
+            <div className='img-box'><img src={`http://localhost:8090/room/view/${room.roomImage}`} alt='모임방 프로필 사진'/></div>
             <h2>{room.roomTitle}</h2> 
             <a href='#'>모임 정보 수정 &gt;</a>
           </div>

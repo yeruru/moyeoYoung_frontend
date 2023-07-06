@@ -37,6 +37,7 @@ function App() {
         <Route  path="/roomMain/dashboard/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/roomFeed/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/roomAnno/:roomId" element={<RoomMain />} />
+        <Route  path="/roomMain/writefeed/:roomId" element={<RoomMain />} />
           
         <Route exact path="/" element={<Main />} />
         <Route exact path="/login" element={<Login />} />

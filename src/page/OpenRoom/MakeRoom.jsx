@@ -90,10 +90,10 @@ function MakeRoom() {
         formData.append('roomType', room.roomType);
         formData.append('file', file);
         
-        axios.post('http://localhost:8090/makeRoom', formData)
+        axios.post('http://localhost:8090/room/makeRoom', formData)
             .then(res => {
                 setRoomId(res.data);
-                document.location.href=`/roomMain/${res.data}`; 
+                document.location.href=`/roomMain/dashboard/${res.data}`; 
             })
             .catch(err => {
                 console.log(err);
