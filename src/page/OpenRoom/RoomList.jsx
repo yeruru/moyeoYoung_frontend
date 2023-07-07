@@ -21,7 +21,7 @@ function RoomList() {
   const emptyRoomCnt = 4 - containRoomCnt;
   const instance = axios.create({
     baseURL: 'http://localhost:8090', // 기본 경로 설정
-  }); 
+  });  
   const [isBookmarks, setIsBookmarks] = useState([]);
 
   useEffect(() => {
@@ -42,13 +42,11 @@ function RoomList() {
         const pageInfo = res.data.pageInfo;
         setCurPage(pageInfo.curPage);
         setAllPage(pageInfo.allPage); 
-        setIsBookmarks([...res.data.isBookmarks]); 
+        setIsBookmarks([...res.data.isBookmarks]);  
+        
       })
       .catch(err => {
         console.log(err);
-      })
-      .finally(()=> {
-        
       })
   }
 
@@ -114,6 +112,7 @@ function RoomList() {
 
 
   const plusRoomList = () => {
+    console.log(roomList);
    setCurPage(curPage+1); 
     if (searchCate) { 
       searchByCateName(cateWord, curPage + 1);
@@ -173,13 +172,13 @@ function RoomList() {
                 const isBookmark = isBookmarks.some((roomId) => roomId === item.roomId); 
                 return (
                   <li key={index}>                     
-                    <RoomCard key={item.roomId} isBookmark = {isBookmark} item={item} />
+                    <RoomCard key={item.roomId} isBookmark = {isBookmark} item={item}/>
                     {/* <RoomCard key={item.roomId} isBookmark = {isBookmark} roomId={item.roomId} title={item.roomTitle} memCnt={item.roomUserCnt} category={item.roomCategory} content={item.roomContent} imgName={item.roomImage} /> */}
                   </li>
                 )
               })}
               {containRoomCnt !== 0 && Array(emptyRoomCnt).fill().map((_, index) => (
-                <li className='hidden-li' key={index}> <RoomCard /></li>))
+                <li className='hidden-li' key={index}></li>))
               }
               {
                 roomList.length!==0 && curPage !== allPage && 

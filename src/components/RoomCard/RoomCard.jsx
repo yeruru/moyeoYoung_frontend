@@ -4,7 +4,7 @@ import './RoomCard.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 
-export const RoomCard = ({ isBookmark, item }) => {
+export const RoomCard = ({ isBookmark, item }) => { 
 // export const RoomCard = ({ isBookmark, roomId, title, memCnt, category, content, imgName }) => {
   const [backColor, setBackColor] = useState('');
   const instance = axios.create({
@@ -42,9 +42,9 @@ export const RoomCard = ({ isBookmark, item }) => {
 
   }
   return (
-
-    <div id='room-card'>
-      <a href="#" className='a-mark'>
+    
+    <div id='room-card'> 
+  <a href="#" className='a-mark'>
         <button className='bookmark'><span id={item.roomId} className={`material-symbols-outlined mark-icon ${bookmark? 'click':''}`} onClick={callBookmark}>
           bookmark
         </span></button>
@@ -60,7 +60,7 @@ export const RoomCard = ({ isBookmark, item }) => {
             </span><span className='p4'>{item.roomUserCnt}</span>
           </div>
         </div>
-      </a>
+      </a> 
     </div>
 
   )
