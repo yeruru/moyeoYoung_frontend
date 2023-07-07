@@ -70,7 +70,7 @@ function Header() {
                     <a href='#'>청년공간이란?</a>
                   </li>
                   <li>
-                    <a href='#'>청년공간 찾아보기</a>
+                    <Link to='/youthspacelist'>청년공간 찾아보기</Link>
                   </li>
                   <li>
                     <a href='#'>청년TALK</a>
@@ -79,7 +79,7 @@ function Header() {
               </div>
             </li>
             <li className='nav-item'>
-              <a href='#;'>모임</a>
+            <Link to='/roomlist/1'>모임</Link>
             </li>
 
             <li>
