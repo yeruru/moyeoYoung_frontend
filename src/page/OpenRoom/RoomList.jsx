@@ -20,7 +20,7 @@ function RoomList() {
   const containRoomCnt = (roomList.length) % 4;
   const emptyRoomCnt = 4 - containRoomCnt;
   const instance = axios.create({
-    baseURL: 'http://localhost:8090', // 기본 경로 설정
+    baseURL: 'http://localhost:8090/room', // 기본 경로 설정
   });  
   const [isBookmarks, setIsBookmarks] = useState([]);
 

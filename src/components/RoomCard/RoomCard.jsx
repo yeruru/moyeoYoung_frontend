@@ -7,8 +7,9 @@ import axios from 'axios';
 export const RoomCard = ({ isBookmark, item }) => { 
 // export const RoomCard = ({ isBookmark, roomId, title, memCnt, category, content, imgName }) => {
   const [backColor, setBackColor] = useState('');
+  const [detail, setDetail] = useState(item.roomContent.replace(/<br\/>/g, ''));
   const instance = axios.create({
-    baseURL: 'http://localhost:8090', // 기본 경로 설정
+    baseURL: 'http://localhost:8090/room', // 기본 경로 설정
   });
   const [bookmark, setBookmark] = useState(isBookmark); 
   useEffect(() => { 
@@ -21,8 +22,7 @@ export const RoomCard = ({ isBookmark, item }) => {
       case '동아리': setBackColor('pink'); break;
       case '친목': setBackColor('yellow'); break;
       case '기타': setBackColor('gray'); break;
-    }
- 
+    } 
   }, [])
 
  
@@ -48,9 +48,9 @@ export const RoomCard = ({ isBookmark, item }) => {
         <button className='bookmark'><span id={item.roomId} className={`material-symbols-outlined mark-icon ${bookmark? 'click':''}`} onClick={callBookmark}>
           bookmark
         </span></button>
-        <img src={`http://localhost:8090/view/${item.roomImage}`} className='card-img' />
+        <img src={`http://localhost:8090/room/view/${item.roomImage}`} className='card-img' />
         <p className='p2'>{item.roomTitle}</p>
-        <p className="intro">{item.roomContent}</p>
+        <p className="intro">{detail}</p>
 
         <div className='mini-sec'>
           <p className={`p3 ${backColor}`}>#{item.roomCategory}</p>

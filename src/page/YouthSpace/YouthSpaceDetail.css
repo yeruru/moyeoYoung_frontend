@@ -33,8 +33,7 @@
 
 #space-detail .img-box {
     width: 600px;
-    height: 400px;
-    background-color: pink;
+    height: 400px; 
 
     margin: 0 auto;
     display: flex;
@@ -91,6 +90,12 @@
     bottom: 7px;
 }
 
+#space-detail .homepage :hover{
+    
+}
+#space-detail .homepage :hover{
+    text-decoration: underline;
+}
 #space-detail .s-textbox {
     margin-left: 40px;
 
@@ -98,4 +103,5 @@
 
 #space-detail .detail-area {
     line-height: 2em;
-}
+    white-space: pre-wrap;
+} 
