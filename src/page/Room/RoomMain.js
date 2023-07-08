@@ -9,6 +9,7 @@ import Dashboard from './RoomContent/dashboard/Dashboard';
 import test from '../../images/illust/test.jpg';
 import WriteFeed from './RoomContent/Feed/WriteFeed';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
 
 function RoomMain() {
   const location = useLocation();
@@ -46,7 +47,7 @@ function RoomMain() {
           <div className='title-box'>
             <div className='img-box'><img src={`http://localhost:8090/room/view/${room.roomImage}`} alt='모임방 프로필 사진'/></div>
             <h2>{room.roomTitle}</h2> 
-            <a href='#'>모임 정보 수정 &gt;</a>
+            <Link to={`/settingroom/${roomId}`}>모임 정보 수정 &gt;</Link>
           </div>
           <RoomHeader onContentChange={handleContentChange} />
         </div>

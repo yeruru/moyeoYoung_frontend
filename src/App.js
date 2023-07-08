@@ -8,14 +8,16 @@ import Dashboard from "./page/Room/RoomContent/dashboard/Dashboard";
 
 import RoomList from "./page/OpenRoom/RoomList";
 import MakeRoom from "./page/OpenRoom/MakeRoom";
-import { YouthSpaceList } from "./page/YouthSpace/YouthSpaceList";
+import { SettingRoom } from "./page/OpenRoom/SettingRoom";
 
 import Header from "./page/Main/Header";
 import Main from "./page/Main/Main"; 
 import Footer from "./page/Main/Footer";
 import WhatYouth from "./page/YouthSpace/WhatYouth"; 
- 
+
+import { YouthSpaceList } from "./page/YouthSpace/YouthSpaceList";
 import { YouthSpaceDetail } from "./page/YouthSpace/YouthSpaceDetail"; 
+
 import Login from "./page/Login/Login";
 import SignUp from "./page/Login/SignUp";
 import MyPage from "./page/MyPage/MyPage"; 
@@ -33,6 +35,8 @@ function App() {
         <Route exact path="/youthspacelist/:page" element={<YouthSpaceList/>}/>
         <Route exact path="/roomlist/:page" element={<RoomList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
+        {/* <Route path="/settingroom" element={<SettingRoom/>}/> */}
+        <Route exact path="/settingroom/:roomId" element={<SettingRoom/>}/>
         <Route exact path="/roomlist" element={<RoomList/>}/>
         <Route exact path="/roomMain/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/dashboard/:roomId" element={<RoomMain />} />
