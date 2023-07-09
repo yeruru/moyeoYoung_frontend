@@ -11,7 +11,7 @@ function WriteFeed ({roomId}){
     const [photosName, setPhotosName] = useState([]);
     const [show, setShow] = useState(false);
     const [files, setfiles] = useState([]);
-    const [feed, setFeed] = useState({title:'', content:'' ,userId : 0, roomId:0, filename : []});
+    const [feed, setFeed] = useState({title:'', content:'' ,userId : 0, roomId:0, filename : ''});
 
     const text = (e) => {
         setTextCount(e.target.value.length);

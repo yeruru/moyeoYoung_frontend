@@ -44,7 +44,7 @@ function RoomMain() {
       <div className='flex-box'>
         <div className='room-header'>
           <div className='title-box'>
-            <div className='img-box'><img src={`http://localhost:8090/room/view/${room.roomImage}`} alt='모임방 프로필 사진'/></div>
+            <div className='img-box'><img src={`http://localhost:8090/room/view/${room.roomImage}`}className='img' alt='모임방 프로필 사진'/></div>
             <h2>{room.roomTitle}</h2> 
             <a href='#'>모임 정보 수정 &gt;</a>
           </div>

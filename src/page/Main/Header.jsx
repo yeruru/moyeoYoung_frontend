@@ -9,6 +9,7 @@ import imge from '../../images/photo/photo02.jpg';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Link } from 'react-router-dom';
 import { clearTokens } from '../../persist-store';
+import axios from 'axios';
 
 function Header() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
