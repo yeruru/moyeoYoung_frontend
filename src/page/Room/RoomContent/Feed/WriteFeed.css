@@ -131,3 +131,17 @@
     background-repeat: no-repeat;
     background-position: center;
 }
+
+.roomfeeddetail .feeddetailImg {
+    width: 100%;
+    max-width: 650px;
+    height: auto;
+    max-height: 550px;
+    min-height: 450px;
+    margin : 0 auto;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-radius: 10px;
+    border: 2px solid #EEEEEE;
+}

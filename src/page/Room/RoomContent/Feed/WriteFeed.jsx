@@ -5,6 +5,8 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import './WriteFeed.css';
 import axios from 'axios';
+
+
 function WriteFeed ({roomId}){
     const [textCount, setTextCount] = useState(0);
     const [photos, setPhotos] = useState([]);

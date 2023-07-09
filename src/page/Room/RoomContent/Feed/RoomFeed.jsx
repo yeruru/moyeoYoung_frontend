@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef} from 'react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { Swiper, SwiperSlide } from 'swiper/react';
 import "./RoomFeed.css";
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -10,8 +9,8 @@ import FavoriteBorderIcon from '@mui/icons-material/FavoriteBorder';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import nothing from '../../../../images/Group 153.svg'
-import RoomMain from '../../RoomMain';
 import axios from 'axios';
+import RoomFeedDetail from './RoomFeedDetail';
 
 
 function RoomFeed({onContentChange}) {
@@ -20,6 +19,9 @@ function RoomFeed({onContentChange}) {
   const [member, setmember] = useState("승현");
   const [feed, setFeed] = useState([]);
   const modalRef = useRef(null);
+  const [modalOpen, setModalOpen] = useState(false);
+  const [feedId, setFeedId] = useState();
+  
   let { roomId } = useParams();
 
   useEffect(() => {
@@ -44,12 +46,13 @@ function RoomFeed({onContentChange}) {
     axios.get(`http://localhost:8090/feed/selectfeed/${roomId}`)
     .then(res=>{
       setFeed(res.data);
-      console.log(res.data);
     })
     .catch(err => {
       console.log(err);
     });
   },[]);
+
+  console.log(feedId);
 
   const modal = () => {
     setModalClicked(!modalClicked);
@@ -88,6 +91,16 @@ function RoomFeed({onContentChange}) {
     onContentChange(content);
   }
 
+  const detail = (feedId) =>{
+    setFeedId(feedId);
+    setModalOpen(true);
+  }
+
+  const handleCloseModal = () => {
+    setFeedId(null);
+    setModalOpen(false);
+  };
+
   return (
     <div className='roomfeed'>
       <div className='room-box'>
@@ -102,8 +115,6 @@ function RoomFeed({onContentChange}) {
         }
         {
           feed.map((feed)=>{
-            
-            console.log(feed.filename.split(",")[0]);
             return(
               <div className='feed' key={feed.feedId}>      
                 <div className='feedHeader'>
@@ -128,27 +139,27 @@ function RoomFeed({onContentChange}) {
                 <div className='feedContent'>
                 <div className='Title'>{feed.title}</div>
                   {
-                    feed.filename.split(",").length == 2 && 
+                    feed.filename.split(",").length <= 3 && 
                     <div className='feedimg'>
-                    <div>
-                      <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
-                    </div>
-                    <div className='feedimg2'>
-                      <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
-                      <div className='otherimg' ><em className='num'></em></div>
-                    </div>
+                      <div>
+                        <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
+                      </div>
+                      <div className='feedimg2'>
+                        <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
+                        <div className='otherimg'  onClick={() => detail(`${feed.feedId}`)}  key={feed.feedId} style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[2]})` , cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
+                      </div>
                   </div>
                   }
                   {
-                    feed.filename.split(",").length >= 3 && 
+                    feed.filename.split(",").length > 3 && 
                     <div className='feedimg'>
-                    <div>
-                      <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
-                    </div>
-                    <div className='feedimg2'>
-                      <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
-                      <div className='otherimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[2]})`}}><em className='num'>+{feed.filename.split(",").length-3}</em></div>
-                    </div>
+                      <div>
+                        <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
+                      </div>
+                      <div className='feedimg2'>
+                        <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
+                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+{feed.filename.split(",").length-3}</em></div>
+                      </div>
                   </div>
                   }
                 </div>
@@ -168,36 +179,11 @@ function RoomFeed({onContentChange}) {
             )
           })
         }
-        <div>
-          <div className='detailfeed'>
-              <div className='feedDetail'>
-                <div className='photo'>
-                <Swiper 
-                    style={{marginTop: '80px',width:'650px', height:'400px', overflow:'hidden', borderRadius: '10px', backgroundColor : 'black'}}
-                    spaceBetween={30}
-                    slidesPerView={1}
-                    loop={true}
-                    navigation={true}
-                    pagination={{ clickable: true }}
-                >
-                    <SwiperSlide>
-                        <div className='feeddetailImg' style={{backgroundImage : `url()`}}></div>
-                    </SwiperSlide>
-                </Swiper>
-
-                </div>
-                <div className='comment'>
-                  <div className='commentDetail'>
-                    
-                  </div>
-                  <div className='commentInput'>
-                      <input className="writecomment" type='text' placeholder='댓글을 작성해주세요'/>
-                      <input className="commentsubmit" type='submit'></input>
-                  </div>
-                </div>
-              </div>
-          </div>
-        </div>
+        <RoomFeedDetail
+          isOpen={modalOpen}
+          content={feedId}
+          onClose={handleCloseModal}
+        />
       </div>
     </div>
   )

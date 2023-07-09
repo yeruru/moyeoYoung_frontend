@@ -174,6 +174,8 @@
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
     z-index: 1000;
+
+    display: none;
 }
 
 .roomfeed .feedDetail{
@@ -185,41 +187,69 @@
     top : 50%;
     left : 50%;
     transform: translate(-50%, -50%);
+    border-radius: 10px;
+    z-index: 1000;
+}
+
+.roomfeed .show {
+    display: block;
 }
 
 .roomfeed .photo{
     width : 750px;
     height : 600px;
-    background-color: blue;
+    border-right: 2px solid #EEEEEE;
+    overflow-y: scroll;
 }
 
 .roomfeed .comment{
     width : 350px;
     height : 600px;
-    background-color: red;
 }
 
 .roomfeed .commentDetail{
-    height : 470px;
+    height : 510px;
     width : 100%;
-    background-color: yellow;
+    overflow-y: scroll;
+    border-radius: 10px;
+}
+
+.roomfeed .comments{
+    display: flex;
+    padding: 15px 14px;
 }
 
 .roomfeed .commentInput{
     position: relative;
-    height: 130px;
+    height: 90px;
     width : 100%;
-    background-color: green;
+    border-top: 2px solid #EEEEEE;
+}
+.roomfeed .profileimg{
+    width : 35px;
+    height : 35px;
+    background-color: #1DC078;
+    border-radius: 50%;
+}
+
+.roomfeed .commentbox{
+    background-color: rgb(231, 228, 228);
+    width :260px;
+    min-height: 50px;
+    margin-left : 10px;
+    border-radius: 10px;
+    word-break: break-all;
 }
 
 .roomfeed .writecomment{
     position : absolute;
-    width : 230px;
-    height : 40px;
+    width : 220px;
+    height : 33px;
     border : none;
     top : 50%;
     left : 37%;
     transform: translate(-50%, -50%);
+    border : 2px solid #EEEEEE;
     border-radius: 10px;
     font-size: 13px;
     font-weight: 100;
@@ -234,13 +264,47 @@
 
 .roomfeed .commentsubmit{
     position : absolute;
-    width : 80px;
-    height: 40px;
+    width : 70px;
+    height: 34px;
     top : 50%;
-    left : 83%;
+    left : 82%;
     transform: translate(-50%, -50%);
+    font-size: 13px;
+    font-weight: 100;
+    color : white;
+    background-color: #1DC078;
+    border : 1px solid transparent;
+    border-radius: 10px;
+    font-family: 'NanumSquareNeo-Variable';
+    cursor: pointer;
 }
 
-.roomfeed .feeddetailImg{
+.roomfeed .username{
+    padding: 10px 10px 0px 10px;
+    font-size: 13.5px;
+    font-weight: 600;
 }
+.roomfeed .realcomment{
+    padding: 10px 10px;
+}
+
+.roomfeed .timer{
+    font-size: 11px;
+    margin-left: 10px;
+    font-weight: 100;
+    color : rgb(161, 160, 160);
+}
+
+.roomfeed .detailTitle {
+    padding : 10px 50px;
+    font-size: 18px;
+    color : black;
+}
+
+.roomfeed .detailContent{
+    padding :5px 50px;
+    font-size: 13px;
+}
+
+
 
