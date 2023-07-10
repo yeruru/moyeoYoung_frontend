@@ -1,6 +1,6 @@
 
 * {margin: 0; padding: 0;}
-body {min-height: 300px; font-size: 16px; line-height: 1em; font-family: "NanumSquareNeo-Variable", sans-serif; color: #393939;}
+body {min-height: 300px; font-size: 16px; line-height: 1em; font-family: "NanumSquareNeo-Variable", sans-serif; color: #393939; cursor: url('./images/mouse.svg') 1 1, auto;}
 a {text-decoration: none; color: #393939;}
 em {font: inherit; vertical-align: baseline;}
 img {width: 100%;}
@@ -20,4 +20,10 @@ ul,li {list-style: none;}
 .nanumpenscript * {
   font-family: 'Nanum Pen Script', cursive;
 }
-
+/* 롯데리아 촵땡겨체 */
+@font-face {
+  font-family: 'LOTTERIACHAB';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2302@1.0/LOTTERIACHAB.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}

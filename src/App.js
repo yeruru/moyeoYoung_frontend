@@ -1,9 +1,6 @@
 import "./App.css";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Routes, Route } from 'react-router-dom';
 import RoomMain from "./page/Room/RoomMain";
-import RoomPlay from "./page/Room/RoomPlay";
-import RoomFeed from "./page/Room/RoomContent/Feed/RoomFeed";
-import RoomAnno from "./page/Room/RoomContent/Announcements/RoomAnno";
 
 import RoomList from "./page/OpenRoom/RoomList";
 import MakeRoom from "./page/OpenRoom/MakeRoom";
@@ -14,7 +11,8 @@ import Main from "./page/Main/Main";
 import Footer from "./page/Main/Footer";
 import WhatYouth from "./page/YouthSpace/WhatYouth";
 
-
+// 쪽지
+import Note from "./page/Note/Note";
 
 function App() {
   return (
@@ -27,7 +25,8 @@ function App() {
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
         <Route exact path="/roomlist" element={<RoomList/>}/>
         <Route path="/roomMain/*" element={<RoomMain />} />
-      <Routes/>
+        <Route exact path="/note" element={<Note />} />
+      </Routes>
       <Footer/>
     </>
   );

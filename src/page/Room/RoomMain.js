@@ -38,6 +38,7 @@ function RoomMain() {
           {selectedContent === 'dashboard' && <Dashboard />} {/* 대시보드 컴포넌트 추가 */}
           {selectedContent === 'roomFeed' && <RoomFeed />}
           {selectedContent === 'roomAnno' && <RoomAnno />}
+          
         </div>
         <div className='play'>
           <RoomPlay />
