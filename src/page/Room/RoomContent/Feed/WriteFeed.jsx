@@ -12,34 +12,64 @@ function WriteFeed ({roomId}){
     const [photos, setPhotos] = useState([]);
     const [photosName, setPhotosName] = useState([]);
     const [show, setShow] = useState(false);
-    const [files, setfiles] = useState([]);
+    const [files, setFiles] = useState([]);
     const [feed, setFeed] = useState({title:'', content:'' ,userId : 0, roomId:0, filename : ''});
+    const [modalOpen, setModalOpen] = useState(false);
 
     const text = (e) => {
         setTextCount(e.target.value.length);
         const name = e.target.name;
         const value = e.target.value;
         setFeed({...feed, [name]:value})  
-    }
+    };
 
     const change = (e) => {
         const name = e.target.name;
         const value = e.target.value;
         setFeed({...feed, [name]:value})    
-    }
+    };
+
+    const open = () => {
+        if(feed.title == ''){
+            window.confirm("제목을 입력해주세요");
+        }else if(feed.content==''){
+            window.confirm("내용을 입력해주세요");
+        }else if(feed.filename == ''){
+            const result = window.confirm("사진을 업로드해주세요");
+        }else{
+            setModalOpen(!modalOpen);
+            document.getElementById("body").style.overflowY="hidden";
+        };
+    };
+
+    const close = () => {
+        setModalOpen(!modalOpen);
+        document.getElementById("body").style.overflowY="scroll";
+    };
 
     const filechange = (e) => {
+        const allowedTypes = ['image/jpeg', 'image/png'];
+
+           
         const files = e.target.files;
         Array.from(files).forEach(file => {
-            setfiles((prevFiles)=> [...prevFiles, file]);
-            const reader = new FileReader();
-            setPhotosName((prevPhotosName)=> [...prevPhotosName, file.name]);
-            reader.readAsDataURL(file);
-            reader.onloadend = () => {
+            if (!allowedTypes.includes(file.type)) {
+                alert('이미지 파일만 업로드 가능합니다.');
+                e.target.value = null;
+                setShow(show);
+                return;
+            }else{
+                setFiles((prevFiles)=> [...prevFiles, file]);
+                const reader = new FileReader();
+                setPhotosName((prevPhotosName)=> [...prevPhotosName, file.name]);
+                reader.readAsDataURL(file);
+                reader.onloadend = () => {
                 setPhotos((prevPhotos) => [...prevPhotos, reader.result])
-            };
+                };
+                setShow(!show);
+            } 
         });
-        setShow(!show);
+       
     };
 
     useEffect(() => {
@@ -50,14 +80,32 @@ function WriteFeed ({roomId}){
         }));
     }, [photosName, roomId]);
 
+    const feedImgDelete = (index) => {
+        setPhotos(prevPhotos => {
+            const updatedPhotos = [...prevPhotos];
+            updatedPhotos.splice(index, 1);
+            return updatedPhotos
+        });
+        setPhotosName(prevPhotos => {
+            const updatedPhotosName = [...prevPhotos];
+            updatedPhotosName.splice(index, 1);
+            setFeed(prevFeed => ({
+                ...prevFeed,
+                filename: updatedPhotosName,
+            }));
+            return updatedPhotosName;
+        });
+        if(photos.length != 1){
+            setShow(show);
+        }else{
+            setShow(!show);
+        }
+    };
+
 
     const submit = (e) => {
-        if(feed.title == ''){
-            alert("제목을 입력해주세요")
-        }else if(feed.content=='')(
-            alert("내용을 입력해주세요")
-        )
         e.preventDefault();
+        console.log("asdf");
         const formData = new FormData();
         formData.append('title', feed.title);
         formData.append('content', feed.content);
@@ -73,16 +121,22 @@ function WriteFeed ({roomId}){
         })
         .then(res => {
             console.log(res);
+            document.location.href=`/roomMain/roomFeed/${roomId}`; 
         })
         .catch(err => {
             console.log(err);
         })
+    };
+
+    const notclose = (event) => {
+        event.stopPropagation();
     }
+
     return(
         <div className='writefeed'>
             <div className='feedwrite'>
                 <Swiper 
-                    style={{marginTop: '80px',width:'500px', height:'300px', overflow:'hidden', borderRadius: '10px'}}
+                    style={{margin: '30px auto',width:'500px', height:'300px', overflow:'hidden', borderRadius: '10px'}}
                     spaceBetween={30}
                     slidesPerView={1}
                     loop={true}
@@ -90,9 +144,17 @@ function WriteFeed ({roomId}){
                     className={`${show ? 'show' : 'noshow'}`}
                 >
                 {
-                photos.map((item) => ( // 여기서 맵 함수를 사용할 수 있도록 수정
-                    <SwiperSlide key={item}>
-                        <div className='feedImg' style={{backgroundImage : `url(${item})`}}></div>
+                photos.map((item, index) => ( // 여기서 맵 함수를 사용할 수 있도록 수정
+                    <SwiperSlide key={index}>
+                            <div className='feedImg' style={{backgroundImage : `url(${item})`,  width: '100%',
+                                maxWidth: '500px',
+                                height: 'auto',
+                                maxHeight: '500px',
+                                minHeight: '300px',
+                                margin: '0 auto',
+                                backgroundSize: 'contain'}}>
+                            <div className='feedX'onClick={() => feedImgDelete(index)}>X</div>
+                        </div>
                     </SwiperSlide>
                     ))
                 }
@@ -102,7 +164,7 @@ function WriteFeed ({roomId}){
                         <div className='plus'><span className='plusfont'>+</span></div>
                     </div>
                 </label>
-                <input className="fileimage" type="file" name="filename" id="input-file" onChange={filechange} multiple/> 
+                 <input className="fileimage" type="file" name="filename" id="input-file" onChange={filechange} multiple/> 
                  <div className='feedTitle'>
                     <div>제목</div>
                     <input className='title' maxLength={20} name="title" onChange={change} placeholder='제목을 작성해주세요'></input>
@@ -113,10 +175,18 @@ function WriteFeed ({roomId}){
                     <p className="txt-length">( {textCount} / 300 )</p>
                 </div>
                 <div className='feedbutton'>
-                    <input type="button" className="btn btn1" value={'돌아가기'}/>
-                    <input type="submit" className="btn btn2" onClick={submit} value={'작성하기'}/>
-                </div> 
+                    <input type="submit" className="btn btn2" onClick={open} value={'작성하기'}/>
+                </div>  
             </div>  
+            <div className={`checkbackground ${modalOpen ? 'show' : ''}`}  onClick={close}>
+                <div className='checkWrite' onClick={notclose}> 
+                    <div className='checkword'>글을 작성하시겠습니까?</div>
+                    <div className='checkword2'>
+                        <div className='checkoutWrite' onClick={close}>돌아가기</div>
+                        <div className= 'submit' onClick={submit}>작성하기</div>
+                    </div>
+                </div>
+            </div>
         </div>
     )
 }

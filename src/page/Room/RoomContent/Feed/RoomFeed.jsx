@@ -21,7 +21,6 @@ function RoomFeed({onContentChange}) {
   const modalRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [feedId, setFeedId] = useState();
-  
   let { roomId } = useParams();
 
   useEffect(() => {
@@ -52,10 +51,11 @@ function RoomFeed({onContentChange}) {
     });
   },[]);
 
-  console.log(feedId);
-
-  const modal = () => {
-    setModalClicked(!modalClicked);
+  const modal = (feedId) => {
+    setModalClicked(prevState => ({
+      ...prevState,
+      [feedId]: !prevState[feedId]
+    }));
   };
 
   const handleClick = () => {
@@ -94,11 +94,13 @@ function RoomFeed({onContentChange}) {
   const detail = (feedId) =>{
     setFeedId(feedId);
     setModalOpen(true);
+    document.getElementById("body").style.overflowY="hidden";
   }
 
   const handleCloseModal = () => {
     setFeedId(null);
     setModalOpen(false);
+    document.getElementById("body").style.overflowY="scroll";
   };
 
   return (
@@ -115,6 +117,7 @@ function RoomFeed({onContentChange}) {
         }
         {
           feed.map((feed)=>{
+            console.log(feed.feedId);
             return(
               <div className='feed' key={feed.feedId}>      
                 <div className='feedHeader'>
@@ -123,14 +126,14 @@ function RoomFeed({onContentChange}) {
                     <span className='username'>일단 이름은 이걸로</span>
                   </div>
                   <div className='drop-box'>
-                    <MoreVertIcon onClick={modal} style={{cursor:'pointer'}} ref={modalRef} ></MoreVertIcon> 
-                    <div className={`droppage ${modalClicked ? 'show' : ''}`} >  
+                    <MoreVertIcon onClick={()=>modal(feed.feedId)} style={{cursor:'pointer'}} ref={modalRef} ></MoreVertIcon> 
+                    <div className={`droppage ${modalClicked[feed.feedId] ? 'show' : ''}`} >  
                         <ul>
                             <li>
-                              <a href="#">수정</a>
+                              <div className='feedModefy' style={{cursor:'pointer'}}>수정</div>
                             </li>
                             <li>
-                              <a href="#" style={{color:'red'}}>삭제</a>
+                              <div className='feedDelete' style={{color:'red', cursor:'pointer'}}>삭제</div>
                             </li>
                           </ul>
                     </div>
@@ -139,7 +142,7 @@ function RoomFeed({onContentChange}) {
                 <div className='feedContent'>
                 <div className='Title'>{feed.title}</div>
                   {
-                    feed.filename.split(",").length <= 3 && 
+                    feed.filename.split(",").length <= 3 && 1 < feed.filename.split(",").length &&
                     <div className='feedimg'>
                       <div>
                         <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
@@ -162,6 +165,21 @@ function RoomFeed({onContentChange}) {
                       </div>
                   </div>
                   }
+                  {
+                    feed.filename.split(",").length  == 1 && 
+                    <div className='feedimg'>
+                    <div>
+                      <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`, 
+                        maxWidth: '500px',
+                        height: 'auto',
+                        maxHeight: '300px',
+                        minHeight: '250px',
+                        margin: '0 auto',
+                        backgroundSize: 'contain'}}>
+                      </div>
+                    </div>
+                    </div>
+                  }
                 </div>
                 <div className='feedfooter'>
                   <div onClick={handleClick} style={{ position: 'relative', cursor: 'pointer' }}>
@@ -171,8 +189,8 @@ function RoomFeed({onContentChange}) {
                     <FavoriteBorderIcon style={{color:'gray', position:'relative',display : !isClicked? 'block' : 'none', fontSize:'25px'}}/>
                   </div>
                   <div id = "likecount" style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '2px'}}>12</div>
-                    <ModeCommentOutlinedIcon style={{color:'gray', fontSize : '23px', marginLeft : '9px' ,marginTop : '2px',cursor : 'pointer' }}/> 
-                    <div style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '3px'}}>31</div>
+                    <ModeCommentOutlinedIcon onClick={() => detail(`${feed.feedId}`)} style={{color:'gray', fontSize : '23px', marginLeft : '9px' ,marginTop : '2px',cursor : 'pointer' }}/> 
+                    <div onClick={() => detail(`${feed.feedId}`)} style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '3px',cursor : 'pointer'}}>31</div>
                 </div>
                 <div className='Content'>{feed.content}</div>
               </div>
