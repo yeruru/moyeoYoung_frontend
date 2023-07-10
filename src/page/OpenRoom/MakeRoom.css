@@ -43,10 +43,11 @@
     font-size: 18px;
 }
 
-#make-room .ipbox{
+#make-room .ipbox, .setting-ipbox{
     height: 30px;
     border: none;
     border-bottom: 1px solid rgb(190, 190, 190);
+    background-color: white;
     padding: 10px;  
     padding-left: 20px;
     width: 93%;
@@ -77,14 +78,14 @@
     letter-spacing:0.05em;
 }
 
-#make-room .ipbox:focus,
-#make-room .ipbox:hover{  
+#make-room .ipbox:focus:not(.my-class),
+#make-room .ipbox:hover:not(.my-class){  
    box-shadow: 0px 0px 2px 1px rgb(224, 224, 224);
    border-radius: 100px;
 
 }
-#make-room .ipbox-area:focus,
-#make-room .ipbox-area:hover{ 
+#make-room .ipbox-area:focus:not(.my-class),
+#make-room .ipbox-area:hover:not(.my-class){ 
     outline: none;
    box-shadow: 0px 0px 2px 1px rgb(224, 224, 224);
    border-radius: 10px;
@@ -411,5 +412,7 @@
 }
 #make-Room-modal .btn2:active{
     background: rgb(22, 158, 97);
- 
+    
 }
+
+/* SettingRoom */

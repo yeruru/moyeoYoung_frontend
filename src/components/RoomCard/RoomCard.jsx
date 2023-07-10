@@ -3,15 +3,16 @@ import React from 'react'
 import './RoomCard.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-
+import { Link } from 'react-router-dom';
+ 
 export const RoomCard = ({ isBookmark, item }) => { 
-// export const RoomCard = ({ isBookmark, roomId, title, memCnt, category, content, imgName }) => {
   const [backColor, setBackColor] = useState('');
+  const [detail, setDetail] = useState(item.roomContent.replace(/<br\/>/g, ''));
   const instance = axios.create({
-    baseURL: 'http://localhost:8090', // 기본 경로 설정
+    baseURL: 'http://localhost:8090/room', // 기본 경로 설정
   });
-  const [bookmark, setBookmark] = useState(isBookmark); 
-  useEffect(() => { 
+  const [bookmark, setBookmark] = useState(isBookmark);
+  useEffect(() => {
     switch (item.roomCategory) {
       case '취업준비': setBackColor('blue'); break;
       case '스터디': setBackColor('lblue'); break;
@@ -22,35 +23,34 @@ export const RoomCard = ({ isBookmark, item }) => {
       case '친목': setBackColor('yellow'); break;
       case '기타': setBackColor('gray'); break;
     }
- 
   }, [])
 
- 
-  const callBookmark=(e)=>{
-    e.preventDefault();    
-    instance.get(`/bookmark/${e.target.id}`,{
+
+  const callBookmark = (e) => {
+    e.preventDefault();
+    instance.get(`/bookmark/${e.target.id}`, {
       params: {
         status: bookmark
       }
     })
-    .then(res=>{  
-      setBookmark(!bookmark);
-    })
-    .catch(err=>{
-      console.log(err);
-    })
+      .then(res => {
+        setBookmark(!bookmark);
+      })
+      .catch(err => {
+        console.log(err);
+      })
 
   }
-  return (
-    
-    <div id='room-card'> 
-  <a href="#" className='a-mark'>
-        <button className='bookmark'><span id={item.roomId} className={`material-symbols-outlined mark-icon ${bookmark? 'click':''}`} onClick={callBookmark}>
+  return ( 
+    <div id='room-card'>
+      <Link to={`/roomMain/dashboard/${item.roomId}`} className='a-mark'> 
+        <button className='bookmark'><span id={item.roomId} className={`material-symbols-outlined mark-icon ${bookmark ? 'click' : ''}`} onClick={callBookmark}>
+ 
           bookmark
         </span></button>
-        <img src={`http://localhost:8090/view/${item.roomImage}`} className='card-img' />
+        <img src={`http://localhost:8090/room/view/${item.roomImage}`} className='card-img' />
         <p className='p2'>{item.roomTitle}</p>
-        <p className="intro">{item.roomContent}</p>
+        <p className="intro">{detail}</p>
 
         <div className='mini-sec'>
           <p className={`p3 ${backColor}`}>#{item.roomCategory}</p>
@@ -59,8 +59,8 @@ export const RoomCard = ({ isBookmark, item }) => {
               group
             </span><span className='p4'>{item.roomUserCnt}</span>
           </div>
-        </div>
-      </a> 
+        </div> 
+        </Link> 
     </div>
 
   )
