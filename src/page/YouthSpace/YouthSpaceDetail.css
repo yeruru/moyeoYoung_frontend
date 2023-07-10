@@ -84,14 +84,17 @@
     margin-top: 8px;
 }
 
+#space-detail .hom-box {
+    display: flex;
+}
 #space-detail .p-h2 {
     width: 100px;
     position: relative;
     bottom: 7px;
 }
 
-#space-detail .homepage :hover{
-    
+#space-detail .homepage{
+    display: block;
 }
 #space-detail .homepage :hover{
     text-decoration: underline;

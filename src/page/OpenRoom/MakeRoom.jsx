@@ -60,8 +60,9 @@ function MakeRoom() {
     //사용자설정이미지
     const inputImg = (e) => {
         selectImg(e); //이미지 출력 프론트
-        //백엔드 이름 넘겨주기
+        //백엔드 이름 저장
         setRoom({ ...room, 'roomImage': e.target.files[0].name });
+        //백엔드 파일저장
         setFile(e.target.files[0]);
     }
     const type = (e) => {

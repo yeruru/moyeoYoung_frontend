@@ -48,7 +48,7 @@ export const YouthSpaceList = () => {
                     <ul className='card-list'>
                         {
                             spaceList.map((item,index)=>(
-                                <li key={index}><SpaceCard space={item}/></li>  
+                                <li key={index}><SpaceCard key={index} space={item}/></li>  
                             ))
                             // spaceList.map((item,index)=>(
                             //     <li><SpaceCard key={index} place={item.place}/></li>  

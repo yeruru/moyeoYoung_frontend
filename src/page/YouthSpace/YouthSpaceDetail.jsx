@@ -17,7 +17,7 @@ export const YouthSpaceDetail = () => {
     axios.get(`http://localhost:8090/youth/youthSpaceDetail/${spaceId}`)
     .then(res=>{
       setSpace(res.data.space);  
-      // setDetail(res.data.space.detail.replace(/<br\/>/g, '\n').replace(/\다. /g, '다.\n').replace(/○/g, '\n○').replace(/\n○/, '○'));
+      setDetail(res.data.space.detail.replace(/<br\/>/g, '\n').replace(/\다. /g, '다.\n').replace(/○/g, '\n○').replace(/\n○/, '○'));
       // console.log(res.data.space.detail.replace(/<br\/>|\. /g, '\n'));
       // console.log(res.data.space.imgURLs);
       setImgURLs(res.data.space.imgURLs);
@@ -34,7 +34,7 @@ export const YouthSpaceDetail = () => {
     <div id="space-detail">
       <div className="wrap">
         <div className='detail-head'>
-          <p>청년공간 &nbsp;&gt;&nbsp; <Link to="/youthspacelist/1" className='to-list'>청년공간 모아보기</Link> &nbsp;&gt;&nbsp; 호서대벤처타워 </p>
+          <p>청년공간 &nbsp;&gt;&nbsp; <Link to="/youthspacelist/1" className='to-list'>청년공간 모아보기</Link> &nbsp;&gt;&nbsp; {space.title} </p>
         </div>
         <div className='space-title'>{space.title}</div>
         <div className="img-box">
@@ -48,8 +48,8 @@ export const YouthSpaceDetail = () => {
             {/* <img src="" alt="공간이미지들" className='img'/> */}
               { 
               imgURLs.map((item, index)=>(
-            <SwiperSlide>
-                <img key={index} src={item} alt="공간이미지들" className='img'/>
+            <SwiperSlide key={index}> 
+                <img  src={item} alt="공간이미지들" className='img'/>
             </SwiperSlide>
               ))
               }
@@ -65,12 +65,14 @@ export const YouthSpaceDetail = () => {
             <p className='p-h2'>기본정보</p>
           </div>
           <ul className="s-textbox">
-            <li className='s-p'>-&nbsp;&nbsp; <span className='t1'>공간유형</span> :&nbsp;&nbsp;&nbsp;{space.spaceType} </li>
-            <li className='s-p'>-&nbsp;&nbsp; <span className='t1'>장소</span> :&nbsp;&nbsp;&nbsp;{space.place}</li>
-            <li className='s-p'>-&nbsp;&nbsp; <span className='t1'>운영시간</span> :&nbsp;&nbsp;&nbsp;{space.useTime} </li>
-            <li className='s-p'>-&nbsp;&nbsp; <span className='t1'>업무시간</span> :&nbsp;&nbsp;&nbsp;{space.openHours} </li>
-            <li className='s-p'>-&nbsp;&nbsp; <span className='t1'>운영기관</span> :&nbsp;&nbsp;&nbsp;{space.inst}</li>
-            <li className='s-p'>-&nbsp;&nbsp; <span className='t1'>홈페이지</span> :&nbsp;&nbsp;&nbsp;<a href = {space.homepage} className='homepage'>{space.homepage}</a></li>
+            <li className='s-p'>-&nbsp;&nbsp; 
+            <div className='t1'>공간유형</div> :&nbsp;&nbsp;&nbsp;{space.spaceType} 
+            </li>
+            <li className='s-p'>-&nbsp;&nbsp; <div className='t1'>장소</div> <span>:&nbsp;&nbsp;&nbsp;{space.place}</span></li>
+            <li className='s-p'>-&nbsp;&nbsp; <div className='t1'>운영시간</div> :&nbsp;&nbsp;&nbsp;{space.useTime} </li>
+            <li className='s-p'>-&nbsp;&nbsp; <div className='t1'>업무시간</div> :&nbsp;&nbsp;&nbsp;{space.openHours} </li>
+            <li className='s-p'>-&nbsp;&nbsp; <div className='t1'>운영기관</div> :&nbsp;&nbsp;&nbsp;{space.inst}</li>
+            <li className='s-p'>-&nbsp;&nbsp; <div className='t1'>홈페이지</div> :&nbsp;&nbsp;&nbsp;<a href = {space.homepage} className='homepage'>{space.homepage}</a></li>
 
           </ul>
         </div>
