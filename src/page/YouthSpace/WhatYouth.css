@@ -1,0 +1,81 @@
+.wrap-e { contain: paint;}
+
+/* 패스 & 메세지 */
+.what .airplane { z-index: 1; position: absolute; left: 0; top: 0px; width: 80px; transform: rotate(40deg); offset-distance: 0%; offset-rotate: auto 89deg; offset-path: path('M187.998 0.5C187.998 0.5 175.878 145.137 187.998 236.5C204.913 364.004 276.45 421.648 290.498 549.5C311.767 743.069 187.998 1028.5 187.998 1037.5C187.998 1046.67 177.499 1120.45 80.0001 1117C-17.4989 1113.55 -35.5 970.5 90.4979 964C216.496 957.5 294.045 1306.33 290.498 1581.5C288.143 1764.2 229.359 1860.03 187.998 2038C156.735 2172.52 105.539 2243.9 105.998 2382C106.451 2518.2 186.877 2488.64 202 2624');}
+.what .track { position: absolute; top: 0px; left: 33%; width: 1048px;}
+.what .flight-path { stroke: #DDDDDD; stroke-width: 7px; stroke-dasharray: 14px; fill: none;}
+.airplane-scroll-timeline { position: relative; height: 1945px; margin: 200px 0;}
+
+/* 타이틀 */
+.what .what-title { padding-top: 60px; position: relative;}
+.what .what-title em { font-family: 'LOTTERIACHAB'; display: flex; justify-content: center; font-size: 30px; font-weight: 100; color: var(--mo);}
+.what .what-title h2 {  display: flex; justify-content: center; font-size: 88px; font-family: 'LOTTERIACHAB'; padding-top: 50px; font-weight: 100;}
+.what .what-title span { width: 500px; height: 80px; background-color: #1BDA45; display: block; position: absolute; z-index: -1; bottom: -50px; left: 32%; opacity: .2; opacity: 0;}
+
+/* 메인 이미지 */
+.what .what-main { position: relative; width: 1000px; height: 300px; left: 50%; top: 160px; transform: translate(-50%, 0); }
+.what .what-main .main-illu { width: 650px; position: absolute; left: 50%; transform: translate(-50%, 0);}
+.what .lBalloon-box { position: absolute; left: 60px; top: -100px;}
+.what .lBalloon-box p { position: absolute; position: absolute; top: 33px; left: 40px; line-height: 1.2em;}
+.what .LBalloon-box { position: absolute; right: 60px; top: -100px;}
+.what .LBalloon-box p{ position: absolute; top: 33px; right: 60px; line-height: 1.2em;}
+
+/* section 이미지 */
+.ex-1, .ex-2, .ex-3 { position: absolute; top:0;}
+.what section { width: 100%; display: flex; justify-content: space-around;}
+.ex-1 { left: 0; top: 850px; }
+.ex-1 .what-img-box img:nth-of-type(2) { animation: opAnimation 2s infinite;}
+.ex-2 { left: 0; top: 1530px;}
+.ex-2 img { width: 500px; margin-left: 55px;}
+.ex-2 .what-img-box img:nth-of-type(2) { animation: slideAnimation 2s infinite;}
+.ex-3 { left: 0; top: 2150px;}
+.ex-3 img { width: 500px;}
+.ex-3 .what-img-box img:nth-of-type(2) { animation: slideAnimation2 2s infinite;}
+
+/* module */
+.what-img-box { position: relative;  width: 500px; height: 500px;}
+.what-img-box img { position: absolute;}
+.what-text-ex em { color: var(--mo); margin-bottom: 20px; display: block; margin-top: 30px;}
+.what-text-ex p { font-size: 40px; line-height: 44px;}
+.what-text-ex a { display: inline-block; padding: 15px 25px; border: 1px solid #212429; margin-top: 20px; border-radius: 30px; transition: all .3s;}
+.what-text-ex a:hover { background-color: var(--mo); color: #fff; border: 1px solid #fff;}
+.what .end-img { position: relative; z-index: 10; top: 20px; text-align: center;}
+.what .end-img em { position: relative; top: -50px; font-family: 'LOTTERIACHAB'; font-weight: 100; font-size: 50px; display: block;}
+.what .end-img h4 { position: relative; top: -40px; font-family: 'LOTTERIACHAB'; font-weight: 100; font-size: 80px; margin: 60px; display: block; color: var(--mo);}
+
+/* animation */
+@keyframes slideAnimation {
+  0% {
+    top: 20px;
+  }
+  50% {
+    top: 0px;
+  }
+  100% {
+    top: 20px;
+  }
+}
+
+@keyframes opAnimation {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes slideAnimation2 {
+  0% {
+    top: 2px;
+  }
+  50% {
+    top: 0px;
+  }
+  100% {
+    top: 2px;
+  }
+}

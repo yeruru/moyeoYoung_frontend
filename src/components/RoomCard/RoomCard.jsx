@@ -4,9 +4,8 @@ import './RoomCard.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
-
-export const RoomCard = ({ isBookmark, item }) => {
-  // export const RoomCard = ({ isBookmark, roomId, title, memCnt, category, content, imgName }) => {
+ 
+export const RoomCard = ({ isBookmark, item }) => { 
   const [backColor, setBackColor] = useState('');
   const [detail, setDetail] = useState(item.roomContent.replace(/<br\/>/g, ''));
   const instance = axios.create({
@@ -42,11 +41,11 @@ export const RoomCard = ({ isBookmark, item }) => {
       })
 
   }
-  return (
-
+  return ( 
     <div id='room-card'>
       <Link to={`/roomMain/dashboard/${item.roomId}`} className='a-mark'> 
         <button className='bookmark'><span id={item.roomId} className={`material-symbols-outlined mark-icon ${bookmark ? 'click' : ''}`} onClick={callBookmark}>
+ 
           bookmark
         </span></button>
         <img src={`http://localhost:8090/room/view/${item.roomImage}`} className='card-img' />
@@ -60,8 +59,8 @@ export const RoomCard = ({ isBookmark, item }) => {
               group
             </span><span className='p4'>{item.roomUserCnt}</span>
           </div>
-        </div>
-        </Link>
+        </div> 
+        </Link> 
     </div>
 
   )

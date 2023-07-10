@@ -30,22 +30,25 @@ export const YouthSpaceDetail = () => {
 
   //   formatted_text = re.sub(r'\.\s+', '.\n', text)
   // }
+  
   return (
     <div id="space-detail">
       <div className="wrap">
         <div className='detail-head'>
+ 
           <p>청년공간 &nbsp;&gt;&nbsp; <Link to="/youthspacelist/1" className='to-list'>청년공간 모아보기</Link> &nbsp;&gt;&nbsp; {space.title} </p>
         </div>
         <div className='space-title'>{space.title}</div>
+ 
+       
         <div className="img-box">
           <Swiper
             navigation
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}
             loop={true}
-            className="swiper-container"
-            >
-            {/* <img src="" alt="공간이미지들" className='img'/> */}
+            className="swiper-container" >
+  
               { 
               imgURLs.map((item, index)=>(
             <SwiperSlide key={index}> 
@@ -54,7 +57,7 @@ export const YouthSpaceDetail = () => {
               ))
               }
              
-           
+ 
           </Swiper>
 
         </div>
@@ -65,6 +68,7 @@ export const YouthSpaceDetail = () => {
             <p className='p-h2'>기본정보</p>
           </div>
           <ul className="s-textbox">
+
             <li className='s-p'>-&nbsp;&nbsp; 
             <div className='t1'>공간유형</div> :&nbsp;&nbsp;&nbsp;{space.spaceType} 
             </li>
