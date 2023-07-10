@@ -1,6 +1,6 @@
 import React from 'react'
 import './MakeRoom.css'
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
@@ -15,6 +15,11 @@ function MakeRoom() {
     const [roomId, setRoomId] = useState(0);
     const [file, setFile] = useState();
     const [modal, setModal] = useState(false);
+
+    useEffect(()=>{
+        const acc = localStorage.getItem('accessToken');
+        console.log(acc);
+    },[])
 
     //소개글 글자수
     const changeLength = (e) => {
