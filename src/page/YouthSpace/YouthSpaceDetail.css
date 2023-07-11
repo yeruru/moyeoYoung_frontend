@@ -83,9 +83,10 @@
     margin-top: 8px;
 }
  
-#space-detail .hom-box {
+#space-detail .s-p {
     display: flex;
-} 
+
+}
 #space-detail .p-h2 {
     width: 100px;
     position: relative;
@@ -93,9 +94,12 @@
 } 
 #space-detail .homepage{
     display: block;
+    width:200px;
+    line-height: 1.5em;
+    margin-top: -4px;
 }
-#space-detail .homepage :hover{
-    text-decoration: underline;
+#space-detail .homepage:hover{
+   color:rgb(89, 155, 255);
 } 
 #space-detail .s-textbox {
     margin-left: 40px;
