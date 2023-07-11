@@ -99,14 +99,14 @@
 .roomfeed .Content{
     padding : 0 26px;
     line-height: 22px;
-    white-space: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow:hidden;
+    display: inline-block;
+    width: 480px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     font-size: 13px;
     color : gray;
-    margin-top: 20px;
+    margin-top: 10px;
 }
 
 .roomfeed .Title{
@@ -199,7 +199,7 @@
     width : 750px;
     height : 600px;
     border-right: 2px solid #EEEEEE;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .roomfeed .comment{
@@ -304,6 +304,8 @@
 .roomfeed .detailContent{
     padding :5px 50px;
     font-size: 13px;
+    width: 650px;
+    word-wrap: break-word;
 }
 
 

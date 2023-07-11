@@ -12,6 +12,8 @@ const RoomFeedDetail = ({isOpen, onClose, content}) => {
     const [feedId, setFeedId] = useState(content);
     const [feedFileName, setFeedFileName] = useState([]);
 
+    console.log(content);
+
     const handleModalClick = (event) => {
         event.stopPropagation();
     };
@@ -41,7 +43,7 @@ const RoomFeedDetail = ({isOpen, onClose, content}) => {
                         style={{marginTop: '60px', minWidth:'650px', minHeight:'400px', overflow:'hidden', borderRadius: '10px' , position:'relative'}}
                         spaceBetween={30}
                         slidesPerView={1}
-                        loop={true}
+                        loop={false}
                         navigation={true}
                     >
                     {

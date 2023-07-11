@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import axios from 'axios';
-import './signup.css';
+import './SignUp.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
