@@ -10,6 +10,7 @@ import test from '../../images/illust/test.jpg';
 import WriteFeed from './RoomContent/Feed/WriteFeed';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import ModifyFeed from './RoomContent/Feed/ModifyFeed';
 
 function RoomMain() {
   const location = useLocation();
@@ -56,6 +57,7 @@ function RoomMain() {
           {selectedContent === 'roomFeed' && <RoomFeed onContentChange={handleContentChange}/>}
           {selectedContent === 'roomAnno' && <RoomAnno/>}
           {selectedContent === 'writefeed' && <WriteFeed roomId={roomId}/>}
+          {selectedContent === 'modifyfeed' && <ModifyFeed roomId={roomId}/>}
         </div>
         <div className='play'>
           <RoomPlay />

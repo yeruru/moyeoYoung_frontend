@@ -103,6 +103,10 @@ function RoomFeed({onContentChange}) {
     document.getElementById("body").style.overflowY="scroll";
   };
 
+  const modify = () => {
+    location('modifyfeed');
+  }
+
   return (
     <div className='roomfeed'>
       <div className='room-box'>
@@ -117,7 +121,6 @@ function RoomFeed({onContentChange}) {
         }
         {
           feed.map((feed)=>{
-            console.log(feed.feedId);
             return(
               <div className='feed' key={feed.feedId}>      
                 <div className='feedHeader'>
@@ -130,7 +133,7 @@ function RoomFeed({onContentChange}) {
                     <div className={`droppage ${modalClicked[feed.feedId] ? 'show' : ''}`} >  
                         <ul>
                             <li>
-                              <div className='feedModefy' style={{cursor:'pointer'}}>수정</div>
+                              <div className='feedModefy' style={{cursor:'pointer'}} onClick={() => modify(`${feed.feedId}`)} >수정</div>
                             </li>
                             <li>
                               <div className='feedDelete' style={{color:'red', cursor:'pointer'}}>삭제</div>
@@ -142,14 +145,14 @@ function RoomFeed({onContentChange}) {
                 <div className='feedContent'>
                 <div className='Title'>{feed.title}</div>
                   {
-                    feed.filename.split(",").length <= 3 && 1 < feed.filename.split(",").length &&
+                    feed.filename.split(",").length < 3 && 1 < feed.filename.split(",").length &&
                     <div className='feedimg'>
                       <div>
                         <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
                       </div>
                       <div className='feedimg2'>
                         <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
-                        <div className='otherimg'  onClick={() => detail(`${feed.feedId}`)}  key={feed.feedId} style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[2]})` , cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
+                        <div className='otherimg'  onClick={() => detail(`${feed.feedId}`)}  key={feed.feedId} style={{ cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
                       </div>
                   </div>
                   }
@@ -166,16 +169,28 @@ function RoomFeed({onContentChange}) {
                   </div>
                   }
                   {
+                    feed.filename.split(",").length == 3 && 
+                    <div className='feedimg'>
+                      <div>
+                        <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
+                      </div>
+                      <div className='feedimg2'>
+                        <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
+                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
+                      </div>
+                  </div>
+                  }
+                  {
                     feed.filename.split(",").length  == 1 && 
                     <div className='feedimg'>
                     <div>
                       <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`, 
-                        maxWidth: '500px',
                         height: 'auto',
-                        maxHeight: '300px',
                         minHeight: '250px',
+                        width:'500px',
                         margin: '0 auto',
-                        backgroundSize: 'contain'}}>
+                        backgroundSize: 'cover'}}>
+
                       </div>
                     </div>
                     </div>

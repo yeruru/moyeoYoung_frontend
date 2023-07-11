@@ -59,12 +59,12 @@ function WriteFeed ({roomId}){
                 setShow(show);
                 return;
             }else{
-                setFiles((prevFiles)=> [...prevFiles, file]);
+                setFiles(prevFiles=> [...prevFiles, file]);
                 const reader = new FileReader();
                 setPhotosName((prevPhotosName)=> [...prevPhotosName, file.name]);
                 reader.readAsDataURL(file);
                 reader.onloadend = () => {
-                setPhotos((prevPhotos) => [...prevPhotos, reader.result])
+                    setPhotos((prevPhotos) => [...prevPhotos, reader.result])
                 };
                 setShow(!show);
             } 
@@ -95,14 +95,18 @@ function WriteFeed ({roomId}){
             }));
             return updatedPhotosName;
         });
+        setFiles(prevFiles => {
+            const updatedFiles = [...prevFiles];
+            updatedFiles.splice(index, 1);
+            return updatedFiles;
+        });
         if(photos.length != 1){
             setShow(show);
         }else{
             setShow(!show);
         }
     };
-
-
+    
     const submit = (e) => {
         e.preventDefault();
         console.log("asdf");
@@ -146,13 +150,8 @@ function WriteFeed ({roomId}){
                 {
                 photos.map((item, index) => ( // 여기서 맵 함수를 사용할 수 있도록 수정
                     <SwiperSlide key={index}>
-                            <div className='feedImg' style={{backgroundImage : `url(${item})`,  width: '100%',
-                                maxWidth: '500px',
-                                height: 'auto',
-                                maxHeight: '500px',
-                                minHeight: '300px',
-                                margin: '0 auto',
-                                backgroundSize: 'contain'}}>
+                            <div className='feedImg' style={{backgroundImage : `url(${item})`
+                             }}>
                             <div className='feedX'onClick={() => feedImgDelete(index)}>X</div>
                         </div>
                     </SwiperSlide>
