@@ -9,6 +9,7 @@ import banner1 from '../../images/main/banner1.svg';
 import banner2 from '../../images/main/banner2.svg';
 import banner3 from '../../images/main/banner3.svg';
 import youthLogo from '../../images/main/youthLogo.svg';
+import { Link } from 'react-router-dom';
 
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
@@ -88,7 +89,7 @@ function Main() {
             <em>청년공간</em>
             <div className='title'>
                 <h4>가까운 청년공간을 알아보세요🔍</h4>
-                <a href="#;">더보기 &gt;</a>
+                <Link to='/youthspacelist'>더보기 &gt;</Link>
             </div>
           </div>
           <div className='box youth'>
@@ -108,7 +109,7 @@ function Main() {
             <em>모임소식</em>
             <div className='title'>
                 <h4>원하는 모임에 참여해 보세요🙋‍♀️</h4>
-                <a href="#;">더보기 &gt;</a>
+                <Link to='/roomlist'>더보기 &gt;</Link>
             </div>
           </div>
         </div>
