@@ -11,6 +11,7 @@ import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import nothing from '../../../../images/Group 153.svg'
 import axios from 'axios';
 import RoomFeedDetail from './RoomFeedDetail';
+import ModifyFeed from './ModifyFeed.jsx';
 
 
 function RoomFeed({onContentChange}) {
@@ -20,7 +21,10 @@ function RoomFeed({onContentChange}) {
   const [feed, setFeed] = useState([]);
   const modalRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [modifyModal, setModifyModal] = useState(false);
   const [feedId, setFeedId] = useState();
+  const [mfeedId, setMFeedId] = useState();
   let { roomId } = useParams();
 
   useEffect(() => {
@@ -47,14 +51,15 @@ function RoomFeed({onContentChange}) {
       setFeed(res.data);
     })
     .catch(err => {
-      console.log(err);
+
     });
   },[]);
 
-  const modal = (feedId) => {
+  const modal = (p_feedId) => {
+    console.log(p_feedId);
     setModalClicked(prevState => ({
       ...prevState,
-      [feedId]: !prevState[feedId]
+      [p_feedId]: !prevState[p_feedId]
     }));
   };
 
@@ -97,14 +102,51 @@ function RoomFeed({onContentChange}) {
     document.getElementById("body").style.overflowY="hidden";
   }
 
+  const modify = (feedId) => {
+    setFeedId(feedId);
+    setModifyModal(true);
+    document.getElementById("body").style.overflowY="hidden";
+  }
+
   const handleCloseModal = () => {
     setFeedId(null);
     setModalOpen(false);
     document.getElementById("body").style.overflowY="scroll";
   };
 
-  const modify = () => {
-    location('modifyfeed');
+  const ModifyCloseModal = () => {
+    setFeedId(null);
+    setModifyModal(false);
+    document.getElementById("body").style.overflowY="scroll";
+  }
+
+  const open = (p_id) => {
+    setDeleteModal(!deleteModal);
+    setMFeedId(p_id);
+    document.getElementById("body").style.overflowY="hidden";
+  };
+
+  const close = () => {
+    setDeleteModal(!deleteModal);
+    document.getElementById("body").style.overflowY="scroll";
+  };
+
+  const notclose = (event) => {
+    event.stopPropagation();
+  }
+
+  
+
+  const deletefeed = () => { 
+    console.log(mfeedId);
+    axios.post(`http://localhost:8090/feed/deletefeed/${mfeedId}`)
+    .then(res => {
+      console.log(res);
+      document.location.href=`/roomMain/roomFeed/${roomId}`;
+    })
+    .catch(err => {
+
+    })
   }
 
   return (
@@ -129,17 +171,26 @@ function RoomFeed({onContentChange}) {
                     <span className='username'>일단 이름은 이걸로</span>
                   </div>
                   <div className='drop-box'>
-                    <MoreVertIcon onClick={()=>modal(feed.feedId)} style={{cursor:'pointer'}} ref={modalRef} ></MoreVertIcon> 
+                    <MoreVertIcon onClick={() => modal(feed.feedId)} style={{cursor:'pointer'}} ref={modalRef} ></MoreVertIcon> 
                     <div className={`droppage ${modalClicked[feed.feedId] ? 'show' : ''}`} >  
                         <ul>
                             <li>
-                              <div className='feedModefy' style={{cursor:'pointer'}} onClick={() => modify(`${feed.feedId}`)} >수정</div>
+                              <div className='feedModefy' style={{cursor:'pointer'}} onClick={() => modify(feed.feedId)}>수정</div>
                             </li>
                             <li>
-                              <div className='feedDelete' style={{color:'red', cursor:'pointer'}}>삭제</div>
+                              <div className='feedDelete' style={{color:'red', cursor:'pointer'}} onClick={()=>{open(feed.feedId)}}>삭제</div>
                             </li>
                           </ul>
                     </div>
+                    <div className={`checkbackground ${deleteModal ? 'show' : ''}`}  onClick={close}>
+                    <div className='checkdelete' onClick={notclose}> 
+                        <div className='checkword'>정말로 삭제하시겠습니까?</div>
+                        <div className='checkword2'>
+                            <div className='checkoutdelete' onClick={close}>취소</div>
+                            <div className='delete' onClick={deletefeed}>삭제하기</div>
+                        </div>
+                    </div>
+                   </div>
                   </div>
                 </div>
                 <div className='feedContent'>
@@ -184,7 +235,7 @@ function RoomFeed({onContentChange}) {
                     feed.filename.split(",").length  == 1 && 
                     <div className='feedimg'>
                     <div>
-                      <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`, 
+                      <div className='bigimg' onClick={() => detail(`${feed.feedId}`)} style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`, cursor : 'pointer',
                         height: 'auto',
                         minHeight: '250px',
                         width:'500px',
@@ -216,6 +267,12 @@ function RoomFeed({onContentChange}) {
           isOpen={modalOpen}
           content={feedId}
           onClose={handleCloseModal}
+        />
+        <ModifyFeed 
+          isOpen={modifyModal}
+          content={feedId}
+          onClose={ModifyCloseModal}
+          roomId = {roomId}
         />
       </div>
     </div>

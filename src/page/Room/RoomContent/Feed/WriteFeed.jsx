@@ -49,8 +49,6 @@ function WriteFeed ({roomId}){
 
     const filechange = (e) => {
         const allowedTypes = ['image/jpeg', 'image/png'];
-
-           
         const files = e.target.files;
         Array.from(files).forEach(file => {
             if (!allowedTypes.includes(file.type)) {
@@ -60,8 +58,8 @@ function WriteFeed ({roomId}){
                 return;
             }else{
                 setFiles(prevFiles=> [...prevFiles, file]);
-                const reader = new FileReader();
                 setPhotosName((prevPhotosName)=> [...prevPhotosName, file.name]);
+                const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onloadend = () => {
                     setPhotos((prevPhotos) => [...prevPhotos, reader.result])
@@ -69,9 +67,7 @@ function WriteFeed ({roomId}){
                 setShow(!show);
             } 
         });
-       
     };
-
     useEffect(() => {
         setFeed(prevFeed => ({
           ...prevFeed,
@@ -163,7 +159,7 @@ function WriteFeed ({roomId}){
                         <div className='plus'><span className='plusfont'>+</span></div>
                     </div>
                 </label>
-                 <input className="fileimage" type="file" name="filename" id="input-file" onChange={filechange} multiple/> 
+                 <input className="fileimage" type="file" name="filename" id="input-file" onChange={filechange} multiple accept="image/jpeg, image/png, image/gif"/> 
                  <div className='feedTitle'>
                     <div>제목</div>
                     <input className='title' maxLength={20} name="title" onChange={change} placeholder='제목을 작성해주세요'></input>
