@@ -1,73 +1,93 @@
-.writefeed .feedwrite {
-    height: 1000px;
+.modifybackground {
+    position : fixed;
+    width : 100%;
+    height : 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index : 10000;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+
+    display: none;
+}
+
+.modifyfeed .feedwrite {
+    position: fixed;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    height: 600px;
     width: 600px;
     border : 1.3px solid #EEEEEE;
     background-color: white;
     margin: 0 auto;
+    z-index: 10002;
 }
 
-.writefeed .fileimage {
+.modifyfeed .fileimage {
     display:none;
 }
 
-.writefeed .photes{
+.modifyfeed .photes{
     cursor: pointer;
     position : relative;
-    width : 500px;
-    height: 300px;
+    width : 450px;
+    height: 250px;
     background-color: white;
     border : 2px solid #d7d7d7;
     opacity: .6;
     border-radius: 30px;
     margin: 30px auto;
 }
-.writefeed .plus{
-    width : 100px;
-    height: 100px;
+.modifyfeed .plus{
+    width : 70px;
+    height: 70px;
     border-radius: 50%;
     position: absolute;
+    transform: translate(-50%, -50%);
     top : 50%;
     left: 50%;
-    transform: translate(-50%, -50%);
     background-color: var(--mo);
 }
 
-.writefeed .plusfont{
+.modifyfeed .plusfont{
     position: absolute;
     top : 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 60px;
+    font-size: 45px;
     color: #fff;
 }
 
-.writefeed .feedTitle{
+.modifyfeed .feedTitle{
     width : 500px;
     margin : 10px auto;
 }
 
-.writefeed .feedContent{
+.modifyfeed .feedContent{
     width : 500px;
     margin : 10px auto;
 }
 
-.writefeed .title {
-    width : 500px;
+.modifyfeed .title {
+    width : 450px;
     height: 40px;
-    margin : 10px auto;
     font-size: 13px;
     font-weight: 100;
     font-family: 'NanumSquareNeo-Variable';
     border : 2px solid #d7d7d7;
     border-radius: 10px; 
     padding: 0 10px 0 10px;
+    margin : 10px auto;
+    margin-left: 25px;
     box-sizing: border-box;
     
 }
-.writefeed .content {
-    width : 500px;
+.modifyfeed .content {
+    width : 450px;
     height: 100px;
     margin : 10px auto;
+    margin-left: 25px;
     resize : none;
     line-height: 1.7em;
     font-size: 13px;
@@ -79,7 +99,7 @@
     box-sizing: border-box;
 }
 
-.writefeed .feedbutton{
+.modifyfeed .feedbutton{
     width : 500px;
     height : 40px;   
     margin : 0 auto;
@@ -88,14 +108,14 @@
     text-align: right;
 }
 
-.writefeed .btn {
+.modifyfeed .btn {
     width : 80px;
     height : 34px;
-    margin : 7px 0 0 15px;
+    margin : 0px 25px 0 15px;
     cursor: pointer;
 }
 
-.writefeed .btn1{
+.modifyfeed .btn1{
     background-color : white;
     font-family: 'NanumSquareNeo-Variable';
     font-weight: 100;
@@ -103,7 +123,7 @@
     border : 1px solid #d7d7d7;
     border-radius: 5px;
 }
-.writefeed .btn2{
+.modifyfeed .btn2{
     background-color : var(--mo);
     font-family: 'NanumSquareNeo-Variable';
     font-weight: 100;
@@ -113,11 +133,12 @@
     color : white;
 }
 
-.writefeed .txt-length{
+.modifyfeed .txt-length{
     font-size: 11px;
+    margin-left: 25px;
 }
 
-.writefeed .feedX{
+.modifyfeed .feedX{
     position : absolute;
     z-index: 300;
     width : 30px;
@@ -128,20 +149,20 @@
     font-weight: 900;
     line-height: 30px;
     text-align: center;
-    left : 93%;
+    left : 91%;
     top : 2%;
     border-radius: 50%;
     cursor: pointer;
 }
 
-.writefeed .noshow{
+.modifyfeed .noshow{
     display: none;
-}.writefeed .show{
+}.modifyfeed .show{
     display : block;
 }
 
-.writefeed .feedImg{
-    height: 300px;
+.modifyfeed .feedImg{
+    height: 250px;
     margin : 0 auto;
     background-size: contain;
     background-repeat: no-repeat;
@@ -158,23 +179,23 @@
     border-radius: 10px;
 }
 
-.writefeed .checkbackground{
+.modifyfeed .checkbackground{
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 10000;
+    z-index: 10003;
 
     display: none;
 }
 
-.writefeed .show{
+.modifyfeed .show{
     display: block;
 }
 
-.writefeed .checkWrite{
+.modifyfeed .checkWrite{
     position : fixed;
     width : 470px;
     height : 180px;
@@ -186,7 +207,7 @@
     z-index : 10000;
     border-radius: 20px;
 }
-.writefeed .checkword{
+.modifyfeed .checkword{
     position : absolute;
     width: 450px;
     top : 28%;
@@ -196,7 +217,7 @@
     transform: translate(-50%, -50%);
 }
 
-.writefeed .checkword2 {
+.modifyfeed .checkword2 {
     position : absolute;
     display: flex;
     top : 65%;
@@ -204,7 +225,7 @@
     transform: translate(-50%, -50%);
 }
 
-.writefeed .checkoutWrite{
+.modifyfeed .checkoutWrite{
     margin-right: 20px;
     text-align: center;
     width : 100px;
@@ -218,8 +239,7 @@
     cursor: pointer;
 }
 
-.writefeed .submit{
-    margin-left: 20px;
+.modifyfeed .submit{
     text-align: center;
     width : 100px;
     height: 33px;
@@ -229,4 +249,5 @@
     color : white;
     border-radius: 7px;
     cursor: pointer;
+    margin-right: 25px;
 }
