@@ -9,7 +9,11 @@ import imge from '../../images/photo/photo02.jpg';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Link, useNavigate } from 'react-router-dom';
 import { clearTokens } from '../../persist-store';
+
 import { padding } from '@mui/system';
+
+import axios from 'axios';
+
 
 function Header() {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
@@ -102,8 +106,9 @@ function Header() {
                   <li>
                     <Link to='/whatyouth'>청년공간이란?</Link>
                   </li>
-                  <li>
-                    <Link to='/youthspacelist'>청년공간 찾아보기</Link>
+                  <li> 
+                    <Link to='/youthspacelist/1'>청년공간 찾아보기</Link>
+ 
                   </li>
                   <li>
                     <Link to='#'>청년TALK</Link>

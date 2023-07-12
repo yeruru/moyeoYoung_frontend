@@ -32,9 +32,8 @@
 }
 
 #space-detail .img-box {
-    width: 600px;
-    height: 400px;
-    background-color: pink;
+    width: 600px; 
+    height: 400px;  
 
     margin: 0 auto;
     display: flex;
@@ -45,7 +44,7 @@
 #space-detail .img {
 
     width: 100%;
-    height: 100%;
+    height: 100%; 
 }
 
 #space-detail .con {
@@ -54,9 +53,8 @@
     margin: 0 auto;
     margin-top: 80px;
     width: 700px;
-
-}
-
+ 
+} 
 #space-detail .summary-con li {
     font-size: 16px;
     margin-bottom: 20px;
@@ -84,18 +82,31 @@
     padding-right: 10px;
     margin-top: 8px;
 }
+ 
+#space-detail .s-p {
+    display: flex;
 
+}
 #space-detail .p-h2 {
     width: 100px;
     position: relative;
     bottom: 7px;
+} 
+#space-detail .homepage{
+    display: block;
+    width:200px;
+    line-height: 1.5em;
+    margin-top: -4px;
 }
-
+#space-detail .homepage:hover{
+   color:rgb(89, 155, 255);
+} 
 #space-detail .s-textbox {
     margin-left: 40px;
 
 }
 
 #space-detail .detail-area {
-    line-height: 2em;
-}
+    line-height: 2em; 
+    white-space: pre-wrap;
+} 

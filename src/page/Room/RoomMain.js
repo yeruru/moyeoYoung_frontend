@@ -9,6 +9,8 @@ import Dashboard from './RoomContent/dashboard/Dashboard';
 import test from '../../images/illust/test.jpg';
 import WriteFeed from './RoomContent/Feed/WriteFeed';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import ModifyFeed from './RoomContent/Feed/ModifyFeed';
 
 function RoomMain() {
   const location = useLocation();
@@ -44,9 +46,9 @@ function RoomMain() {
       <div className='flex-box'>
         <div className='room-header'>
           <div className='title-box'>
-            <div className='img-box'><img src={`http://localhost:8090/room/view/${room.roomImage}`} alt='모임방 프로필 사진'/></div>
+            <div className='img-box'><img src={`http://localhost:8090/room/view/${room.roomImage}`}className='img' alt='모임방 프로필 사진'/></div>
             <h2>{room.roomTitle}</h2> 
-            <a href='#'>모임 정보 수정 &gt;</a>
+            <Link to={`/settingroom/${roomId}`}>모임 정보 수정 &gt;</Link>
           </div>
           <RoomHeader onContentChange={handleContentChange} />
         </div>
@@ -55,6 +57,7 @@ function RoomMain() {
           {selectedContent === 'roomFeed' && <RoomFeed onContentChange={handleContentChange}/>}
           {selectedContent === 'roomAnno' && <RoomAnno/>}
           {selectedContent === 'writefeed' && <WriteFeed roomId={roomId}/>}
+          {selectedContent === 'modifyfeed' && <ModifyFeed roomId={roomId}/>}
         </div>
         <div className='play'>
           <RoomPlay />

@@ -1,10 +1,11 @@
 import React from 'react'
 import './SpaceCard.css'
+import { Link } from 'react-router-dom'
 export const SpaceCard = ({space}) => {
     
     return (
         <div id="youth-space-card"> 
-        <a href='#' className='a-card'>
+        <Link to={`/youthspacedetail/${space.spaceId}`} className='a-card'>
             <div id='card'>
                 <div className="card-img-div"> 
                 <img src={`https://youth.seoul.go.kr${space.titleImage}`} className='card-img' />
@@ -17,7 +18,7 @@ export const SpaceCard = ({space}) => {
                     </div>
                 </div>
             </div>
-        </a>
+        </Link>
         </div>
     )
 }

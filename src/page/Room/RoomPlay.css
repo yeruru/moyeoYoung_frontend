@@ -2,12 +2,14 @@
 .roomh .flex-box { max-width: 1200px; margin: 85px auto; display: flex; flex: 1 1 auto; align-items: flex-start;}
 .roomh .header { z-index: 19000; position: fixed; width: 100%; min-width: 1034px; height: 34px; left: 0; top: 50px; background: #fff; text-align: center;}
 .roomh .room-header { position: sticky; top: 50px; width: 300px; padding-bottom: 20px; margin-right: 18px; padding-right: 20px; box-sizing: border-box;}
-.roomh .title-box .img-box {height: 160px; margin: 30px 0;}
+.roomh .title-box .img-box {width:100; height: 160px; margin: 30px 0;}
+.roomh .title-box .img {height: 100%; object-fit: cover;}
 .roomh .title-box h2 { line-height: 1.2em; font-size: 18px; margin-bottom: 10px;}
 .roomh .title-box a { font-size: 16px; transition: all .3s; color: #868686;}
 .roomh .title-box a:hover { color: var(--mo);}
 /* .room-header > div { position: relative; overflow: visible; box-sizing: border-box; min-height: 416px;} */
 .roomh .conetent {flex: 0 0 auto; width: 700px; background-color: antiquewhite; overflow: auto; /* 추가 */}
 .roomh .play { position: sticky; top: 50px; flex: 0 0 auto; width: 250px;}
-.roomh .play-top { position: fixed;}
+.roomh .play-top { position: fixed;} 
+
 
