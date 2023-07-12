@@ -23,6 +23,7 @@ import ScrollToTop from "./page/Main/ScrollToTop";
 // 쪽지
 import Note from "./page/Note/Note";
 import UserPage from "./page/UserPage/UserPage";
+import OpenChat from "./page/OpenChat/OpenChat";
 
 function App() {
   return (
@@ -58,6 +59,10 @@ function App() {
         {/* <Route exact path="/youthspacedetail:spaceid" element={<MakeRoom/>}/> */}
         <Route exact path="/note" element={<Note />} />
         <Route exact path="/userpage" element={<UserPage />} />
+
+        
+        <Route exact path="/ws-chat" element={<OpenChat />} />
+
 
       </Routes>
       <ScrollToTop />
