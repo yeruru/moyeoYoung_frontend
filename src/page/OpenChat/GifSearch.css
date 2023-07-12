@@ -1,0 +1,51 @@
+.modal {
+  width: 600px;
+  height: 450px;
+  overflow-y: scroll;
+  position: relative;
+  animation: slide-down 0.3s ease-out;
+  z-index: 9999;
+
+}
+
+@keyframes slide-down {
+  0% {
+    opacity: 0;
+    transform: translateY(-10%);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.inputBox {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  border-radius: 8px;
+}
+
+.gifContainer {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; 
+}
+
+.gif {
+  width: 200px;
+  height: 150px;
+  cursor: pointer;
+  margin: 10px;
+
+  border-radius: 8px;  
+  margin-left: 0px;
+  margin-right: 0px;
+  
+  transition: transform 0.1s ease-in-out;
+}
+
+.gif:hover {
+  transform: scale(0.97);
+}
