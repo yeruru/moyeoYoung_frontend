@@ -117,7 +117,7 @@ function Header() {
               </div>
             </li>
             <li className='nav-item'>
-              <Link to='/roomlist'>모임</Link>
+              <Link to='/roomlist/1'>모임</Link>
             </li>
 
             <li>
