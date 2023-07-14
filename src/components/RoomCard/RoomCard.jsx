@@ -3,7 +3,7 @@ import React from 'react'
 import './RoomCard.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useNavigate  } from 'react-router-dom';
  
 export const RoomCard = ({ isBookmark, item }) => { 
   const [backColor, setBackColor] = useState('');
@@ -12,6 +12,8 @@ export const RoomCard = ({ isBookmark, item }) => {
     baseURL: 'http://localhost:8090/room', // 기본 경로 설정
   });
   const [bookmark, setBookmark] = useState(isBookmark);
+  const navigate  = useNavigate();
+
   useEffect(() => {
     switch (item.roomCategory) {
       case '취업준비': setBackColor('blue'); break;
@@ -25,10 +27,19 @@ export const RoomCard = ({ isBookmark, item }) => {
     }
   }, [])
 
-
   const callBookmark = (e) => {
-    e.preventDefault();
+    const accessToken = localStorage.getItem('accessToken');
+    if(accessToken===null){
+      e.preventDefault();
+      alert('로그인이 필요합니다');
+      navigate('/login');
+  } 
+  e.preventDefault();
     instance.get(`/bookmark/${e.target.id}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+    }
+    },{
       params: {
         status: bookmark
       }

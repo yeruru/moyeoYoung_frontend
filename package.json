@@ -34,6 +34,7 @@
     "redux": "^4.2.1",
     "redux-devtools-extension": "^2.13.9",
     "slick-carousel": "^1.8.1",
+    "sockjs-client": "^1.6.1",
     "styled-components": "^6.0.1",
     "swiper": "^9.4.1",
     "web-vitals": "^2.1.4"
