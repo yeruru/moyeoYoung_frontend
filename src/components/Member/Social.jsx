@@ -23,12 +23,13 @@ const Social = () => {
     return (
         <div style={{display:'flex', justifyContent:'center', marginTop:'30px'}}>
             <form className='social-form'>
-            <KakaoLogin  href={KAKAO_AUTH_URL}
+            <a href={KAKAO_AUTH_URL}>카카오요청</a>
+            {/* <KakaoLogin  href={KAKAO_AUTH_URL}
                 token=""
                 onSuccess={responseKakao}
                 onFail={console.error}
                 onLogout={console.info}
-            />
+            /> */}
             </form>
         </div>
     );
