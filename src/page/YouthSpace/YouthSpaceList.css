@@ -17,20 +17,22 @@
     display: block;
     margin: 0 auto;
 }
-
+#youth-space-list input:active, 
+#youth-space-list input:hover,
+#youth-space-list input:focus,
 #youth-space-list button:focus,
+#youth-space-list select:focus,
 button:active {
     outline: none;
 }
 
-#youth-space-list input:active, 
-#youth-space-list input:hover{
-    outline: none;
+#youth-space-list input:active:not(.lst1), 
+#youth-space-list input:hover:not(.lst1){
+    
     box-shadow: 0px 0px 4px 2px rgb(160, 179, 173); 
 }
 
-#youth-space-list input:focus{
-    outline: none;
+#youth-space-list input:focus:not(.lst1){
     background-color: rgb(247, 255, 252);
     box-shadow: 0px 0px 4px 2px rgb(160, 179, 173); 
 }
@@ -45,7 +47,15 @@ button:active {
 #youth-space-list .search-position {
     width: 550px;
     position: relative;
-    margin: 0 auto;
+    margin: 0 auto; 
+}
+#youth-space-list .loc-search-position {
+    margin: 0 auto; 
+    width: 600px;
+    position: relative;
+    display: flex;
+    justify-content: flex-end;
+   
 }
 
 #youth-space-list .search-text {
@@ -62,15 +72,68 @@ button:active {
     font-size: 16px;
     color: #72817a;
     padding-left: 30px;
+    margin-top: 20px;
+    margin-bottom: 10px;
     /* 9CB4AA */
+    
+    
+}
+#youth-space-list .loc-search-text {
+    transition: 0.1s all linear;
+    width: 140px;
+    height: 40px;
+    /* background-color: rgba(228, 247, 239, 1); */
+    border-radius: 5px;
+    text-align: center;
+    border: 1px solid rgb(215, 231, 225);
+    box-shadow: 0px 0px 3px 2px rgb(215, 231, 225); 
+    display: block;
+   
+    font-size: 16px;
+    color: #72817a; 
 
+    background-color: rgb(247, 255, 252);
+    /* box-shadow: 0px 0px 4px 2px rgb(160, 179, 173);  */
+    margin-left: 10px;
+    margin-right: 10px;
+    /* 9CB4AA */
+    
 }
 
+#youth-space-list .loc-search-btn {
+    /* background-color: rgb(50 178 122);
+    width: 60px;
+    height: 35px; 
+    border-radius: 5px; 
+    border: none;
+    box-shadow: 0px 0px 2px 2px rgb(42 151 103);
+    margin-left: 10px; */
+
+    transition: 0.1s all linear;
+    width: 60px;
+    height: 40px;
+    background-color: rgb(50 178 122);
+    border-radius: 5px;
+    border: none;
+    text-align: center; 
+    box-shadow: 0px 0px 3px 1px rgb(50 178 122); 
+    display: block;
+   
+    font-size: 16px;
+    color: #72817a; 
+ 
+    /* box-shadow: 0px 0px 4px 2px rgb(160, 179, 173);  */
+    margin-left: 10px;
+    margin-right: 10px;
+}
 #youth-space-list .search-icon {
     position: absolute;
     right: 0;
     top: 14px;
     color: #72817a;
+}
+#youth-space-list .search-icon2 { 
+    color: #f5fff8;
 }
 
 #youth-space-list .card-list {
@@ -81,45 +144,9 @@ button:active {
     flex-wrap: wrap;
     justify-content: space-evenly;
 }
+ 
 
-/* 카드 */
-#youth-space-list #card {
-    display: flex;
-    width: 450px;
-    background-color: rgb(255, 255, 255);
-    margin-bottom: 30px;
-    padding: 6px;
-    box-shadow: 0px 0px 3px 2px rgb(218, 218, 218);
-}
-
-#youth-space-list .card-img {
-    width: 220px;
-    height: 135px;
-}
-
-#youth-space-list .tbox {
-    padding: 12px;
-    padding-left: 15px;
-}
-
-#youth-space-list .s-name {
-    font-size: 15px;
-    font-weight: bold;
-    padding-top: 10px;
-}
-
-#youth-space-list .s-loc {
-    margin-top: 40px;
-    margin-bottom: 5px;
-    font-size: 12px;
-    color: rgb(35, 137, 254);
-}
-
-#youth-space-list .s-time {
-    font-size: 13px;
-}
-
-/* -카드- */
+/* -더보기- */
 
 #youth-space-list .plus-btn {
     width: 250px;
@@ -144,4 +171,22 @@ button:active {
 #youth-space-list .plus-btn:active {
     color: white;
     background-color: #232323;
+}
+
+#youth-space-list  .empty-item-box {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+#youth-space-list  .empty-img-box {
+    width: 300px;
+    margin: 0 auto;
+    margin-top: 9%;
+    margin-bottom: 7%;
+}
+
+#youth-space-list  .empty-p {
+    font-size: 20px;
+    color: rgb(101, 101, 101);
 }

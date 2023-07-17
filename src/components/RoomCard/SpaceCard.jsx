@@ -1,17 +1,24 @@
 import React from 'react'
-
-
-export const SpaceCard = () => {
+import './SpaceCard.css'
+import { Link } from 'react-router-dom'
+export const SpaceCard = ({space}) => {
+    
     return (
-        <a href='#' className='a-card'>
+        <div id="youth-space-card"> 
+        <Link to={`/youthspacedetail/${space.spaceId}`} className='a-card'>
             <div id='card'>
-                <img src='/image/image 27.png' className='card-img' />
+                <div className="card-img-div"> 
+                <img src={`https://youth.seoul.go.kr${space.titleImage}`} className='card-img' />
+                </div>
                 <div className='tbox'>
-                    <p className='s-name'>SK 텔레콤 행복 비즈카페</p>
-                    <p className='s-loc'>서울 중구</p>
-                    <p className='s-time'>이용시간 : 평일 10시 ~ 18시</p>
+                    <p className='s-name'>{space.title}</p>
+                    <div className='bottom-txt'> 
+                    <p className='s-loc'>{space.placeLoc}</p> 
+                    <p className='s-time'>{space.openHours}</p>
+                    </div>
                 </div>
             </div>
-        </a>
+        </Link>
+        </div>
     )
 }

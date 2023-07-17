@@ -1,10 +1,10 @@
 import React from 'react'
 import './MakeRoom.css'
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link,useHistory  } from 'react-router-dom';
 
 function MakeRoom() {
     const [activeCate, setActiveCate] = useState('');
@@ -12,8 +12,14 @@ function MakeRoom() {
     const [imgSrc, setImgSrc] = useState('/image/room_basic1.jpg');
     const inputRef = useRef();
     const [room, setRoom] = useState({ roomTitle: '', roomContent: '', roomImage: 'room_basic1.jpg', roomType: 'open', roomCategory: '' })
+    const [roomId, setRoomId] = useState(0);
     const [file, setFile] = useState();
     const [modal, setModal] = useState(false);
+
+    useEffect(()=>{
+        const acc = localStorage.getItem('accessToken');
+        console.log(acc);
+    },[])
 
     //소개글 글자수
     const changeLength = (e) => {
@@ -39,8 +45,7 @@ function MakeRoom() {
     }
 
     //room만들기 =======================================================
-    const title = (e) => {
-        changeLength(e);
+    const title = (e) => { 
         changeRoom(e);
     }
     const content = (e) => {
@@ -60,8 +65,9 @@ function MakeRoom() {
     //사용자설정이미지
     const inputImg = (e) => {
         selectImg(e); //이미지 출력 프론트
-        //백엔드 이름 넘겨주기
+        //백엔드 이름 저장
         setRoom({ ...room, 'roomImage': e.target.files[0].name });
+        //백엔드 파일저장
         setFile(e.target.files[0]);
     }
     const type = (e) => {
@@ -89,11 +95,15 @@ function MakeRoom() {
         formData.append('roomCategory', room.roomCategory);
         formData.append('roomType', room.roomType);
         formData.append('file', file);
-         
-        axios.post('http://localhost:8090/makeRoom', formData)
+        const accessToken = localStorage.getItem('accessToken'); 
+        axios.post('http://localhost:8090/room/makeRoom', formData,{
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
             .then(res => {
-                // document.location.href="/roomMain";
-                console.log(res);
+                setRoomId(res.data);
+                document.location.href=`/roomMain/dashboard/${res.data}`; 
             })
             .catch(err => {
                 console.log(err);
@@ -251,7 +261,7 @@ function MakeRoom() {
                             </div>
                         </li>
                     </ul>
-
+                    
                     <div className='sm-btns'>
                     <Link to="/roomlist"><input type='button' className='back-btn smb' value='돌아가기' /></Link>
                         <input type='submit' className='submit-btn smb' value='모임개설' onClick={onModal} />

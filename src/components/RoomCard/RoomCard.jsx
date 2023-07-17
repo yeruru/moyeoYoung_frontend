@@ -1,45 +1,21 @@
-// import React from 'react'
-// import './RoomCard.css';
-// import { useState, useEffect } from 'react';
-// export const RoomCard = ({room}) => { 
-//   useEffect(()=>{
-//     console.log('Enter at RoomCard : ');
-//   },[])
-//   return (
-//     <div id='room-card'>
-//       <a href="#" className='a-mark'>
-//         <button className='bookmark'><span className="material-symbols-outlined mark-icon click">
-//           bookmark
-//         </span></button>
-//         <img src='/image/test.jpg' className='card-img' />
-//         <p className='p2'>{room.roomTitle}</p>
-//         <div>
-//           <div className='mini-sec'>
-//             <p className='p3 pink'>#{room.roomCategory}</p>
-//             <div className='mini-sec2'>
-//               <span className="material-symbols-outlined group-icon">
-//                 group
-//               </span><span className='p4'>{room.roomUserCnt}</span>
-//             </div>
-//           </div>
-//         </div>
-//       </a>
-//     </div>
 
-//   )
-// }
 import React from 'react'
 import './RoomCard.css';
 import { useState, useEffect } from 'react';
-
-export const RoomCard = ({ title, memCnt, category, content, imgName }) => {
+import axios from 'axios';
+import { Link,useNavigate  } from 'react-router-dom';
+ 
+export const RoomCard = ({ isBookmark, item }) => { 
   const [backColor, setBackColor] = useState('');
-  // const instance = axios.create({
-  //   baseURL: 'https://localhost:8090', // 기본 경로 설정
-  // });
+  const [detail, setDetail] = useState(item.roomContent.replace(/<br\/>/g, ''));
+  const instance = axios.create({
+    baseURL: 'http://localhost:8090/room', // 기본 경로 설정
+  });
+  const [bookmark, setBookmark] = useState(isBookmark);
+  const navigate  = useNavigate();
 
-  useEffect(() => { 
-    switch (category) {
+  useEffect(() => {
+    switch (item.roomCategory) {
       case '취업준비': setBackColor('blue'); break;
       case '스터디': setBackColor('lblue'); break;
       case '과외/멘토': setBackColor('orange'); break;
@@ -49,28 +25,53 @@ export const RoomCard = ({ title, memCnt, category, content, imgName }) => {
       case '친목': setBackColor('yellow'); break;
       case '기타': setBackColor('gray'); break;
     }
- 
   }, [])
-  return (
 
+  const callBookmark = (e) => {
+    const accessToken = localStorage.getItem('accessToken');
+    if(accessToken===null){
+      e.preventDefault();
+      alert('로그인이 필요합니다');
+      navigate('/login');
+  } 
+  e.preventDefault();
+    instance.get(`/bookmark/${e.target.id}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+    }
+    },{
+      params: {
+        status: bookmark
+      }
+    })
+      .then(res => {
+        setBookmark(!bookmark);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+
+  }
+  return ( 
     <div id='room-card'>
-      <a href="#" className='a-mark'>
-        <button className='bookmark'><span className="material-symbols-outlined mark-icon">
+      <Link to={`/roomMain/dashboard/${item.roomId}`} className='a-mark'> 
+        <button className='bookmark'><span id={item.roomId} className={`material-symbols-outlined mark-icon ${bookmark ? 'click' : ''}`} onClick={callBookmark}>
+ 
           bookmark
         </span></button>
-        <img src={`http://localhost:8090/view/${imgName}`} className='card-img' />
-        <p className='p2'>{title}</p>
-        <p className="intro">{content}</p>
+        <img src={`http://localhost:8090/room/view/${item.roomImage}`} className='card-img' />
+        <p className='p2'>{item.roomTitle}</p>
+        <p className="intro">{detail}</p>
 
         <div className='mini-sec'>
-          <p className={`p3 ${backColor}`}>#{category}</p>
+          <p className={`p3 ${backColor}`}>#{item.roomCategory}</p>
           <div className='mini-sec2'>
             <span className="material-symbols-outlined group-icon">
               group
-            </span><span className='p4'>{memCnt}</span>
+            </span><span className='p4'>{item.roomUserCnt}</span>
           </div>
-        </div>
-      </a>
+        </div> 
+        </Link> 
     </div>
 
   )

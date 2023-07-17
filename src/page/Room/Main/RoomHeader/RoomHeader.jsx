@@ -1,13 +1,21 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import styled from 'styled-components';
 import SettingsIcon from '@mui/icons-material/Settings';
 
 function RoomHeader({ onContentChange }) {
-  const [selectedButton, setSelectedButton] = useState('dashboard');
+  const [selectedButton, setSelectedButton] = useState('');
+  const location = useLocation();
+  
+  useEffect(()=>{
+    const content= location.pathname.split("/")[2];
+    setSelectedButton(content);
+  },[]);
 
   const handleLinkClick = (content) => {
     setSelectedButton(content);
     onContentChange(content);
+    console.log(content);
   };
 
   return (
