@@ -88,7 +88,6 @@ function ModifyFeed ({isOpen, content, onClose, roomId}) {
     
     const submit = (e) => {
         e.preventDefault();
-        console.log("asdf");
         const formData = new FormData();
         formData.append('title', feed.title);
         formData.append('content', feed.content);

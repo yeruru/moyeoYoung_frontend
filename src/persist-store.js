@@ -3,7 +3,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 // Auth 리듀서와 액션 생성자 정의
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
+  initialState: { 
     accessToken: null,
     refreshToken: null,
   },

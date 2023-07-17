@@ -32,12 +32,13 @@ const LoginForm = () => {
         // localStorage에 access 토큰 저장
         localStorage.setItem('accessToken', accessToken);
         localStorage.setItem('refreshToken', refreshToken);
+        console.log(accessToken);
 
         dispatch(setTokens({ accessToken })); // 액션 생성자를 사용하여 액션을 디스패치합니다.
         dispatch({ type: 'USERID', payload: res.data.userid });
 
         // 로그인 성공 후 Main 컴포넌트로 이동
-        document.location.href = '/';
+        // document.location.href = '/';
       })
       .catch((err) => {
         console.log(err);
