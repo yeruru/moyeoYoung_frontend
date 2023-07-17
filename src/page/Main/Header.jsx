@@ -242,7 +242,7 @@ function Header() {
               </a>
             </li>
           )}
-            <li className='noteLi'>
+            {/* <li className='noteLi'>
               <NoteIconContainer onClick={handleNoteIconClick}>
                 <NotificationsIcon />
               </NoteIconContainer>
@@ -252,7 +252,7 @@ function Header() {
                   <p>알림이 없습니다</p>
                 </NoteBox>
               )}
-            </li>
+            </li> */}
             <li>
               <MailIcon />
             </li>
