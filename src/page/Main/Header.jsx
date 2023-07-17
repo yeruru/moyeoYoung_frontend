@@ -7,7 +7,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import styled from 'styled-components';
 import imge from '../../images/photo/photo02.jpg';
 import ClearIcon from '@mui/icons-material/Clear';
-import { Link } from 'react-router-dom';
+import { Link ,useNavigate  } from 'react-router-dom';
 import { clearTokens } from '../../persist-store';
 
 function Header() {
@@ -25,15 +25,27 @@ function Header() {
 
   // 로그인 부분
   const [isLoggedIn, setIsLoggedIn] = useState(false); // 로그인 상태 여부
-  const userid = useSelector((state) => state.UserId);
+  const memberId = useSelector((state) => state.memberId);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // 로그인 여부를 확인하여 상태 업데이트
     const token = localStorage.getItem('accessToken');
-    setIsLoggedIn(!!token);
-  }, []);
+    const expirationTime = localStorage.getItem('expirationTime');
+    const currentTime = new Date().getTime();
 
+    if (token && expirationTime && currentTime > expirationTime) {
+      // 토큰이 만료된 경우
+      dispatch(clearTokens());
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
+      alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
+      navigate('/login');
+    } else {
+      setIsLoggedIn(!!token);
+    }
+  }, [dispatch, navigate]);
+  
   // 모달
   const handleNoteIconClick = () => {
     setNoteBoxOpen(!isNoteBoxOpen);
@@ -45,9 +57,11 @@ function Header() {
     console.log('====로그아웃 되었습니다====');
     localStorage.removeItem('accessToken'); // 로컬 스토리지에서 토큰 제거
     localStorage.removeItem('refreshToken');
-    document.location.href = '/login'; // 로그아웃 후 홈페이지로 리다이렉트
+    navigate('/login');
+    // document.location.href = '/login'; // 로그아웃 후 홈페이지로 리다이렉트
   };
 
+  
   return (
     <div className='mo-header'>
       <div className='header-wrap'>
@@ -85,7 +99,7 @@ function Header() {
             <li>
               {isLoggedIn ? ( // 로그인 상태에 따라 버튼을 다르게 렌더링
                 <>
-                  <b>{userid}</b>&nbsp;&nbsp;
+                  <b>{memberId}</b>&nbsp;&nbsp;
                   <a className='header-btn logout' onClick={logout}>
                     로그아웃
                   </a>
@@ -103,11 +117,13 @@ function Header() {
                 </Link>
               </li>
             )}
+            {!isLoggedIn && (
             <li>
               <a href='/signup' className='header-btn join'>
                 회원가입
               </a>
             </li>
+          )}
             <li className='noteLi'>
               <NoteIconContainer onClick={handleNoteIconClick}>
                 <NotificationsIcon />
