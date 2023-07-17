@@ -29,7 +29,7 @@ function WriteFeed ({roomId}){
         setFeed({...feed, [name]:value})    
     };
 
-    const open = () => {
+    const open = () => { 
         if(feed.title == ''){
             window.confirm("제목을 입력해주세요");
         }else if(feed.content==''){

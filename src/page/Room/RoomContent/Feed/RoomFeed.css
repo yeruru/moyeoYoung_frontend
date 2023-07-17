@@ -320,6 +320,14 @@
     display: none;
 }
 
+.roomfeed .like{
+    display: none;
+}
+
+.roomfeed .redlike {
+    display : none;
+}
+
 .roomfeed .show {
     display: block;
 }
@@ -381,5 +389,7 @@
     border-radius: 7px;
     cursor: pointer;
 }
-
-
+/* 
+.roomfeed .like{
+    display : block;
+} */

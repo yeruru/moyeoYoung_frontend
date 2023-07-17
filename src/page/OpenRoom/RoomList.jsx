@@ -179,7 +179,6 @@ function RoomList() {
             <button type='button' className='make-btn' onClick={goMakeRoom}>만들기</button>
             {/* <Link to="/makeRoom"><button type='button' className='make-btn'>만들기</button></Link> */}
           </div>
-
           <div className="list-box">
             <ul className='card-ul'>
               {roomList.length == 0 &&
@@ -207,12 +206,8 @@ function RoomList() {
                   <button className="plusRoomList" onClick={plusRoomList}>더 보 기</button>
                 </div>
               }
-
-
             </ul>
-
           </div>
-
         </div>
       </div>
     </div >

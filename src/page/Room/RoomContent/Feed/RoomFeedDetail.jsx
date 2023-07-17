@@ -7,7 +7,6 @@ import 'swiper/css/pagination';
 import axios from 'axios';
 
 const RoomFeedDetail = ({isOpen, onClose, content}) => { 
-
     const [feedDetail, setFeedDetail] = useState({title:'', content:'' ,userId : 0,  filename : '', roomcreateDate : ''});
     const [feedId, setFeedId] = useState(content);
     const [feedFileName, setFeedFileName] = useState([])

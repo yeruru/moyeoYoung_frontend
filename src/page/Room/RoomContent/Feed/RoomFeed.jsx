@@ -12,12 +12,12 @@ import nothing from '../../../../images/Group 153.svg'
 import axios from 'axios';
 import RoomFeedDetail from './RoomFeedDetail';
 import ModifyFeed from './ModifyFeed.jsx';
+import {useSelector} from 'react-redux';
 
 
 function RoomFeed({onContentChange}) {
-  const [isClicked, setIsClicked] = useState(false);
+  const [likes, setLikes] = useState([14]);
   const [modalClicked, setModalClicked] = useState(false);
-  const [member, setmember] = useState("승현");
   const [feed, setFeed] = useState([]);
   const modalRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
@@ -51,45 +51,40 @@ function RoomFeed({onContentChange}) {
       setFeed(res.data);
     })
     .catch(err => {
-
     });
   },[]);
 
   const modal = (p_feedId) => {
-    console.log(p_feedId);
     setModalClicked(prevState => ({
       ...prevState,
       [p_feedId]: !prevState[p_feedId]
     }));
   };
 
-  const handleClick = () => {
-    setIsClicked(!isClicked);
-    if(isClicked === false){
-      increaseLikeCount();
-    }else{
-      decreaseLikeCount();
-    }
+  const handleClick = (feedId) => {
+    setLikes((prevLikes) => {
+      const isLiked = prevLikes.includes(feedId);
+
+      if(isLiked){
+        decreaseLikeCount(feedId);
+        return prevLikes.filter((id) => id !== feedId)
+      }else{
+        increaseLikeCount(feedId);
+        return [...prevLikes, feedId];
+      }
+    });
   };
 
-  // const MyComponent = () => {
-  //   if(member == '승현'){
-  //     return <div>This is rendered when condition is true.</div>;
-  //   }else{
-  //     return <div>This is rendered when condition is false.</div>;  
-  //   }
-  // }
-
-  const increaseLikeCount = () => {
-    let Count = document.getElementById("likecount").innerHTML;
+  const increaseLikeCount = (feedId) => {
+    let Count = document.getElementById(`likecount${feedId}`).innerHTML;
     Count = (Number)(Count) + 1;
-    document.getElementById("likecount").innerHTML = Count;
+    document.getElementById(`likecount${feedId}`).innerHTML = Count;
   }
 
-  const decreaseLikeCount = () => {
-    let Count = document.getElementById("likecount").innerHTML;
+  const decreaseLikeCount = (feedId) => {
+    let Count = document.getElementById(`likecount${feedId}`).innerHTML;
     Count = Count - 1;
-    document.getElementById("likecount").innerHTML = Count;
+    document.getElementById(`likecount${feedId}`).innerHTML = Count;
   }
 
   const location = (content) => {
@@ -134,8 +129,6 @@ function RoomFeed({onContentChange}) {
   const notclose = (event) => {
     event.stopPropagation();
   }
-
-  
 
   const deletefeed = () => { 
     console.log(mfeedId);
@@ -248,13 +241,13 @@ function RoomFeed({onContentChange}) {
                   }
                 </div>
                 <div className='feedfooter'>
-                  <div onClick={handleClick} style={{ position: 'relative', cursor: 'pointer' }}>
-                    <FavoriteIcon style={{color: 'red', position:'relative' ,display : isClicked? 'block' : 'none' , fontSize:'25px'}} ></FavoriteIcon>
+                  <div className={`redlike ${likes.includes(feed.feedId) ? 'show' : ''}`} onClick={() => handleClick(feed.feedId)} style={{ position: 'relative', cursor: 'pointer' }}>
+                    <FavoriteIcon style={{color: 'red', position:'relative',  fontSize:'25px'}} ></FavoriteIcon>
                   </div>
-                  <div onClick={handleClick} style={{ position: 'relative', cursor: 'pointer' }}>
-                    <FavoriteBorderIcon style={{color:'gray', position:'relative',display : !isClicked? 'block' : 'none', fontSize:'25px'}}/>
+                  <div className={`like ${likes.includes(feed.feedId) ? '' : 'show'}`} onClick={()=>handleClick(feed.feedId)} style={{ position: 'relative', cursor: 'pointer' }}>
+                    <FavoriteBorderIcon style={{color:'gray', position:'relative', fontSize:'25px'}}/>
                   </div>
-                  <div id = "likecount" style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '2px'}}>12</div>
+                  <div id = {`likecount${feed.feedId}`} style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '2px'}}>12</div>
                     <ModeCommentOutlinedIcon onClick={() => detail(`${feed.feedId}`)} style={{color:'gray', fontSize : '23px', marginLeft : '9px' ,marginTop : '2px',cursor : 'pointer' }}/> 
                     <div onClick={() => detail(`${feed.feedId}`)} style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '3px',cursor : 'pointer'}}>31</div>
                 </div>

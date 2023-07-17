@@ -2,7 +2,7 @@ import { configureStore, createSlice } from '@reduxjs/toolkit';
 
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
+  initialState: { 
     accessToken: null,
     refreshToken: null,
   },
