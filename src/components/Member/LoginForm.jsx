@@ -7,7 +7,6 @@ import {
   Dialog,
   DialogTitle,
   DialogContent,
-  // DialogActions,
   TextField,
 } from "@mui/material";
 import "./LoginForm.css";
@@ -56,8 +55,7 @@ const LoginForm = () => {
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         setAccessToken(accessToken);
-
-        dispatch(setTokens({ accessToken })); // 액션 생성자를 사용하여 액션을 디스패치합니다.
+        dispatch(setTokens({ accessToken }));
         dispatch({ type: "USERID", payload: res.data.memberId });
         console.log("로그인 성공");
         console.log(res.data.email);

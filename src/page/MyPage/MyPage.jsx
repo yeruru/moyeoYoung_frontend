@@ -86,7 +86,6 @@ const MyPage = () => {
     form.append("file", formData.file); // 파일 데이터 추가
     console.log(formData.fileName);
     console.log(formData.file);
-    // 프로필 업데이트 API를 호출합니다.
     axios
     .post(`http://localhost:8090/member/update/${memberId}`, form,{
       headers: {
@@ -95,7 +94,6 @@ const MyPage = () => {
     })
       .then((response) => {
         console.log("프로필 업데이트 성공:", response.data);
-        // 업데이트 성공에 대한 처리를 진행합니다.
         handleModalClose();
       })
       .catch((error) => {
