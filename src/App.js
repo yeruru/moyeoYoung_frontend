@@ -25,6 +25,7 @@ import Note from "./page/Note/Note";
 import UserPage from "./page/UserPage/UserPage";
 import OpenChat from "./page/OpenChat/OpenChat";
 
+
 function App() {
   return (
     <>
@@ -40,7 +41,13 @@ function App() {
         <Route exact path="/roomMain/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/dashboard/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/roomFeed/:roomId" element={<RoomMain />} />
+
+        {/* 모임방 공지사항 */}
         <Route  path="/roomMain/roomAnno/:roomId" element={<RoomMain />} />
+        <Route  path="/roomMain/writeAnno/:roomId" element={<RoomMain />} />
+        <Route  path="/roomMain/:roomId/detailAnno/:annoId" element={<RoomMain />} />
+        <Route  path="/roomMain/:roomId/editAnno/:annoId" element={<RoomMain />} />
+
         <Route  path="/roomMain/writefeed/:roomId" element={<RoomMain />} />
 
         <Route exact path="/" element={<Main />} />
