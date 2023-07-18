@@ -5,6 +5,7 @@ import img4 from '../images/music/music-4.jpg';
 import img5 from '../images/music/music-5.jpg';
 import img6 from '../images/music/music-6.jpg';
 import img7 from '../images/music/music-7.jpg';
+import img8 from '../images/music/music-8.jpg';
 import music1 from '../music/music-1.mp3';
 import music2 from '../music/music-2.mp3';
 import music3 from '../music/music-3.mp3';
@@ -12,6 +13,7 @@ import music4 from '../music/music-4.mp3';
 import music5 from '../music/music-5.mp3';
 import music6 from '../music/music-6.mp3';
 import music7 from '../music/music-7.mp3';
+import music8 from '../music/music-8.mp3';
 
 const playList = [
   {
@@ -29,8 +31,8 @@ const playList = [
     id: 2,
   },
   {
-    name: 'The Cradle of Your Soul',
-    artist: 'lemonmusicstudio',
+    name: '마음이 편해지는 유령송',
+    artist: '유령',
     img: img3,
     src: music3,
     id: 3,
@@ -62,6 +64,13 @@ const playList = [
     img: img7,
     src: music7,
     id: 7,
+  },
+  {
+    name: 'Everything Feels New',
+    artist: 'EvgenyBardyuzha',
+    img: img8,
+    src: music8,
+    id: 8,
   },
 ];
 
