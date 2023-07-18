@@ -25,6 +25,7 @@ function RoomList() {
   const [isBookmarks, setIsBookmarks] = useState([]);
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
+  console.log(accessToken);
   useEffect(() => { 
     getRoomList(page);
   }, [])
