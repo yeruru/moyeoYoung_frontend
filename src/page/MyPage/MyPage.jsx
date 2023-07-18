@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import "../../images/member/default.png"
+import "../../images/member/normal.png"
 import {
   TextField,
   Button,

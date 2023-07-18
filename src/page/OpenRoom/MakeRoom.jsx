@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
-import { Link,useHistory  } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 
 function MakeRoom() {
     const [activeCate, setActiveCate] = useState('');
@@ -91,6 +91,7 @@ function MakeRoom() {
         formData.append('roomType', room.roomType);
         formData.append('file', file);
         const accessToken = localStorage.getItem('accessToken'); 
+        console.log(accessToken);
         axios.post('http://localhost:8090/room/makeRoom', formData,{
             headers: {
                 'Authorization': `Bearer ${accessToken}`
