@@ -47,7 +47,7 @@ function Header() {
       alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
       navigate('/login');
     } else {
-      setIsLoggedIn(!!token);
+      setIsLoggedIn(token);
     }
   }, [dispatch, navigate]);
   
@@ -253,14 +253,14 @@ function Header() {
                 </NoteBox>
               )}
             </li> */}
-            <li>
+            {/* <li>
               <MailIcon />
             </li>
             <li>
               <Pro>
                 <ProImg src={imge} />
               </Pro>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

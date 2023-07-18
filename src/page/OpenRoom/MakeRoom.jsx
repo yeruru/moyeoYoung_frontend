@@ -16,11 +16,6 @@ function MakeRoom() {
     const [file, setFile] = useState();
     const [modal, setModal] = useState(false);
 
-    useEffect(()=>{
-        const acc = localStorage.getItem('accessToken');
-        console.log(acc);
-    },[])
-
     //소개글 글자수
     const changeLength = (e) => {
         settxtLength(e.target.value.length);

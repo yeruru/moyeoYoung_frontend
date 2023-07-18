@@ -50,21 +50,15 @@ const LoginForm = () => {
       .then((res) => {
         const accessToken = res.data.accessToken;
         const refreshToken = res.data.refreshToken;
-        console.log(accessToken);
-        console.log(refreshToken);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         setAccessToken(accessToken);
         dispatch(setTokens({ accessToken }));
         dispatch({ type: "USERID", payload: res.data.memberId });
-        console.log("로그인 성공");
-        console.log(res.data.email);
-        console.log(accessToken);
         // 로그인 성공 후 Main 컴포넌트로 이동
         document.location.href = "/";
       })
       .catch((err) => {
-        console.log(err);
         alert("로그인에 실패하였습니다.");
       });
   };
