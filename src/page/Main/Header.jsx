@@ -253,14 +253,14 @@ function Header() {
                 </NoteBox>
               )}
             </li> */}
-            <li>
+            {/* <li>
               <MailIcon />
             </li>
             <li>
               <Pro>
                 <ProImg src={imge} />
               </Pro>
-            </li>
+            </li> */}
           </ul>
         </div>
       </div>

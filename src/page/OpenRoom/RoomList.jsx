@@ -8,8 +8,6 @@ import nothing from '../../images/Group 153.svg'
 
 function RoomList() {
   const { page } = useParams();
-  // const [nextPage,setNextPage] = useState(); 
-  const [searchBasic, setSearchBasic] = useState(true);
   const [searchCate, setSearchCate] = useState(false);
   const [searchWord, setSearchWord] = useState(false);
   const [curPage, setCurPage] = useState();
@@ -25,20 +23,21 @@ function RoomList() {
   const [isBookmarks, setIsBookmarks] = useState([]);
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
-  useEffect(() => { 
-    getRoomList(page);
+  useEffect(() => {
+    getRoomList(page); 
   }, [])
 
   const getRoomList = (p_page) => {
     setSearchCate(false);
-    setSearchWord(false);
-    setSearchBasic(true); 
+    setSearchWord(false); 
+
 
     instance.get(`/roomList/${p_page}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }
-    })
+    }
+    )
       .then((res) => {
         if (p_page === 1) {
           setRoomList([...res.data.list]);
@@ -48,7 +47,9 @@ function RoomList() {
         const pageInfo = res.data.pageInfo;
         setCurPage(pageInfo.curPage);
         setAllPage(pageInfo.allPage);
-        setIsBookmarks([...res.data.isBookmarks]);
+        if(res.data.isBookmarks){
+          setIsBookmarks([...res.data.isBookmarks]); 
+        }
 
       })
       .catch(err => {
@@ -65,8 +66,8 @@ function RoomList() {
   const searchByCateName = (p_cateName, p_page) => {
     setSearchCate(true);
     setSearchWord(false);
-    setSearchBasic(false);
-    instance.get(`/roomListByCate/${p_page}`, { 
+
+    instance.get(`/roomListByCate/${p_page}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       },
@@ -97,11 +98,11 @@ function RoomList() {
   const searchByWord = (p_word, p_page) => {
     setSearchCate(false);
     setSearchWord(true);
-    setSearchBasic(false);
+
     instance.get(`/roomListByWord/${p_page}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
-    }, params: {
+      }, params: {
         word: p_word
       }
     })
@@ -181,7 +182,7 @@ function RoomList() {
           </div>
           <div className="list-box">
             <ul className='card-ul'>
-              {roomList.length == 0 &&
+              {roomList.length === 0 &&
                 <div className='empty-item-box'>
                   <div className='empty-img-box'>
                     <img src={nothing} /></div>
