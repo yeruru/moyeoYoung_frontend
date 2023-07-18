@@ -42,7 +42,6 @@
 .roomfeed .userProfile{
     height: 50px;
     width: 50px;
-    background-image: url("../../../../../public/image/feed/hello.jpg");
     background-repeat : no-repeat;
     background-size : cover;
     background-position: center;

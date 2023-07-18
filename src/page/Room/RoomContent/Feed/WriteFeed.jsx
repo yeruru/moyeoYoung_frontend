@@ -16,6 +16,8 @@ function WriteFeed ({roomId}){
     const [feed, setFeed] = useState({title:'', content:'' ,userId : 0, roomId:0, filename : ''});
     const [modalOpen, setModalOpen] = useState(false);
 
+    const accessToken = localStorage.getItem("accessToken");
+
     const text = (e) => {
         setTextCount(e.target.value.length);
         const name = e.target.name;
@@ -102,22 +104,23 @@ function WriteFeed ({roomId}){
             setShow(!show);
         }
     };
+
+    console.log(accessToken);
     
     const submit = (e) => {
         e.preventDefault();
-        console.log("asdf");
         const formData = new FormData();
         formData.append('title', feed.title);
         formData.append('content', feed.content);
-        formData.append('userId', feed.userId);
         formData.append('roomId', feed.roomId);
         formData.append('filename', feed.filename);
         formData.append('files', files);
         Object.values(files).forEach((file)=> formData.append("files", file));
         axios.post(`http://localhost:8090/feed/writefeed/${feed.roomId}`, formData,{
-            headers: {
-                "Content-Type": `multipart/form-data; `,
-            }
+                headers: {
+                    "Content-Type": `multipart/form-data; `,
+                    'Authorization': `Bearer ${accessToken}`,
+                }
         })
         .then(res => {
             console.log(res);

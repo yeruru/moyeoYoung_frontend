@@ -31,7 +31,7 @@ function Main() {
         setRoomList(res.data.list);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
       });
   };
 

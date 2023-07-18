@@ -103,8 +103,6 @@ function ModifyFeed ({isOpen, content, onClose, roomId}) {
             console.log(err);
         })
     };
-
-    console.log(feed);
     return(
     <div className={`modifybackground ${isOpen ? 'show' : ''}`}  onClick={onClose}>
         <div className='modifyfeed' onClick={notclose}>

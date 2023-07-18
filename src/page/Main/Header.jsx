@@ -47,7 +47,7 @@ function Header() {
       alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
       navigate('/login');
     } else {
-      setIsLoggedIn(!!token);
+      setIsLoggedIn(token);
     }
   }, [dispatch, navigate]);
   
@@ -125,10 +125,6 @@ function Header() {
             <li>
               {isLoggedIn ? ( // 로그인 상태에 따라 버튼을 다르게 렌더링
                 <>
-                  <b>{memberId}</b>&nbsp;&nbsp;
-                  <a className='header-btn logout' onClick={logout}>
-                    로그아웃
-                  </a>
                 </>
               ) : (
                 <Link to='/login' className='header-btn login'>

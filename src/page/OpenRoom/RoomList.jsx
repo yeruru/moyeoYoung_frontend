@@ -22,9 +22,9 @@ function RoomList() {
   });
   const [isBookmarks, setIsBookmarks] = useState([]);
   const navigate = useNavigate();
-  const accessToken = localStorage.getItem('accessToken');
+  const accessToken = localStorage.getItem('accessToken'); 
   useEffect(() => {
-    getRoomList(page); 
+    getRoomList(page);   
   }, [])
 
   const getRoomList = (p_page) => {
