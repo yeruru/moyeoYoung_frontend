@@ -4,7 +4,7 @@ import { useState, useRef, useEffect } from 'react';
 import CenterFocusWeakIcon from '@mui/icons-material/CenterFocusWeak';
 import CloseIcon from '@mui/icons-material/Close';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+import { Link  } from 'react-router-dom';
 
 function MakeRoom() {
     const [activeCate, setActiveCate] = useState('');
@@ -15,11 +15,6 @@ function MakeRoom() {
     const [roomId, setRoomId] = useState(0);
     const [file, setFile] = useState();
     const [modal, setModal] = useState(false);
-
-    useEffect(()=>{
-        const acc = localStorage.getItem('accessToken');
-        console.log(acc);
-    },[])
 
     //소개글 글자수
     const changeLength = (e) => {
@@ -95,8 +90,13 @@ function MakeRoom() {
         formData.append('roomCategory', room.roomCategory);
         formData.append('roomType', room.roomType);
         formData.append('file', file);
-        
-        axios.post('http://localhost:8090/room/makeRoom', formData)
+        const accessToken = localStorage.getItem('accessToken'); 
+        console.log(accessToken);
+        axios.post('http://localhost:8090/room/makeRoom', formData,{
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }
+        })
             .then(res => {
                 setRoomId(res.data);
                 document.location.href=`/roomMain/dashboard/${res.data}`; 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef} from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import "./RoomFeed.css";
 import 'swiper/css';
 import 'swiper/css/navigation';
@@ -11,17 +11,23 @@ import ModeCommentOutlinedIcon from '@mui/icons-material/ModeCommentOutlined';
 import nothing from '../../../../images/Group 153.svg'
 import axios from 'axios';
 import RoomFeedDetail from './RoomFeedDetail';
+import ModifyFeed from './ModifyFeed.jsx';
+import {useSelector} from 'react-redux';
 
 
 function RoomFeed({onContentChange}) {
-  const [isClicked, setIsClicked] = useState(false);
+  const [likes, setLikes] = useState([]);
   const [modalClicked, setModalClicked] = useState(false);
-  const [member, setmember] = useState("승현");
   const [feed, setFeed] = useState([]);
   const modalRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [modifyModal, setModifyModal] = useState(false);
   const [feedId, setFeedId] = useState();
+  const [mfeedId, setMFeedId] = useState();
   let { roomId } = useParams();
+
+  const accessToken = localStorage.getItem("accessToken");
 
   useEffect(() => {
     const handleClickOutsideModal = (event) => {
@@ -41,50 +47,85 @@ function RoomFeed({onContentChange}) {
     };
   }, []);
 
+  
   useEffect(()=>{
-    axios.get(`http://localhost:8090/feed/selectfeed/${roomId}`)
+    axios.get(`http://localhost:8090/feed/likelist`,{
+      headers: {
+        'Authorization': `Bearer ${accessToken}`,
+      }})
+      .then(res=>{
+        setLikes(res.data);
+      })
+      .catch(err=>{
+
+      });
+  },[]);
+
+  useEffect(()=>{
+    axios.get(`http://localhost:8090/feed/selectfeed/${roomId}/`)
     .then(res=>{
       setFeed(res.data);
     })
     .catch(err => {
-      console.log(err);
-    });
+    })
   },[]);
 
-  const modal = (feedId) => {
+  console.log(feed);
+  
+
+  const modal = (p_feedId) => {
     setModalClicked(prevState => ({
       ...prevState,
-      [feedId]: !prevState[feedId]
+      [p_feedId]: !prevState[p_feedId]
     }));
   };
 
-  const handleClick = () => {
-    setIsClicked(!isClicked);
-    if(isClicked === false){
-      increaseLikeCount();
-    }else{
-      decreaseLikeCount();
-    }
+  const handleClick = (feedId) => {
+    setLikes((prevLikes) => {
+      const isLiked = prevLikes.includes(feedId);
+
+      if(isLiked){
+        decreaseLikeCount(feedId);
+        axios.get(`http://localhost:8090/feed/delike/${feedId}`,{
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+          }
+        })
+        .then(res=>{
+          console.log(res);
+        })
+        .catch(err=>{
+          console.log(err);
+        })
+        return prevLikes.filter((id) => id !== feedId)
+      }else{
+        increaseLikeCount(feedId);
+        axios.get(`http://localhost:8090/feed/like/${feedId}`,{
+          headers: {
+            'Authorization': `Bearer ${accessToken}`,
+          }
+        })
+        .then(res=>{
+          console.log(res);
+        })
+        .catch(err=>{
+          console.log(err);
+        })
+        return [...prevLikes, feedId];
+      }
+    });
   };
 
-  // const MyComponent = () => {
-  //   if(member == '승현'){
-  //     return <div>This is rendered when condition is true.</div>;
-  //   }else{
-  //     return <div>This is rendered when condition is false.</div>;  
-  //   }
-  // }
-
-  const increaseLikeCount = () => {
-    let Count = document.getElementById("likecount").innerHTML;
+  const increaseLikeCount = (feedId) => {
+    let Count = document.getElementById(`likecount${feedId}`).innerHTML;
     Count = (Number)(Count) + 1;
-    document.getElementById("likecount").innerHTML = Count;
+    document.getElementById(`likecount${feedId}`).innerHTML = Count;
   }
 
-  const decreaseLikeCount = () => {
-    let Count = document.getElementById("likecount").innerHTML;
+  const decreaseLikeCount = (feedId) => {
+    let Count = document.getElementById(`likecount${feedId}`).innerHTML;
     Count = Count - 1;
-    document.getElementById("likecount").innerHTML = Count;
+    document.getElementById(`likecount${feedId}`).innerHTML = Count;
   }
 
   const location = (content) => {
@@ -97,20 +138,55 @@ function RoomFeed({onContentChange}) {
     document.getElementById("body").style.overflowY="hidden";
   }
 
+  const modify = (feedId) => {
+    setFeedId(feedId);
+    setModifyModal(true);
+    document.getElementById("body").style.overflowY="hidden";
+  }
+
   const handleCloseModal = () => {
     setFeedId(null);
     setModalOpen(false);
     document.getElementById("body").style.overflowY="scroll";
   };
 
-  const modify = () => {
-    location('modifyfeed');
+  const ModifyCloseModal = () => {
+    setFeedId(null);
+    setModifyModal(false);
+    document.getElementById("body").style.overflowY="scroll";
+  }
+
+  const open = (p_id) => {
+    setDeleteModal(!deleteModal);
+    setMFeedId(p_id);
+    document.getElementById("body").style.overflowY="hidden";
+  };
+
+  const close = () => {
+    setDeleteModal(!deleteModal);
+    document.getElementById("body").style.overflowY="scroll";
+  };
+
+  const notclose = (event) => {
+    event.stopPropagation();
+  }
+
+  const deletefeed = () => { 
+    console.log(mfeedId);
+    axios.post(`http://localhost:8090/feed/deletefeed/${mfeedId}`)
+    .then(res => {
+      console.log(res);
+      document.location.href=`/roomMain/roomFeed/${roomId}`;
+    })
+    .catch(err => {
+
+    })
   }
 
   return (
     <div className='roomfeed'>
       <div className='room-box'>
-        <div className='writeFeed' style={{cursor:'pointer'}} onClick={() => location('writefeed')} >작성하기</div> 
+        <div className='writeFeed' style={{cursor:'pointer'}} onClick={() => location('writefeed')}>작성하기</div> 
         {
           feed.length == 0 &&
           <div className='empty-item-box'>
@@ -125,21 +201,30 @@ function RoomFeed({onContentChange}) {
               <div className='feed' key={feed.feedId}>      
                 <div className='feedHeader'>
                   <div className='userheader'>
-                    <div className='userProfile'></div>
-                    <span className='username'>일단 이름은 이걸로</span>
+                    <div className='userProfile' style={{backgroundImage : `url(http://localhost:8090/room/view/${feed.profilename})`}}></div>
+                    <span className='username'>{feed.nickname}</span>
                   </div>
                   <div className='drop-box'>
-                    <MoreVertIcon onClick={()=>modal(feed.feedId)} style={{cursor:'pointer'}} ref={modalRef} ></MoreVertIcon> 
+                    <MoreVertIcon onClick={() => modal(feed.feedId)} style={{cursor:'pointer'}} ref={modalRef} ></MoreVertIcon> 
                     <div className={`droppage ${modalClicked[feed.feedId] ? 'show' : ''}`} >  
                         <ul>
                             <li>
-                              <div className='feedModefy' style={{cursor:'pointer'}} onClick={() => modify(`${feed.feedId}`)} >수정</div>
+                              <div className='feedModefy' style={{cursor:'pointer'}} onClick={() => modify(feed.feedId)}>수정</div>
                             </li>
                             <li>
-                              <div className='feedDelete' style={{color:'red', cursor:'pointer'}}>삭제</div>
+                              <div className='feedDelete' style={{color:'red', cursor:'pointer'}} onClick={()=>{open(feed.feedId)}}>삭제</div>
                             </li>
                           </ul>
                     </div>
+                    <div className={`checkbackground ${deleteModal ? 'show' : ''}`}  onClick={close}>
+                    <div className='checkdelete' onClick={notclose}> 
+                        <div className='checkword'>정말로 삭제하시겠습니까?</div>
+                        <div className='checkword2'>
+                            <div className='checkoutdelete' onClick={close}>취소</div>
+                            <div className='delete' onClick={deletefeed}>삭제하기</div>
+                        </div>
+                    </div>
+                   </div>
                   </div>
                 </div>
                 <div className='feedContent'>
@@ -184,7 +269,7 @@ function RoomFeed({onContentChange}) {
                     feed.filename.split(",").length  == 1 && 
                     <div className='feedimg'>
                     <div>
-                      <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`, 
+                      <div className='bigimg' onClick={() => detail(`${feed.feedId}`)} style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`, cursor : 'pointer',
                         height: 'auto',
                         minHeight: '250px',
                         width:'500px',
@@ -197,13 +282,13 @@ function RoomFeed({onContentChange}) {
                   }
                 </div>
                 <div className='feedfooter'>
-                  <div onClick={handleClick} style={{ position: 'relative', cursor: 'pointer' }}>
-                    <FavoriteIcon style={{color: 'red', position:'relative' ,display : isClicked? 'block' : 'none' , fontSize:'25px'}} ></FavoriteIcon>
+                  <div className={`redlike ${likes.includes(feed.feedId) ? 'show' : ''}`} onClick={() => handleClick(feed.feedId)} style={{ position: 'relative', cursor: 'pointer' }}>
+                    <FavoriteIcon style={{color: 'red', position:'relative',  fontSize:'25px'}} ></FavoriteIcon>
                   </div>
-                  <div onClick={handleClick} style={{ position: 'relative', cursor: 'pointer' }}>
-                    <FavoriteBorderIcon style={{color:'gray', position:'relative',display : !isClicked? 'block' : 'none', fontSize:'25px'}}/>
+                  <div className={`like ${likes.includes(feed.feedId) ? '' : 'show'}`} onClick={()=>handleClick(feed.feedId)} style={{ position: 'relative', cursor: 'pointer' }}>
+                    <FavoriteBorderIcon style={{color:'gray', position:'relative', fontSize:'25px'}}/>
                   </div>
-                  <div id = "likecount" style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '2px'}}>12</div>
+                  <div id = {`likecount${feed.feedId}`} style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '2px'}}>{feed.likeCount}</div>
                     <ModeCommentOutlinedIcon onClick={() => detail(`${feed.feedId}`)} style={{color:'gray', fontSize : '23px', marginLeft : '9px' ,marginTop : '2px',cursor : 'pointer' }}/> 
                     <div onClick={() => detail(`${feed.feedId}`)} style={{color:'gray', fontSize:'15px', lineHeight:'24px' ,marginLeft : '3px',cursor : 'pointer'}}>31</div>
                 </div>
@@ -216,6 +301,14 @@ function RoomFeed({onContentChange}) {
           isOpen={modalOpen}
           content={feedId}
           onClose={handleCloseModal}
+          accessToken = {accessToken}
+        />
+        <ModifyFeed 
+          isOpen={modifyModal}
+          content={feedId}
+          onClose={ModifyCloseModal}
+          roomId = {roomId}
+          accessToken={accessToken}
         />
       </div>
     </div>

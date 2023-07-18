@@ -16,6 +16,8 @@ function WriteFeed ({roomId}){
     const [feed, setFeed] = useState({title:'', content:'' ,userId : 0, roomId:0, filename : ''});
     const [modalOpen, setModalOpen] = useState(false);
 
+    const accessToken = localStorage.getItem("accessToken");
+
     const text = (e) => {
         setTextCount(e.target.value.length);
         const name = e.target.name;
@@ -29,7 +31,7 @@ function WriteFeed ({roomId}){
         setFeed({...feed, [name]:value})    
     };
 
-    const open = () => {
+    const open = () => { 
         if(feed.title == ''){
             window.confirm("제목을 입력해주세요");
         }else if(feed.content==''){
@@ -49,8 +51,6 @@ function WriteFeed ({roomId}){
 
     const filechange = (e) => {
         const allowedTypes = ['image/jpeg', 'image/png'];
-
-           
         const files = e.target.files;
         Array.from(files).forEach(file => {
             if (!allowedTypes.includes(file.type)) {
@@ -60,8 +60,8 @@ function WriteFeed ({roomId}){
                 return;
             }else{
                 setFiles(prevFiles=> [...prevFiles, file]);
-                const reader = new FileReader();
                 setPhotosName((prevPhotosName)=> [...prevPhotosName, file.name]);
+                const reader = new FileReader();
                 reader.readAsDataURL(file);
                 reader.onloadend = () => {
                     setPhotos((prevPhotos) => [...prevPhotos, reader.result])
@@ -69,9 +69,7 @@ function WriteFeed ({roomId}){
                 setShow(!show);
             } 
         });
-       
     };
-
     useEffect(() => {
         setFeed(prevFeed => ({
           ...prevFeed,
@@ -106,22 +104,23 @@ function WriteFeed ({roomId}){
             setShow(!show);
         }
     };
+
+    console.log(accessToken);
     
     const submit = (e) => {
         e.preventDefault();
-        console.log("asdf");
         const formData = new FormData();
         formData.append('title', feed.title);
         formData.append('content', feed.content);
-        formData.append('userId', feed.userId);
         formData.append('roomId', feed.roomId);
         formData.append('filename', feed.filename);
         formData.append('files', files);
         Object.values(files).forEach((file)=> formData.append("files", file));
         axios.post(`http://localhost:8090/feed/writefeed/${feed.roomId}`, formData,{
-            headers: {
-                "Content-Type": `multipart/form-data; `,
-            }
+                headers: {
+                    "Content-Type": `multipart/form-data; `,
+                    'Authorization': `Bearer ${accessToken}`,
+                }
         })
         .then(res => {
             console.log(res);
@@ -163,7 +162,7 @@ function WriteFeed ({roomId}){
                         <div className='plus'><span className='plusfont'>+</span></div>
                     </div>
                 </label>
-                 <input className="fileimage" type="file" name="filename" id="input-file" onChange={filechange} multiple/> 
+                 <input className="fileimage" type="file" name="filename" id="input-file" onChange={filechange} multiple accept="image/jpeg, image/png, image/gif"/> 
                  <div className='feedTitle'>
                     <div>제목</div>
                     <input className='title' maxLength={20} name="title" onChange={change} placeholder='제목을 작성해주세요'></input>

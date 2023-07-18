@@ -2,9 +2,9 @@
   --swiper-theme-color: #3a4a5b;
 }
 .main .banner-wrap { max-width: 1200px; margin: 0 auto;}
-.main .swiper { height: 400px; box-sizing: border-box; width: 100%;}
+.main .swiper { height: 350px; box-sizing: border-box; width: 100%;}
 .main .swiper img { width: 500px;}
-.main .swiper a { display: flex; justify-content: space-between; align-items: center; height: 400px;}
+.main .swiper a.atag { display: flex; justify-content: space-between; align-items: center; height: 400px;}
 .main .swiper h2 { line-height: 1.2em; padding: 28px 0; font-size: 30px; font-weight: bolder;}
 .main .swiper em { padding: 10px; background-color: #414141; font-size: 12px; border-radius: 10px; color: #fff; font-weight: 700;}
 .main .swiper p {line-height: 1.2em;}
@@ -18,3 +18,11 @@
 .main .title { display: flex; justify-content: space-between; align-items: center;}
 .main .title a { font-size: 18px;}
 .main .title a:hover { color: var(--mo);}
+
+.main .swiper-button-prev,
+.main .swiper-button-next { top: 45%; color: #7e7e7e; transition: all .3s;}
+.main .swiper-button-prev:active { left: 1px; color: var(--mo);}
+.main .swiper-button-next:active { right: 1px; color: var(--mo);}
+.main .swiper-button-next:after, .swiper-button-prev:after { font-size: 30px;}
+
+

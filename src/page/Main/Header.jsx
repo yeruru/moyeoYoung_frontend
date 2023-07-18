@@ -7,7 +7,7 @@ import MailIcon from '@mui/icons-material/Mail';
 import styled from 'styled-components';
 import imge from '../../images/photo/photo02.jpg';
 import ClearIcon from '@mui/icons-material/Clear';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link ,useNavigate  } from 'react-router-dom';
 import { clearTokens } from '../../persist-store';
 
 import { padding } from '@mui/system';
@@ -47,10 +47,10 @@ function Header() {
       alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
       navigate('/login');
     } else {
-      setIsLoggedIn(!!token);
+      setIsLoggedIn(token);
     }
   }, [dispatch, navigate]);
-
+  
   // 모달
   const handleNoteIconClick = () => {
     setAlarmBoxOpen(!isAlarmBoxOpen);
@@ -62,9 +62,11 @@ function Header() {
     console.log('====로그아웃 되었습니다====');
     localStorage.removeItem('accessToken'); // 로컬 스토리지에서 토큰 제거
     localStorage.removeItem('refreshToken');
-    document.location.href = '/login'; // 로그아웃 후 홈페이지로 리다이렉트
+    navigate('/login');
+    // document.location.href = '/login'; // 로그아웃 후 홈페이지로 리다이렉트
   };
 
+  
   // 프로필 모달
   const [isProBoxOpen, setProBoxOpen] = useState(false);
   const [isMouseInsideProBox, setMouseInsideProBox] = useState(false);
@@ -117,13 +119,13 @@ function Header() {
               </div>
             </li>
             <li className='nav-item'>
-              <Link to='/roomlist'>모임</Link>
+              <Link to='/roomlist/1'>모임</Link>
             </li>
 
             <li>
-              {isLoggedIn ? (
-                // 로그인 상태에 따라 버튼을 다르게 렌더링
-                <></>
+              {isLoggedIn ? ( // 로그인 상태에 따라 버튼을 다르게 렌더링
+                <>
+                </>
               ) : (
                 <Link to='/login' className='header-btn login'>
                   로그인
@@ -230,12 +232,31 @@ function Header() {
               </li>
             )}
             {!isLoggedIn && (
-              <li>
-                <Link to='/signup' className='header-btn join'>
-                  회원가입
-                </Link>
-              </li>
-            )}
+            <li>
+              <a href='/signup' className='header-btn join'>
+                회원가입
+              </a>
+            </li>
+          )}
+            {/* <li className='noteLi'>
+              <NoteIconContainer onClick={handleNoteIconClick}>
+                <NotificationsIcon />
+              </NoteIconContainer>
+              {isNoteBoxOpen && (
+                <NoteBox>
+                  <ClearIcon onClick={handleNoteIconClick} style={{ float: 'right', top: '-20px', position: 'relative' }} />
+                  <p>알림이 없습니다</p>
+                </NoteBox>
+              )}
+            </li> */}
+            {/* <li>
+              <MailIcon />
+            </li>
+            <li>
+              <Pro>
+                <ProImg src={imge} />
+              </Pro>
+            </li> */}
           </ul>
         </div>
       </div>

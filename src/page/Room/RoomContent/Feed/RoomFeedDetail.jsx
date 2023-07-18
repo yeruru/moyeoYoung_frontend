@@ -6,17 +6,19 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import axios from 'axios';
 
-const RoomFeedDetail = ({isOpen, onClose, content}) => { 
-
+const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => { 
     const [feedDetail, setFeedDetail] = useState({title:'', content:'' ,userId : 0,  filename : '', roomcreateDate : ''});
-    const [feedId, setFeedId] = useState(content);
-    const [feedFileName, setFeedFileName] = useState([]);
-
-    console.log(content);
+    const [feedFileName, setFeedFileName] = useState([])
+    const [comment, setComment] = useState();
 
     const handleModalClick = (event) => {
         event.stopPropagation();
     };
+
+    const commentChange = (e) => {
+        const comment = e.target.value;
+        setComment(comment);
+    }
 
     useEffect(() => {
         axios.get(`http://localhost:8090/feed/detailfeed/${content}`)
@@ -30,9 +32,37 @@ const RoomFeedDetail = ({isOpen, onClose, content}) => {
               }));
         })
         .catch(err=>{
-            console.log(err);
         });
-    },[content]);
+    },[content]);   
+
+    // useEffect(()=>{
+    //     axios.get(`http://localhost:8090/feed/selectcomment/${content}`,{
+    //         headers: {
+    //             'Authorization': `Bearer ${accessToken}`
+    //         }   
+    //     })
+    //     .then(res=>{
+
+    //     })
+    // })
+
+    const commentSubmit = (e) => {
+        const formData = new FormData();
+        formData.append("comment", comment);
+        axios.post(`http://localhost:8090/feed/writecomment/${content}`, formData, {
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+            }   
+        })
+        .then(res=>{
+            console.log(content);
+        })
+        .catch(err=>{
+
+        })
+    };
+
+
 
     return(
         <div className="roomfeeddetail">
@@ -112,8 +142,8 @@ const RoomFeedDetail = ({isOpen, onClose, content}) => {
                     </div>
                     </div>
                     <div className='commentInput'>
-                        <input className="writecomment" type='text' placeholder='댓글을 작성해주세요'/>
-                        <input className="commentsubmit" type='submit'></input>
+                        <input className="writecomment" type='text' placeholder='댓글을 작성해주세요' onChange={commentChange}/>
+                        <input className="commentsubmit" type='submit' onClick={commentSubmit}></input>
                     </div>
                 </div>
                 </div>

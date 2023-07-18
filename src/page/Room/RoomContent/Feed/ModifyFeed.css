@@ -1,0 +1,253 @@
+.modifybackground {
+    position : fixed;
+    width : 100%;
+    height : 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index : 10000;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+
+    display: none;
+}
+
+.modifyfeed .feedwrite {
+    position: fixed;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    height: 600px;
+    width: 600px;
+    border : 1.3px solid #EEEEEE;
+    background-color: white;
+    margin: 0 auto;
+    z-index: 10002;
+}
+
+.modifyfeed .fileimage {
+    display:none;
+}
+
+.modifyfeed .photes{
+    cursor: pointer;
+    position : relative;
+    width : 450px;
+    height: 250px;
+    background-color: white;
+    border : 2px solid #d7d7d7;
+    opacity: .6;
+    border-radius: 30px;
+    margin: 30px auto;
+}
+.modifyfeed .plus{
+    width : 70px;
+    height: 70px;
+    border-radius: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top : 50%;
+    left: 50%;
+    background-color: var(--mo);
+}
+
+.modifyfeed .plusfont{
+    position: absolute;
+    top : 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 45px;
+    color: #fff;
+}
+
+.modifyfeed .feedTitle{
+    width : 500px;
+    margin : 10px auto;
+}
+
+.modifyfeed .feedContent{
+    width : 500px;
+    margin : 10px auto;
+}
+
+.modifyfeed .title {
+    width : 450px;
+    height: 40px;
+    font-size: 13px;
+    font-weight: 100;
+    font-family: 'NanumSquareNeo-Variable';
+    border : 2px solid #d7d7d7;
+    border-radius: 10px; 
+    padding: 0 10px 0 10px;
+    margin : 10px auto;
+    margin-left: 25px;
+    box-sizing: border-box;
+    
+}
+.modifyfeed .content {
+    width : 450px;
+    height: 100px;
+    margin : 10px auto;
+    margin-left: 25px;
+    resize : none;
+    line-height: 1.7em;
+    font-size: 13px;
+    font-weight: 100;
+    font-family: 'NanumSquareNeo-Variable';
+    border : 2px solid #d7d7d7;
+    border-radius: 10px;
+    padding: 5px 10px 0 10px;
+    box-sizing: border-box;
+}
+
+.modifyfeed .feedbutton{
+    width : 500px;
+    height : 40px;   
+    margin : 0 auto;
+    display: flex;
+    justify-content: flex-end;
+    text-align: right;
+}
+
+.modifyfeed .btn {
+    width : 80px;
+    height : 34px;
+    margin : 0px 25px 0 15px;
+    cursor: pointer;
+}
+
+.modifyfeed .btn1{
+    background-color : white;
+    font-family: 'NanumSquareNeo-Variable';
+    font-weight: 100;
+    font-size: 14px;
+    border : 1px solid #d7d7d7;
+    border-radius: 5px;
+}
+.modifyfeed .btn2{
+    background-color : var(--mo);
+    font-family: 'NanumSquareNeo-Variable';
+    font-weight: 100;
+    font-size: 14px;
+    border : 1px solid #EEEEEE;
+    border-radius: 5px;
+    color : white;
+}
+
+.modifyfeed .txt-length{
+    font-size: 11px;
+    margin-left: 25px;
+}
+
+.modifyfeed .feedX{
+    position : absolute;
+    z-index: 300;
+    width : 30px;
+    height : 30px;
+    background-color: #3b3b3b;
+    font-size: 20px;
+    color: white;
+    font-weight: 900;
+    line-height: 30px;
+    text-align: center;
+    left : 91%;
+    top : 2%;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.modifyfeed .noshow{
+    display: none;
+}.modifyfeed .show{
+    display : block;
+}
+
+.modifyfeed .feedImg{
+    height: 250px;
+    margin : 0 auto;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.roomfeeddetail .feeddetailImg {
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    width: 100%;
+    height: 0;
+    padding-bottom: 50%;
+    border-radius: 10px;
+}
+
+.modifyfeed .checkbackground{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10003;
+
+    display: none;
+}
+
+.modifyfeed .show{
+    display: block;
+}
+
+.modifyfeed .checkWrite{
+    position : fixed;
+    width : 470px;
+    height : 180px;
+    background-color: white;
+    border: 1px solid #c3c0c0;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    z-index : 10000;
+    border-radius: 20px;
+}
+.modifyfeed .checkword{
+    position : absolute;
+    width: 450px;
+    top : 28%;
+    left : 50%;
+    font-size: 24px;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+.modifyfeed .checkword2 {
+    position : absolute;
+    display: flex;
+    top : 65%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modifyfeed .checkoutWrite{
+    margin-right: 20px;
+    text-align: center;
+    width : 100px;
+    height: 33px;
+    background-color: white;
+    font-size: 17px;
+    line-height: 33px;
+    color : black;
+    border: 2px solid #d4d4d4;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+.modifyfeed .submit{
+    text-align: center;
+    width : 100px;
+    height: 33px;
+    background-color: var(--mo);
+    font-size: 17px;
+    line-height: 33px;
+    color : white;
+    border-radius: 7px;
+    cursor: pointer;
+    margin-right: 25px;
+}

@@ -41,3 +41,23 @@
 .css-mnqx6b-MuiButtonBase-root-MuiButton-root {
   background-color: var(--mo) !important;
 }
+
+.MuiDialogTitle-root+.css-ypiqx9-MuiDialogContent-root {
+  padding-top: 0;
+  display: flex;
+  flex-wrap: nowrap;
+  flex-direction: column;
+}
+
+.css-1u3bzj6-MuiFormControl-root-MuiTextField-root {
+  margin-top: 25px;
+}
+
+
+.css-wb57ya-MuiFormControl-root-MuiTextField-root {
+  margin-top: 15px !important;
+}
+
+.css-bdhsul-MuiTypography-root-MuiDialogTitle-root {
+  padding: 16px 0 0 24px !important;
+}

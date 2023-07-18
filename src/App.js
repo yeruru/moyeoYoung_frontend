@@ -37,8 +37,7 @@ function App() {
         <Route exact path="/roomlist/:page" element={<RoomList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
         {/* <Route path="/settingroom" element={<SettingRoom/>}/> */}
-        <Route exact path="/settingroom/:roomId" element={<SettingRoom/>}/>
-        <Route exact path="/roomlist" element={<RoomList/>}/>
+        <Route exact path="/settingroom/:roomId" element={<SettingRoom/>}/> 
         <Route exact path="/roomMain/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/dashboard/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/roomFeed/:roomId" element={<RoomMain />} />

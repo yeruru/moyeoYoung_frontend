@@ -68,7 +68,7 @@ function RoomMain() {
 
 
           {selectedContent === 'writefeed' && <WriteFeed roomId={roomId}/>}
-          {selectedContent === 'modifyfeed' && <ModifyFeed roomId={roomId}/>}
+          {selectedContent === 'modifyfeed' && <ModifyFeed/>}
         </div>
         <div className='play'>
           <RoomPlay />
