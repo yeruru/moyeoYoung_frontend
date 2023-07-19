@@ -24,6 +24,10 @@ import ScrollToTop from "./page/Main/ScrollToTop";
 import Note from "./page/Note/Note";
 import UserPage from "./page/UserPage/UserPage";
 import OpenChat from "./page/OpenChat/OpenChat";
+import SendNote from "./page/Note/SendNote";
+import NoteForm from "./page/Note/NoteForm";
+import DetailReceive from "./page/Note/DetailReceive";
+import DetailSend from "./page/Note/DetailSend";
 
 function App() {
   return (
@@ -57,6 +61,11 @@ function App() {
         <Route exact path="/youthspacedetail/:spaceId" element={<YouthSpaceDetail/>}/>
         {/* <Route exact path="/youthspacedetail:spaceid" element={<MakeRoom/>}/> */}
         <Route exact path="/note" element={<Note />} />
+        <Route exact path="/sendnote" element={<SendNote />} />
+        <Route exact path="/noteform" element={<NoteForm />} />
+        <Route exact path="/detailreceive" element={<DetailReceive />} />
+        <Route exact path="/detailsend" element={<DetailSend />} />
+
         <Route exact path="/userpage" element={<UserPage />} />
 
         
