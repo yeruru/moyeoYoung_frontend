@@ -18,6 +18,7 @@ export const SettingRoom = () => {
     // const [roomId, setRoomId] = useState();
     const [ContentText, setContentText] = useState('');
     const {roomId} = useParams();
+    const accessToken = localStorage.getItem('accessToken');
 
     const instance = axios.create({
         baseURL: 'http://localhost:8090/room', // 기본 경로 설정
@@ -113,7 +114,11 @@ export const SettingRoom = () => {
         formData.append('roomType', room.roomType);
         formData.append('file', file);
         
-        axios.post(`http://localhost:8090/room/makeRoom`, formData)
+        axios.post(`http://localhost:8090/room/makeRoom`, formData,{
+            headers: {
+                'Authorization': `Bearer ${accessToken}`
+              }
+        })
             .then(res => {
                 document.location.href=`/roomMain/dashboard/${res.data}`; 
             })

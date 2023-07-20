@@ -9,7 +9,7 @@
 .mo-header .nav > li.nav-item a:hover { color: var(--mo); cursor: pointer;}
 .mo-header .nav > li {padding: 0 10px;}
 .mo-header .nav > li:first-child { position: relative;}
-.mo-header .nav > li svg { font-size: 28px;}
+.mo-header .nav > li svg { font-size: 28px; color: #7b7a81;}
 .mo-header .nav-box { height: 100%;}
 .mo-header .dropdown { display: none; position: absolute; top: 90%; left: -10px; z-index: 1; width: 100%; padding: 20px; border: 1px solid #b8b8b8; background-color: #fff; border-radius: 10px;}
 .mo-header .nav-item:hover .dropdown { display: block;}

@@ -29,11 +29,15 @@
     margin-right: auto;
 }
 
-.roomfeed  .username{
+.roomfeed  .username {
     font-size : 13px;
     padding: 0 13px;
     font-family: 'NanumSquareNeo-Variable';
+    display: flex;
+    justify-content: space-between;
 }
+
+.roomfeed  .username span { display: inline-block;}
 
 .roomfeed  .vartical{
     line-height: 50px;
@@ -42,7 +46,6 @@
 .roomfeed .userProfile{
     height: 50px;
     width: 50px;
-    background-image: url("../../../../../public/image/feed/hello.jpg");
     background-repeat : no-repeat;
     background-size : cover;
     background-position: center;
@@ -98,7 +101,7 @@
 
 .roomfeed .Content{
     padding : 0 26px;
-    line-height: 22px;
+    line-height: 13px;
     display: inline-block;
     width: 480px;
     white-space: nowrap;
@@ -110,8 +113,8 @@
 }
 
 .roomfeed .Title{
-    padding : 13px 26px;    
-    font-size : 15px;
+    padding : 10px 26px 5px 26px;    
+    font-size : 18px;
     font-weight: 500;
 }
 
@@ -199,7 +202,6 @@
     width : 750px;
     height : 600px;
     border-right: 2px solid #EEEEEE;
-    overflow-y: auto;
 }
 
 .roomfeed .comment{
@@ -228,8 +230,12 @@
 .roomfeed .profileimg{
     width : 35px;
     height : 35px;
-    background-color: #1DC078;
     border-radius: 50%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    border-radius: 50%;
+    border : 1px solid rgb(210, 207, 207);
 }
 
 .roomfeed .commentbox{
@@ -286,6 +292,9 @@
 }
 .roomfeed .realcomment{
     padding: 10px 10px;
+    color: #5f5f5f;
+    font-size: 12px;
+    line-height: 14px;
 }
 
 .roomfeed .timer{
@@ -293,6 +302,7 @@
     margin-left: 10px;
     font-weight: 100;
     color : rgb(161, 160, 160);
+    flex-grow: 1
 }
 
 .roomfeed .detailTitle {
@@ -305,6 +315,7 @@
     padding :5px 50px;
     font-size: 13px;
     width: 650px;
+    
     word-wrap: break-word;
 }
 
@@ -315,17 +326,19 @@
     width: 100%;
     height: 100vh;
     background-color: rgba(0, 0, 0, 0.2);
-    z-index: 10000;
+    z-index: 10005;
 
     display: none;
 }
 
 .roomfeed .like{
     display: none;
+    margin-top: 2.5px;
 }
 
 .roomfeed .redlike {
     display : none;
+    margin-top: 2.5px;
 }
 
 .roomfeed .show {
@@ -393,3 +406,10 @@
 .roomfeed .like{
     display : block;
 } */
+
+.roomfeed .commentDelete{
+    font-size: 11px;
+    margin-left: 40px;
+    font-weight: 100;
+    color : rgb(161, 160, 160);
+}

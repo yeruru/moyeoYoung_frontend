@@ -128,10 +128,6 @@ function Header() {
             <li>
               {isLoggedIn ? ( // 로그인 상태에 따라 버튼을 다르게 렌더링
                 <>
-                  <b>{memberId}</b>&nbsp;&nbsp;
-                  <a className='header-btn logout' onClick={logout}>
-                    로그아웃
-                  </a>
                 </>
               ) : (
                 <Link to='/login' className='header-btn login'>

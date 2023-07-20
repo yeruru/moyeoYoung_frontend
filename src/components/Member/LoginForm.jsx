@@ -38,6 +38,8 @@ const LoginForm = () => {
     if (accessToken) {
       dispatch(setTokens({ accessToken }));
       document.location.href = "/";
+//       dispatch(setTokens({ accessToken })); 
+//       document.location.href= "/login"; 
     }
   }, [dispatch]);
 
@@ -51,21 +53,15 @@ const LoginForm = () => {
       .then((res) => {
         const accessToken = res.data.accessToken;
         const refreshToken = res.data.refreshToken;
-        console.log(accessToken);
-        console.log(refreshToken);
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
         setAccessToken(accessToken);
         dispatch(setTokens({ accessToken }));
         dispatch({ type: "USERID", payload: res.data.memberId });
-        console.log("로그인 성공");
-        console.log(res.data.email);
-        console.log(accessToken);
         // 로그인 성공 후 Main 컴포넌트로 이동
         document.location.href = "/";
       })
       .catch((err) => {
-        console.log(err);
         alert("로그인에 실패하였습니다.");
       });
   };
@@ -215,7 +211,7 @@ const LoginForm = () => {
           onClick={handleModalOpen}
           variant="outlined"
           fullWidth
-          style={{ margin: 20 }}
+          style={{ margin: '0 auto', marginTop: '20px'}}
         >
           비밀번호 찾기
         </Button>
@@ -225,7 +221,7 @@ const LoginForm = () => {
             {!isCodeVerified ? (
               <>
                 <TextField
-                  style={{ width: "300px" }}
+                  style={{ width: "300px", marginTop:'10px' }}
                   type="email"
                   label="이메일"
                   name="email"
@@ -234,6 +230,7 @@ const LoginForm = () => {
                   required
                 />
                 <Button
+                  style={{height:'56px', marginTop:'15px', marginBottom: '25px'}}
                   type="button"
                   variant="contained"
                   onClick={handleEmailExistenceCheck}
@@ -249,6 +246,7 @@ const LoginForm = () => {
                   required
                 />
                 <Button
+                  style={{height:'56px'}}
                   type="button"
                   variant="contained"
                   onClick={handleVerifyCode}
@@ -285,7 +283,7 @@ const LoginForm = () => {
                   required
                   fullWidth
                 />
-                <Button type="button" variant="contained" onClick={handlePasswordReset}>
+                <Button type="button" variant="contained" style={{marginTop:'20px'}} onClick={handlePasswordReset}>
                   비밀번호 재설정
                 </Button>
               </>

@@ -19,19 +19,25 @@ SwiperCore.use([Navigation, Pagination, Autoplay]);
 function Main() {
   const [roomList, setRoomList] = useState([]);
   const swiperRef = useRef(null);
+  const [accessToken,setAccessToken] = useState();
 
   useEffect(() => {
     getRoomList();
+    setAccessToken(localStorage.getItem('accessToken'));
+    
   }, []);
 
   const getRoomList = () => {
     axios
-      .get('http://localhost:8090/room/roomList/1')
+      .get('http://localhost:8090/room/roomList/1',{
+        headers: {
+          'Authorization': `Bearer ${accessToken}`
+        }
+      })
       .then((res) => {
         setRoomList(res.data.list);
       })
       .catch((err) => {
-        console.log(err);
       });
   };
 
