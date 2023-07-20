@@ -48,4 +48,3 @@
 .pro-box { border: 1px solid #b8b8b8; border-radius: 10px;}
 .pro-box .header-link { width: 150px; height: 50px; display: flex;  align-items: center; justify-content: center; }
 .pro-box .header-link:hover { color: var(--mo);}
-

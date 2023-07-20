@@ -216,6 +216,7 @@ const MyPage = () => {
             {/* </form> */}
           </DialogContent>
         </Dialog>
+        
       </div>
     </div>
     
