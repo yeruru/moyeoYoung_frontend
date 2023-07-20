@@ -5,7 +5,7 @@ import './Header.css';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MailIcon from '@mui/icons-material/Mail';
 import styled from 'styled-components';
-import imge from '../../images/photo/photo02.jpg';
+import imge from '../../images/photo/profile.svg';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Link ,useNavigate  } from 'react-router-dom';
 import { clearTokens } from '../../persist-store';
@@ -15,7 +15,7 @@ import { padding } from '@mui/system';
 import axios from 'axios';
 
 
-function Header() {
+function Header({ profileImageUrl }) {
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isAlarmBoxOpen, setAlarmBoxOpen] = useState(false);
   const toggleDropdown = () => {
@@ -84,6 +84,12 @@ function Header() {
   };
 
   const [selectedButton, setSelectedButton] = useState('');
+
+
+
+  //프로필 하다가 말았음 
+  const [comment, setComment] = useState([]);
+
 
   return (
     <div className='mo-header'>
@@ -204,7 +210,11 @@ function Header() {
               <li>
                 <div onMouseEnter={handleProMouseEnter} onMouseLeave={handleProMouseLeave}>
                   <Pro>
-                    <ProImg src={imge} />
+                  {profileImageUrl ? ( // 프로필 사진 URL이 존재하면 이미지 불러옴
+                      <ProImg src={profileImageUrl} />
+                    ) : (
+                      <ProImg src={imge} /> // 프로필 사진 URL이 없을 경우 기본 이미지 불러옴
+                    )}
                   </Pro>
                   {isProBoxOpen && (
                     <ProBox className='showBox'>
@@ -238,25 +248,6 @@ function Header() {
               </a>
             </li>
           )}
-            {/* <li className='noteLi'>
-              <NoteIconContainer onClick={handleNoteIconClick}>
-                <NotificationsIcon />
-              </NoteIconContainer>
-              {isNoteBoxOpen && (
-                <NoteBox>
-                  <ClearIcon onClick={handleNoteIconClick} style={{ float: 'right', top: '-20px', position: 'relative' }} />
-                  <p>알림이 없습니다</p>
-                </NoteBox>
-              )}
-            </li> */}
-            {/* <li>
-              <MailIcon />
-            </li>
-            <li>
-              <Pro>
-                <ProImg src={imge} />
-              </Pro>
-            </li> */}
           </ul>
         </div>
       </div>
@@ -274,6 +265,9 @@ const Pro = styled.span`
   border-radius: 50%;
   background-color: #ebebeb;
   position: relative;
+  /* background-image: url(${imge});
+  background-repeat: no-repeat;
+  background-size: contain; */
 `;
 
 const ProImg = styled.img`

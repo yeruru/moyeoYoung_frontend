@@ -13,12 +13,15 @@ import axios from 'axios';
 import { Link } from 'react-router-dom';
 import nothing from '../../images/Group 153.svg';
 import { RoomCard } from '../../components/RoomCard/RoomCard';
+import { SpaceCard } from '../../components/RoomCard/SpaceCard'
+import { height } from '@mui/system';
 
 SwiperCore.use([Navigation, Pagination, Autoplay]);
 
 function Main() {
   const [roomList, setRoomList] = useState([]);
   const swiperRef = useRef(null);
+  const swiperRefYouth = useRef(null);
   const [accessToken,setAccessToken] = useState();
 
   useEffect(() => {
@@ -53,12 +56,72 @@ function Main() {
     }
   };
 
+  const handlePrevYouth = () => {
+    if (swiperRefYouth.current && swiperRefYouth.current.swiper) {
+      swiperRefYouth.current.swiper.slidePrev();
+    }
+  };
+  
+  const handleNextYouth = () => {
+    if (swiperRefYouth.current && swiperRefYouth.current.swiper) {
+      swiperRefYouth.current.swiper.slideNext();
+    }
+  };
+  
+
+
+  // 청년공간
+  const [spaceList, setSpaceList] = useState([]);
+  const [curPage, setCurPage] = useState();
+  const [allPage, setAllPage] = useState();
+  const [word, setWord] = useState();
+  const [searchWord, setSearchWord] = useState(false);
+  const [loc, setLoc] = useState('');
+  const [place, setPlace] = useState('');
+  const [dongList, setDongList] = useState([]);
+  const axiosURL = axios.create({
+    baseURL: 'http://localhost:8090/youth', // 기본 경로 설정
+});
+useEffect(() => {
+    getSpaceList(1);
+}, [])
+const getSpaceList = (p_page) => {
+    setSearchWord(false);
+    axiosURL.get(`/allYouthSpaceList/${p_page}`)
+    .then(res => {
+      const list = res.data.list;
+      setSpaceList([...list]);
+      const pageInfo = res.data.pageInfo;
+      setCurPage(pageInfo.curPage);
+      setAllPage(pageInfo.allPage);
+        })
+}
+const searchByWord = (p_page) => {
+    setSearchWord(true);
+    axiosURL.get(`/searchSpaceListByWord/${p_page}`,
+        {
+            params: {
+                word: word,
+            }
+        })
+        .then(res => {
+            const list = res.data.list;
+            if (p_page === 1) {
+                setSpaceList([...list]);
+            } else {
+                setSpaceList([...spaceList, ...list]);
+            }
+            const pageInfo = res.data.pageInfo;
+            setCurPage(pageInfo.curPage);
+            setAllPage(pageInfo.allPage);
+        })
+}
 
   return (
     <>
       <div className='main'>
         <Swiper
-          style={{ marginTop: '80px' }}
+          style={{ marginTop: '80px',  height:'450px'}}
           spaceBetween={30}
           slidesPerView={1}
           loop={true}
@@ -128,8 +191,60 @@ function Main() {
             <em>청년공간</em>
             <div className='title'>
               <h4>가까운 청년공간을 알아보세요🔍</h4>
-              <Link to='/youthspacelist'>더보기 &gt;</Link>
+              <Link to='/youthspacelist/1'>더보기 &gt;</Link>
             </div>
+          <div className='content' style={{ width: '100%', position: 'relative' }}>
+            <div style={{ display: 'flex', alignItems: 'center'}}>
+              <span className="swiper-button-prev" onClick={handlePrevYouth}></span>
+              <span className="swiper-button-next" onClick={handleNextYouth}></span>
+            </div>
+            <Swiper
+              ref={swiperRefYouth}
+              style={{ width: '1100px' }}
+              slidesPerView={2} // 2개씩 보이도록 변경
+              spaceBetween={10} // 각 슬라이드 사이의 간격 조정
+              pagination={{
+                clickable: true,
+              }}
+              breakpoints={{
+                '@0.00': {
+                  slidesPerView: 2,
+                  spaceBetween: 30,
+                },
+                '@0.75': {
+                  slidesPerView: 2,
+                  spaceBetween: 60,
+                },
+                '@1.00': {
+                  slidesPerView: 2, // 1개씩 보이도록 변경
+                  spaceBetween: 90,
+                },
+                '@1.50': {
+                  slidesPerView: 2, // 2개씩 보이도록 변경
+                  spaceBetween: 120,
+                },
+              }}
+              modules={[Pagination, Navigation]}
+              className="mySwiper"
+            >
+            <div className='content'>
+              <ul className='card-list'>
+                {spaceList.length == 0 &&
+                  <div className='empty-item-box'>
+                    <div className='empty-img-box'>
+                      <img src={nothing} /></div>
+                    <p className='empty-p'>등록된 청년공간이 존재하지 않습니다!</p>
+                  </div>
+                }
+                {
+                  spaceList.map((item, index) => (
+                    <SwiperSlide key={index} style={{display:'flex', alignItems:'center'}}><SpaceCard key={index} space={item} /></SwiperSlide>
+                  ))
+                }
+              </ul>
+            </div>
+            </Swiper>
+          </div>
           </div>
           <div className='box youth'>
             <div>
