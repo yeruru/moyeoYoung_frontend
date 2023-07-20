@@ -37,6 +37,7 @@ const LoginForm = () => {
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
       dispatch(setTokens({ accessToken }));
+      document.location.href = "/";
     }
   }, [dispatch]);
 
