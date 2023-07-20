@@ -46,6 +46,7 @@ function Header() {
       localStorage.removeItem('refreshToken');
       alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
       navigate('/login');
+      document.location.reload();
     } else {
       setIsLoggedIn(token);
     }
@@ -84,6 +85,8 @@ function Header() {
   };
 
   const [selectedButton, setSelectedButton] = useState('');
+
+  console.log(isLoggedIn);
 
   return (
     <div className='mo-header'>
