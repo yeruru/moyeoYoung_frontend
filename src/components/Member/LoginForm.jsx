@@ -38,8 +38,6 @@ const LoginForm = () => {
     if (accessToken) {
       dispatch(setTokens({ accessToken }));
       document.location.href = "/";
-//       dispatch(setTokens({ accessToken })); 
-//       document.location.href= "/login"; 
     }
   }, [dispatch]);
 
