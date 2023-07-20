@@ -46,6 +46,7 @@ function Header({ profileImageUrl }) {
       localStorage.removeItem('refreshToken');
       alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
       navigate('/login');
+      document.location.reload();
     } else {
       setIsLoggedIn(token);
     }
@@ -87,8 +88,12 @@ function Header({ profileImageUrl }) {
 
 
 
+
   //프로필 하다가 말았음 
   const [comment, setComment] = useState([]);
+
+
+  console.log(isLoggedIn);
 
 
   return (
