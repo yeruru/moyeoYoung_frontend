@@ -24,11 +24,12 @@ import ScrollToTop from "./page/Main/ScrollToTop";
 import Note from "./page/Note/Note";
 import UserPage from "./page/UserPage/UserPage";
 import OpenChat from "./page/OpenChat/OpenChat";
+
+import Chat from "./page/Chat/Chat";
 import SendNote from "./page/Note/SendNote";
 import NoteForm from "./page/Note/NoteForm";
 import DetailReceive from "./page/Note/DetailReceive";
 import DetailSend from "./page/Note/DetailSend";
-
 
 function App() {
   return (
@@ -41,7 +42,8 @@ function App() {
         <Route exact path="/roomlist/:page" element={<RoomList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
         {/* <Route path="/settingroom" element={<SettingRoom/>}/> */}
-        <Route exact path="/settingroom/:roomId" element={<SettingRoom/>}/> 
+        <Route exact path="/settingroom/:roomId" element={<SettingRoom/>}/>
+        <Route exact path="/chat/:roomId" element={<Chat/>}/>
         <Route exact path="/roomMain/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/dashboard/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/roomFeed/:roomId" element={<RoomMain />} />

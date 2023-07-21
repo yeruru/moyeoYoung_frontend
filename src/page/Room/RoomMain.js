@@ -14,6 +14,8 @@ import WriteFeed from './RoomContent/Feed/WriteFeed';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ModifyFeed from './RoomContent/Feed/ModifyFeed';
+import Chat from '../Chat/Chat';
+import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 
 function RoomMain() {
   const location = useLocation();
@@ -26,8 +28,8 @@ function RoomMain() {
     const path = location.pathname;
     const content = path.split('/')[path.split('/').length-2];
     setSelectedContent(content);
-    console.log(content);
   }, [location]);
+  console.log(roomId);
 
   useEffect(()=>{
     axios.get(`http://localhost:8090/room/getroomMain/${roomId}`)
@@ -44,6 +46,12 @@ function RoomMain() {
     // navigate(`/roomMain/${content}`);
     navigate(`/roomMain/${content}/${roomId}`);
   };
+
+  const openCustomWindow = () => {
+    const width = 400;
+    const height = 600;
+    window.open(`http://localhost:3000/chat/${roomId}`, '_blank', `width=${width}, height=${height}`)
+  }
 
   return (
     <div className='roomh'>
@@ -71,7 +79,11 @@ function RoomMain() {
           {selectedContent === 'modifyfeed' && <ModifyFeed/>}
         </div>
         <div className='play'>
-          <RoomPlay />
+          <RoomPlay/>
+          <div>
+            <button className="Chatbutton" onClick={openCustomWindow} >
+              <ChatBubbleIcon style={{position:'relative', top:'2px', paddingRight:'10px'}}/>모임톡방 입장</button>
+          </div>
         </div>
       </div>
     </div>

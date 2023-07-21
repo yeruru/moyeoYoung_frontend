@@ -201,9 +201,6 @@ function RoomFeed({onContentChange}) {
     })
   }
 
-  console.log(feed);
-  console.log(memberId);
-
   return (
     <div className='roomfeed'>
       <div className='room-box'>
@@ -212,7 +209,7 @@ function RoomFeed({onContentChange}) {
           feed.length == 0 &&
           <div className='empty-item-box'>
           <div className='empty-img-box'>
-            <img src={nothing} /></div>
+            <img src={nothing} style={{width : '200px', marginBottom:'40px'}}/></div>
           <p className='empty-p'>게시물 피드가 존재하지 않습니다</p>
         </div>
         }
