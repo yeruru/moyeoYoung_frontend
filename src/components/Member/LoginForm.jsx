@@ -36,8 +36,8 @@ const LoginForm = () => {
     // 페이지 로드 시 저장된 access 토큰이 있는지 확인하고 있다면 인증 상태로 설정
     const accessToken = localStorage.getItem("accessToken");
     if (accessToken) {
-      dispatch(setTokens({ accessToken })); 
-      document.location.href= "/login"; 
+      dispatch(setTokens({ accessToken }));
+      document.location.href = "/";
     }
   }, [dispatch]);
 

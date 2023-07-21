@@ -1,41 +1,18 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react'
 import './Note.css';
 import usePagination from '@mui/material/usePagination';
 import { Pagination} from '@mui/material';
 import { Link } from 'react-router-dom';
 import NoteMenu from './NoteMenu';
-import axios from 'axios';
 
-function Note() {
-  const accessToken = localStorage.getItem('accessToken');
-  
-  const [noteData, setNoteData] = useState([]);
-  useEffect(() =>{
-    //받은쪽지함
-    axios.get('http://localhost:8090/note/received', {
-      headers: {
-        Authorization: `Bearer ${accessToken}`
-      },
-    })
-    .then((res) => {
-        setNoteData(res.data.notes);
-        console.log(res.data);
-      })
-    .catch((err) => {
-      console.log(err);
-    });
-    console.log(accessToken);
-},[accessToken]);
-
-
-
+function SentNote() {
   return (
     <div className='wrap' style={{display:'flex', justifyContent: 'space-between', marginTop: '85px'}}>
       <NoteMenu/>
       <div className="note">
         <div className='note-flex'>
           <div>
-            <h3 className='note-title'>받은쪽지함</h3>
+            <h3 className='note-title'>보낸쪽지함</h3>
             <div>
               <table>
                 <thead>
@@ -46,15 +23,13 @@ function Note() {
                   </tr>
                 </thead>
                 <tbody>
-                {noteData.map((note) => (
-                    <Link to="/detailreceive" key={note.noteId}>
+                    <Link to="/detailsend">
                       <tr>
-                        <td className='td-name'><p>{note.senderNickname}</p></td>
-                        <td className='td-content'><p>{note.content}</p></td>
-                        <td className='td-date'><p>{note.sendDate}</p></td>
+                        <td className='td-name'><p>나현윤</p></td>
+                        <td className='td-content'><p>ㅎㅇ</p></td>
+                        <td className='td-date'><p>2023-07-03</p></td>
                       </tr>
                     </Link>
-                    ))}
                 </tbody>
               </table>
             </div>
@@ -66,8 +41,7 @@ function Note() {
                 marginTop: '30px'}}/>
       </div>
     </div>
-  );
+  )
 }
 
-export default Note;
-
+export default SentNote

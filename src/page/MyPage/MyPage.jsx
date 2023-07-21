@@ -11,6 +11,8 @@ import {
 import axios from "axios";
 import "./MyPage.css";
 // TODO: 비밀번호 재설정시 유효성로직을 추가 ,  기본이미지 설정 로직 변경
+
+
 const MyPage = () => {
   const accessToken = localStorage.getItem("accessToken");
   const [formData, setFormData] = useState({
@@ -215,6 +217,7 @@ const MyPage = () => {
             {/* </form> */}
           </DialogContent>
         </Dialog>
+        
       </div>
     </div>
     

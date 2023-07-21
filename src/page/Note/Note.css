@@ -1,4 +1,4 @@
-.note { height: 3000px;}
+.note { height: 1000px; width: 100%;}
 .note-btn { border: 0; font-family: inherit; padding: 10px 15px; border-radius: 5px; background-color: #656565; color: #fff; transition: all .3s;}
 .note-btn:hover { background-color: var(--mo);}
 .note-flex { padding-top: 50px; display: flex; justify-content: space-around;}
@@ -12,5 +12,34 @@ thead > tr { background-color: #f4f4f4; border-top: 1px solid #ddd; margin-top: 
 .note .td-content p { width: 470px; padding:0 5px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap;}
 .note .th-date { width: 120px;}
 .note .td-date p { font-size: 12px; color: #656565;}
-
 .pro-box { background-color: pink; position: absolute;}
+.note-title { font-size: 18px; padding-bottom: 40px; border-bottom: 1px solid #ddd;}
+
+/* note-text */
+.note .note-email { width: 500px; margin-left: 20px; padding: 10px; border-radius: 5px; outline-color: #ddd; border-color: #ddd;}
+.note .send-area { margin-top: 20px;}
+.note .writing-area { height: 200px; margin-top: 10px; margin-bottom: 10px;}
+.note .writing-area textarea { width: 100%; height: 100%; border-radius: 5px; border-color: #ddd; outline-color: #ddd; box-sizing: border-box; padding: 10px;}
+.note .character { display: flex; justify-content: flex-end; font-size: 12px;}
+.note .send-btn { font-family: inherit; margin-left: 10px; padding: 13px; border: 0; outline: 0; border-radius: 5px; }
+
+/* sendnote */
+.note .con { width: 700px;}
+.note .con-btn { margin-bottom: 20px;}
+.note .con-btn button { margin-right: 15px; padding: 10px; font-size: 16px; border: 0; outline: 0; border-radius: 5px; font-family: inherit;}
+.note .note-list-a { padding-left: 5px;}
+.note .note-list-a::before { content: '|'; padding-right: 20px; color: #cbcbcb;}
+.note .con-info { padding: 20px 0; border-top: 0.5px solid #ddd; border-bottom: 0.5px solid #ddd; margin-bottom: 20px;}
+.note .con-info h4 { margin-right: 10px;}
+.con-text { word-wrap: break-word; width: 100%;}
+
+
+/* note-menu */
+.note-menu { width: 300px; border-color: #ddd;}
+.note-menu nav { padding: 20px;}
+.note-menu .send-btn { padding: 20px; display: block; background-color: var(--mo); margin-bottom: 20px; border-radius: 10px; text-align: center; font-size: 18px; font-weight: 500; color: #fff; transition: all .3s;}
+.note-menu .send-btn:hover { background-color: #424242;}
+.note-menu .note-a { display: flex; align-items: center; color: #1e1e23; padding: 10px; font-size: 18px; margin-bottom: 5px; border-radius: 5px; font-weight: 300; transition: all .3s;}
+.note-menu .note-a:hover { background-color: rgb(236, 234, 234);}
+.note-menu .note-a.click { background-color: rgba(0, 115, 230, 0.1); color: #0073E6;}
+.note-menu .note-a svg { padding-right: 10px;}
