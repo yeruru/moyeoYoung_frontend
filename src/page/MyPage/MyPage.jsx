@@ -10,6 +10,8 @@ import {
 } from "@mui/material";
 import axios from "axios";
 import "./MyPage.css";
+import styled from 'styled-components';
+import imge from '../../images/photo/profile.svg';
 // TODO: 비밀번호 재설정시 유효성로직을 추가 ,  기본이미지 설정 로직 변경
 
 
@@ -22,6 +24,7 @@ const MyPage = () => {
     regdate: "",
   });
   const [memberId, setMemberId] = useState(0);
+
   useEffect(() => {
     // 유저 정보 가져오기
     axios
@@ -97,6 +100,7 @@ const MyPage = () => {
       .then((response) => {
         console.log("프로필 업데이트 성공:", response.data);
         handleModalClose();
+        window.location.reload(); 
       })
       .catch((error) => {
         console.log(formData.file);
@@ -126,29 +130,23 @@ const MyPage = () => {
   };
 
   return (
-    <div className="MyPage wrap">
-      <div className="mypage-header">
-        {/* <a href="#">마이페이지</a>
-        <a href="#">내모임방</a> */}
-      </div>
+    <div className="MyPage">
       <div className="mypage-contnent">
 
         <div className="mypage-box">
           {/* 프로필 데이터 */}
           <div className="mypage-data">
-            <p>이미지</p>
             <div>
-              {previewImage && (
                 <img
                   src={previewImage}
                   alt="프로필 사진"
                 />
-              )}
             </div>
             <h2>{formData.nickname}</h2>
             <p>{formData.profileContent}</p>
             <p>가입일: {formData.regdate}</p>
           </div>
+
           <div className="mypage-box">
             <Button type="button" variant="outlined" fullWidth onClick={handleModalOpen}>
               프로필 수정
@@ -156,12 +154,6 @@ const MyPage = () => {
           </div>
         </div>
 
-        {/* 관심목록 */}
-        <div className="mypage-favorite">
-            <div>
-                <h4>모임관심목록</h4>
-            </div>
-        </div>        
       </div>
         {/* 프로필 수정 모달 */}
       <div>
@@ -176,11 +168,19 @@ const MyPage = () => {
               />
               {previewImage && (
                 <div className="mypage-img-box">
-                  <img
-                    src={previewImage}
-                    alt="프로필 사진 미리보기"
-                    style={{ width: "200px" }}
-                  />
+                  {previewImage ? ( // previewImage가 존재할 때만 이미지 렌더링
+                    <img
+                      src={previewImage}
+                      alt="프로필 사진"
+                      style={{ width: "200px" }}
+                    />
+                  ) : (
+                    <img
+                      src={imge}
+                      alt="기본 프로필 사진"
+                      style={{ width: "200px" }}
+                    />
+                  )}
                 </div>
               )}
               <TextField

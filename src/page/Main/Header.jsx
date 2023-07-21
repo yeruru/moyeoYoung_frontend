@@ -9,13 +9,13 @@ import imge from '../../images/photo/profile.svg';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Link ,useNavigate  } from 'react-router-dom';
 import { clearTokens } from '../../persist-store';
-
 import { padding } from '@mui/system';
-
 import axios from 'axios';
+import "../../images/member/normal.png"
+import { assertConditionalExpression } from '@babel/types';
 
-
-function Header({ profileImageUrl }) {
+function Header() {
+  const accessToken = localStorage.getItem("accessToken");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isAlarmBoxOpen, setAlarmBoxOpen] = useState(false);
   const toggleDropdown = () => {
@@ -33,6 +33,37 @@ function Header({ profileImageUrl }) {
   const memberId = useSelector((state) => state.memberId);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+
+  const [fileName, setFileName] = useState('normal.png');
+  const [previewImage, setPreviewImage] = useState(null);
+ 
+    
+
+  useEffect(() => {
+    // 유저 정보 가져오기
+    axios
+      .get("http://localhost:8090/member/mypage", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        },
+      })
+      .then((res) => {
+        console.log(res.data.memberId);
+        console.log(res.data.email);
+        setFileName({
+          fileName: res.data.fileName
+        });
+        setPreviewImage(`http://localhost:8090/room/view/${res.data.fileName}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(accessToken);
+  }, [accessToken]);
+
+
+
 
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
@@ -215,17 +246,13 @@ function Header({ profileImageUrl }) {
               <li>
                 <div onMouseEnter={handleProMouseEnter} onMouseLeave={handleProMouseLeave}>
                   <Pro>
-                  {profileImageUrl ? ( // 프로필 사진 URL이 존재하면 이미지 불러옴
-                      <ProImg src={profileImageUrl} />
-                    ) : (
-                      <ProImg src={imge} /> // 프로필 사진 URL이 없을 경우 기본 이미지 불러옴
-                    )}
+                      <ProImg src={previewImage} />
                   </Pro>
                   {isProBoxOpen && (
                     <ProBox className='showBox'>
                       <ul className='pro-box' style={{ backgroundColor: '#fff' }}>
                         <li>
-                          <Link to={'/mypage'} className='header-link'>
+                          <Link to={'/mypagemain'} className='header-link'>
                             마이페이지
                           </Link>
                         </li>
@@ -270,16 +297,12 @@ const Pro = styled.span`
   border-radius: 50%;
   background-color: #ebebeb;
   position: relative;
-  /* background-image: url(${imge});
-  background-repeat: no-repeat;
-  background-size: contain; */
 `;
 
 const ProImg = styled.img`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+      width: 100%;
+    height: 100%;
+    object-fit: cover;
 `;
 
 const AlarmIconContainer = styled.div`
