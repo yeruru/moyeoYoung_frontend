@@ -24,6 +24,7 @@ import ScrollToTop from "./page/Main/ScrollToTop";
 import Note from "./page/Note/Note";
 import UserPage from "./page/UserPage/UserPage";
 import OpenChat from "./page/OpenChat/OpenChat";
+import Chat from "./page/Chat/Chat";
 
 
 function App() {
@@ -37,7 +38,8 @@ function App() {
         <Route exact path="/roomlist/:page" element={<RoomList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
         {/* <Route path="/settingroom" element={<SettingRoom/>}/> */}
-        <Route exact path="/settingroom/:roomId" element={<SettingRoom/>}/> 
+        <Route exact path="/settingroom/:roomId" element={<SettingRoom/>}/>
+        <Route exact path="/chat/:roomId" element={<Chat/>}/>
         <Route exact path="/roomMain/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/dashboard/:roomId" element={<RoomMain />} />
         <Route  path="/roomMain/roomFeed/:roomId" element={<RoomMain />} />

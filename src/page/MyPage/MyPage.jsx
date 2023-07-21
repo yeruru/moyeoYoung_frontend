@@ -20,6 +20,7 @@ const MyPage = () => {
     regdate: "",
   });
   const [memberId, setMemberId] = useState(0);
+  
   useEffect(() => {
     // 유저 정보 가져오기
     axios

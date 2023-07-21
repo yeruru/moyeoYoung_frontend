@@ -60,7 +60,6 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
         })
         .then(res=>{
             setComment(res.data);
-            console.log(res.data);
         })
         .catch(err=>{
             
@@ -119,7 +118,6 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
             fetchComment();
         })
         .catch(err => {
-            
         })
     };
    
@@ -145,7 +143,6 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
                                 <div className='feeddetailImg' style={{backgroundImage:`url(http://localhost:8090/room/view/${item})`}}></div>
                             </SwiperSlide>
                         ))
-
                     }
                     </Swiper>
                     <div className='detailTitle'>{feedDetail.title}</div>
@@ -158,8 +155,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
                         comment.map((item)=>(
                             <div className='comments' key={item.commentId}>
                                 <div className='profileimg' style={{backgroundImage:`url(http://localhost:8090/room/view/${item.profilename})`}}></div>
-                                <div className='commentbox'>
-                                    
+                                <div className='commentbox'>  
                                         <div className='username' >
                                             <span>{item.nickname}</span>
                                             <Timer commentCreateDate={item.commentCreateDate} />
