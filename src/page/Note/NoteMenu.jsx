@@ -25,7 +25,7 @@ function NoteMenu() {
   return (
     <div className='note-menu'>
       <nav>
-        <a href="noteform" className='send-btn'>쪽지쓰기</a>
+        <a href="/noteform" className='send-btn'>쪽지쓰기</a>
         <ul>
           <li>
             <a href="/note" className={`note-a ${isAllVaild === 'received' ? 'click' : ''}`} onClick={() => handleBtnClick('received')}>

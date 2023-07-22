@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
+import React, {  useState } from 'react';
 import './Note.css';
 import usePagination from '@mui/material/usePagination';
 import { Pagination} from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation , useNavigate} from 'react-router-dom';
 import NoteMenu from './NoteMenu';
 import axios from 'axios';
 
-function NoteDetail() {
+function NoteForm() {
   // 글자 수 제한
   const [characterCount, setCharacterCount] = useState(0);
   const maxCharacterCount = 300;
-  
   const handleTextareaChange = (event) => {
     const text = event.target.value;
     const currentCharacterCount = text.length;
-    const name = event.target.name;
-    const value = event.target.value;
-    setNote({...note, [name]:value}) 
+    // const name = event.target.name;
+    // const value = event.target.value;
+    // setNote({...note, [name]:value})  
+    change(event);
     // 300자를 초과하여 입력한 경우, 입력이 더 이상 되지 않도록 제한합니다.
     if (currentCharacterCount <= maxCharacterCount) {
       setCharacterCount(currentCharacterCount);
@@ -25,13 +25,13 @@ function NoteDetail() {
       event.target.value = text.slice(0, maxCharacterCount);
     }
   };
+  const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
+  const location = useLocation();
   // const receivedNickname = useState("");
   // const content = useState("");
   const [note, setNote] = useState({
-    noteId: '',
-    mebmerId: '',
-    receivedNickname: '',
+    receiverNickname: '',
     content: ''
   });
 
@@ -39,32 +39,32 @@ function NoteDetail() {
 const change = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setNote({...note, [name]:value})    
+    setNote({...note, [name]:value})  
 };
 
 const handleSend = (e) => {
   e.preventDefault();
-  const formData = new FormData();
-  console.log(note.noteId);
-  formData.append("noteId", note.noteId);
-  formData.append("receivedNickname", note.receivedNickname);
-  formData.append("content", note.content);
-  // formData.append("memberId", note.memberId);
+  const formData = new FormData(); 
+  formData.append("receiverNickname", note.receiverNickname);
+  formData.append("content", note.content); 
   axios.post('http://localhost:8090/note/send', formData, {
     headers: {
-      Authorization: `Bearer ${accessToken}`
+      Authorization: `Bearer ${accessToken}`,
     },
   })
   .then((response) => {
     console.log(response.data);
-    document.location.href=`/note/received`;
+    navigate("/sendnote");
   })
   .catch((error) => {
-    console.log(formData.toString());
     console.log(error.data);
     console.error(error);
+    alert("보내는 사람 닉네임을 정확하게 입력해주세요!")
+    document.location.href='/noteform';
   });
+  
 };
+
 
   return (
     <div className='wrap' style={{display:'flex', justifyContent: 'space-between', marginTop: '85px'}}>
@@ -76,7 +76,7 @@ const handleSend = (e) => {
             <div className='send-window'>
               <div className='send-area'>
                 <span>받는사람</span>
-                <input type="text" maxLength={20} name= "receivedNickname" onChange={change} placeholder='보내는 사람의 이메일을 입력해 주세요.' className='note-email'/>
+                <input type="text" maxLength={20} name= "receiverNickname" onChange={change} placeholder='보내는 사람의 이메일을 입력해 주세요.' className='note-email'/>
                 <button type='button' className='send-btn' onClick={handleSend}>보내기</button>
               </div>
               <div className='writing-area'>
@@ -97,4 +97,4 @@ const handleSend = (e) => {
   )
 }
 
-export default NoteDetail
+export default NoteForm
