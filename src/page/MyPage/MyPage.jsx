@@ -83,7 +83,13 @@ const MyPage = () => {
   const handleModalClose = () => {
     setIsModalOpen(false);
   };
+
   const handleProfileUpdate = () => {
+    if (isNicknameDuplicated) {
+      alert('닉네임이 중복되었습니다');
+      return;
+    }
+
     const form = new FormData();
     form.append("nickname", formData.nickname);
     form.append("profileContent", formData.profileContent);
@@ -131,11 +137,11 @@ const MyPage = () => {
 
   return (
     <div className="MyPage">
-      <div className="mypage-contnent">
+      <div className="mypage-contnent" style={{height:'100%'}}>
 
-        <div className="mypage-box">
+        <div className="mypage-box" style={{height:'100%'}}>
           {/* 프로필 데이터 */}
-          <div className="mypage-data">
+          <div className="mypage-data" style={{height:'90%'}}>
             <div>
                 <img
                   src={previewImage}

@@ -122,7 +122,6 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
             
         })
     };
-   
 // console.log(comment[0].memberId);
 // console.log(memberId);
 

@@ -3,7 +3,7 @@
 .mypage-header{ width: 300px; padding: 20px;}
 .mypage-header a{ padding: 20px; border: 1px solid beige;}
 .mypage-box{ border: 1px solid beige; box-sizing: border-box;}
-.mypage-data{ height: 300px; text-align: center; display: flex; flex-direction: column; align-items: center;}
+.mypage-data{ height: 300px; text-align: center; display: flex; justify-content: space-evenly; flex-direction: column; align-items: center;}
 .mypage-data h2 { margin-top: 20px;}
 .mypage-data p { font-size: 16px; line-height: 18px; margin-top: 20px;}
 .mypage-data div { width: 130px;

@@ -5,14 +5,14 @@ import './Header.css';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MailIcon from '@mui/icons-material/Mail';
 import styled from 'styled-components';
-import imge from '../../images/photo/profile.svg';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Link ,useNavigate  } from 'react-router-dom';
 import { clearTokens } from '../../persist-store';
-import { padding } from '@mui/system';
 import axios from 'axios';
 import "../../images/member/normal.png"
 import { assertConditionalExpression } from '@babel/types';
+
+import Profile from '../../components/Profile/Profile';
 
 function Header() {
   const accessToken = localStorage.getItem("accessToken");
@@ -152,10 +152,9 @@ function Header() {
                   </li>
                   <li> 
                     <Link to='/youthspacelist/1'>청년공간 찾아보기</Link>
- 
                   </li>
                   <li>
-                    <Link to='#'>청년TALK</Link>
+                    <Link to='/ws-chat'>청년TALK</Link>
                   </li>
                 </ul>
               </div>
@@ -280,6 +279,7 @@ function Header() {
               </a>
             </li>
           )}
+          <Profile/>
           </ul>
         </div>
       </div>
