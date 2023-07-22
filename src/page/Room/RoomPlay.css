@@ -12,4 +12,19 @@
 .roomh .play { position: sticky; top: 50px; flex: 0 0 auto; width: 250px;}
 .roomh .play-top { position: fixed;} 
 
+.roomh .Chatbutton{
+    width : 200px;
+    height: 60px;
+    margin-left: 25px;
+    margin-top: 10px;
+    color : white;
+    background-color:#1DC078;
+    font-size: 20px;
+    border-radius: 5px;
+    border : 1px solid transparent;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 
