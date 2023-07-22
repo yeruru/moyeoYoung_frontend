@@ -1,0 +1,58 @@
+import React, { useState, useEffect } from 'react';
+import '../MyPage.css';
+import { Link } from 'react-router-dom';
+
+
+function MyActivityNav() {
+
+  const [isAllVaild, setIsAllVaild] = useState(null);
+
+  useEffect(() => {
+    // 컴포넌트가 마운트될 때 현재 URL에 따라 상태 초기화
+    const currentPath = window.location.pathname;
+    if (currentPath === '/myroom') {
+      setIsAllVaild('myroom');
+    } else if (currentPath === '/myjoinroom') {
+      setIsAllVaild('myjoinroom');
+    } else if (currentPath === '/myfeed') {
+      setIsAllVaild('myfeed');
+    } else if (currentPath === '/mybookmark') {
+      setIsAllVaild('mybookmark');
+    }
+    else {
+      setIsAllVaild(null);
+    }
+  }, []);
+
+  const handleBtnClick = (target) => {
+    setIsAllVaild((prev) => (prev === target ? null : target));
+  };
+
+  return (
+    <div className='note-menu'>
+      <nav>
+        <a href="/mypagemain" className='send-btn'>마이페이지 &nbsp; &gt;</a>
+        <ul>
+          <li>
+            <a href="/myroom" className={`note-a ${isAllVaild === 'myroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myroom')}>내 모임방
+            </a>
+          </li>
+          <li>
+            <a href="/myjoinroom" className={`note-a ${isAllVaild === 'myjoinroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myjoinroom')}>내 참여방
+            </a>
+          </li>
+          <li>
+            <a href="/myfeed" className={`note-a ${isAllVaild === 'myfeed' ? 'click' : ''}`} onClick={() => handleBtnClick('myfeed')}>피드 목록
+            </a>
+          </li>
+          <li>
+            <a href="/mybookmark" className={`note-a ${isAllVaild === 'mybookmark' ? 'click' : ''}`} onClick={() => handleBtnClick('mybookmark')}>관심 목록
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  )
+}
+
+export default MyActivityNav

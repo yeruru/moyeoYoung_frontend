@@ -1,36 +1,36 @@
-.MyPage{
-    width: 250px;
-    height: 350px;
-    padding: 1px;
-}
-.mypage-header{
-    width: 300px;
-    padding: 20px;
-}
-.mypage-header a{
-    padding: 20px;
-    border: 1px solid beige;
-}
-.mypage-box{
-    border: 1px solid beige;
-    box-sizing: border-box;
-}
-.mypage-data{
-    background-color: aliceblue;
-    height: 300px;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
+/* MyPage */
+.MyPage{ width: 350px; height: 439px; padding: 1px; background-color: #fff; border-radius: 10px; box-shadow: 0px 0px 24px 0px rgba(170, 173, 176, 0.1);}
+.mypage-header{ width: 300px; padding: 20px;}
+.mypage-header a{ padding: 20px; border: 1px solid beige;}
+.mypage-box{ border: 1px solid beige; box-sizing: border-box;}
+.mypage-data{ height: 300px; text-align: center; display: flex; justify-content: space-evenly; flex-direction: column; align-items: center;}
 .mypage-data h2 { margin-top: 20px;}
-.mypage-data p {
-    font-size: 16px;
-    line-height: 18px;
-    margin-top: 20px;
-}
-.mypage-data div { width: 100px; height: 100px; overflow: hidden; border-radius: 50%; background-color: pink;}
-.mypage-data img {height: 100%; width: 100%; object-fit: cover;}
+.mypage-data p { font-size: 16px; line-height: 18px; margin-top: 20px;}
+.mypage-data div { width: 130px;
+  height: 130px;
+  overflow: hidden;
+  border-radius: 50%;
+  margin-top: 55px;}
 
+
+.mypage-data img {height: 100%; width: 100%; object-fit: cover;}
 .mypage-img-box { width: 200px; height: 200px; overflow: hidden; border-radius: 50%; margin: 0 auto;}
 .mypage-img-box img { height: 100%; width: 100%; object-fit: cover;}
+
+/* MyPageMain */
+.mypage-title-box { width: 1200px; margin: 0 auto; height: 100px; display: flex; align-items: center; margin-top: 73px; box-sizing: border-box; padding: 85px 0;}
+.mypage-title-box .myIco { position: relative; top: -20px;}
+.mypage-title-box  h3 { font-size: 35px; padding-top: 29px;}
+.mypageMain .mypage-background { background-color: #F3F5F7; padding-bottom: 60px;}
+.mypageMain .mypage-content { width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; padding-top: 40px;}
+.mypageMain .mypage-active { width: 750px; }
+.mypageMain .mypage-active h4 { font-size: 25px; display: block; margin-top: 20px;}
+.mypageMain .mypage-active-box { background-color: #fff; padding: 30px 108px; box-sizing: border-box; margin-top: 30px; border-radius: 10px; box-shadow: 0px 0px 24px 0px rgba(170, 173, 176, 0.2);}
+.mypageMain .mypage-active-box ul { display: flex; justify-content: space-evenly;}
+.mypageMain .my-icon-link { width: 100px; height: 100px; background-color: #F3F5F7; display: inline-block; border-radius: 20px; position: relative; transition: all .3s;}
+.mypageMain .my-icon-link:hover { box-shadow: 5px 5px 5px 0px rgba(35, 44, 39, 0.2); background-color: var(--mo);}
+.mypageMain .my-icon-link img { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);}
+.mypageMain .my-icon-link span {display: block; margin-top: 10px;}
+.mypageMain .mypage-icon-text {display: block; margin-top: 20px; font-size: 18px;}
+
+

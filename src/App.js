@@ -16,7 +16,13 @@ import { YouthSpaceDetail } from "./page/YouthSpace/YouthSpaceDetail";
 
 import Login from "./page/Login/Login";
 import SignUp from "./page/Login/SignUp";
-import MyPage from "./page/MyPage/MyPage"; 
+
+// 마이페이지
+import MypageMain from "./page/MyPage/MypageMain";
+import MyBookmark from "./page/MyPage/myactivity/MyBookmark";
+import MyFeed from "./page/MyPage/myactivity/MyFeed";
+import MyRoom from "./page/MyPage/myactivity/MyRoom";
+import MyJoinRoom from "./page/MyPage/myactivity/MyJoinRoom"
 
 import ScrollToTop from "./page/Main/ScrollToTop";
 
@@ -64,7 +70,17 @@ function App() {
 
         <Route exact path="/login" element={<Login />} />
         <Route exact path="/signup" element={<SignUp />} />
-        <Route exact path="/mypage" element={<MyPage />} />
+
+        {/* 마이페이지 */}
+        <Route exact path="/mypagemain" element={<MypageMain />} />
+        <Route exact path="/myroom" element={<MyRoom />} />
+        <Route exact path="/myjoinroom" element={<MyJoinRoom />} />
+        <Route exact path="/myfeed" element={<MyFeed />} />
+        <Route exact path="/mybookmark" element={<MyBookmark />} />
+        
+        
+        
+        
 
         <Route path="/roomMain/*" element={<RoomMain />} />
         <Route exact path="/youthspacedetail/:spaceId" element={<YouthSpaceDetail/>}/>

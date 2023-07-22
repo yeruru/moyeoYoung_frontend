@@ -120,7 +120,6 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
         .catch(err => {
         })
     };
-   
 // console.log(comment[0].memberId);
 // console.log(memberId);
 
@@ -178,7 +177,6 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
                             </div>
                         ))
                     }
-                  
                     </div>
                     <div className='commentInput'>
                         <input className="writecomment" type='text' placeholder='댓글을 작성해주세요' onChange={commentChange}/>
