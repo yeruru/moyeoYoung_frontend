@@ -72,8 +72,8 @@ function App() {
         <Route exact path="/note" element={<Note />} />
         <Route exact path="/sendnote" element={<SendNote />} />
         <Route exact path="/noteform" element={<NoteForm />} />
-        <Route exact path="/detailreceive" element={<DetailReceive />} />
-        <Route exact path="/detailsend" element={<DetailSend />} />
+        <Route exact path="/note/receive/:noteId" element={<DetailReceive />} />
+        <Route exact path="/note/send/:noteId" element={<DetailSend />} />
 
         <Route exact path="/userpage" element={<UserPage />} />
 
