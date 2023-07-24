@@ -270,7 +270,6 @@ function Header() {
               </a>
             </li>
           )}
-          <Profile/>
           </ul>
         </div>
       </div>

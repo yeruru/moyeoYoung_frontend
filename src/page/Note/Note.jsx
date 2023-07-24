@@ -74,7 +74,7 @@ const noteStatus = (noteId) => {
                 <tbody>
                 {noteData.map((note) => (
                     <Link to={`/note/receive/${note.noteId}`} key={note.noteId} onClick={()=> noteStatus(note.noteId)}>
-                      <tr style={{ backgroundColor: note.status ? 'lightgrey' : 'white' }}>
+                      <tr style={{ backgroundColor: note.status ? '#f4f4f4' : 'white' }}>
                         <td className='td-name'><p>{note.senderNickname}</p></td>
                         <td className='td-content'><p>{note.content}</p></td>
                         <td className='td-date'><p>{note.sendDate}</p></td>
