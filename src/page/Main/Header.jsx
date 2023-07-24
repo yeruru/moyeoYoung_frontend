@@ -49,8 +49,6 @@ function Header() {
         },
       })
       .then((res) => {
-        console.log(res.data.memberId);
-        console.log(res.data.email);
         setFileName({
           fileName: res.data.fileName
         });
@@ -59,7 +57,6 @@ function Header() {
       .catch((err) => {
         console.log(err);
       });
-    console.log(accessToken);
   }, [accessToken]);
 
 
@@ -117,14 +114,10 @@ function Header() {
 
   const [selectedButton, setSelectedButton] = useState('');
 
-
-
-
   //프로필 하다가 말았음 
   const [comment, setComment] = useState([]);
 
 
-  console.log(isLoggedIn);
 
   //알람기능
   
@@ -281,7 +274,6 @@ function Header() {
               </a>
             </li>
           )}
-          <Profile/>
           </ul>
         </div>
       </div>

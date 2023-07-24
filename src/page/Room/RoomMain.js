@@ -29,7 +29,6 @@ function RoomMain() {
     const content = path.split('/')[path.split('/').length-2];
     setSelectedContent(content);
   }, [location]);
-  console.log(roomId);
 
   useEffect(()=>{
     axios.get(`http://localhost:8090/room/getroomMain/${roomId}`)

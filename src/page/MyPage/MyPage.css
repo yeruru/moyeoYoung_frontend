@@ -1,20 +1,32 @@
 /* MyPage */
 .MyPage{ width: 350px; height: 439px; padding: 1px; background-color: #fff; border-radius: 10px; box-shadow: 0px 0px 24px 0px rgba(170, 173, 176, 0.1);}
 .mypage-header{ width: 300px; padding: 20px;}
+.mypage-icon-nav-box { position: relative;}
+.mypage-icon-nav-box svg { font-size: 30px; padding: 8px; cursor: pointer;}
+.maypage-icon-nav-box-mo { position: absolute; right: 35px; top: 10px; display: none; box-shadow: 0px 0px 24px 0px rgba(170, 173, 176, 0.5); background-color: #fff;}
+.maypage-icon-nav-box-mo.show { display: block;}
+.maypage-icon-nav-box-mo li {  cursor: pointer; transition: all .3s;}
+.maypage-icon-nav-box-mo li a { display: block; padding: 20px; border-bottom: 1px solid #ddd; text-align: center;}
+.maypage-icon-nav-box-mo li a:hover { color: var(--mo);}
+.maypage-icon-nav-box-mo li button { padding: 20px; font-family: inherit; font-size: inherit; border: 0; outline: 0; background-color: inherit;}
+.maypage-icon-nav-box-mo li button:hover { color:var(--mo);}
 .mypage-header a{ padding: 20px; border: 1px solid beige;}
-.mypage-box{ border: 1px solid beige; box-sizing: border-box;}
+.mypage-box{ box-sizing: border-box; height: 93%;}
 .mypage-data{ height: 300px; text-align: center; display: flex; justify-content: space-evenly; flex-direction: column; align-items: center;}
 .mypage-data h2 { margin-top: 20px;}
 .mypage-data p { font-size: 16px; line-height: 18px; margin-top: 20px;}
-.mypage-data div { width: 130px;
-  height: 130px;
-  overflow: hidden;
-  border-radius: 50%;
-  margin-top: 55px;}
-
+.mypage-data div { width: 130px; height: 130px; overflow: hidden; border-radius: 50%;}
+.dialogtitle-mo { padding-bottom: 20px; display: block; position: relative;}
+.dialogtitle-mo::after { content: ''; position: absolute; width: 90%; height: 0.5px; background-color: #ddd; bottom: -10px; left: 20px;}
+.css-1t1j96h-MuiPaper-root-MuiDialog-paper { width: auto;} 
 
 .mypage-data img {height: 100%; width: 100%; object-fit: cover;}
-.mypage-img-box { width: 200px; height: 200px; overflow: hidden; border-radius: 50%; margin: 0 auto;}
+.pro-modify-box { position: relative;}
+.pro-modify-box span { position: absolute; bottom: 0; left: 57%; width: 50px; height: 50px; background-color: #fff; border-radius: 50%; cursor: pointer; border: 2px solid #ddd; display: flex; justify-content: center; align-items: center; transition: all .3s;}
+.pro-modify-box svg { font-size: 30px; color: rgb(96, 95, 107);}
+.pro-modify-box span:hover { background-color: var(--mo);}
+.pro-modify-box span:hover svg { color: #fff;}
+.mypage-img-box { width: 150px; height: 150px; overflow: hidden; border-radius: 50%; margin: 0 auto; margin-top: 35px;}
 .mypage-img-box img { height: 100%; width: 100%; object-fit: cover;}
 
 /* MyPageMain */

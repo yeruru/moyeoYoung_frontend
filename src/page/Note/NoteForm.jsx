@@ -1,14 +1,15 @@
-import React, { useState } from "react";
-import "./Note.css";
-import usePagination from "@mui/material/usePagination";
-import { Pagination } from "@mui/material";
-import { Link, useLocation, useNavigate } from "react-router-dom";
-import NoteMenu from "./NoteMenu";
-import axios from "axios";
+import React, {  useEffect, useState } from 'react';
+import './Note.css';
+import usePagination from '@mui/material/usePagination';
+import { Pagination} from '@mui/material';
+import { Link, useLocation , useNavigate} from 'react-router-dom';
+import NoteMenu from './NoteMenu';
+import axios from 'axios';
 
 function NoteForm() {
   // 글자 수 제한
   const [characterCount, setCharacterCount] = useState(0);
+  const [nickname, setNickname] = useState("");
   const maxCharacterCount = 300;
   const handleTextareaChange = (event) => {
     const text = event.target.value;
@@ -29,6 +30,10 @@ function NoteForm() {
   const accessToken = localStorage.getItem("accessToken");
   const location = useLocation();
   const { receiverNickname } = location.state;
+  useEffect(()=>{
+    setNickname(location.pathname.split("/")[2]);
+  },[location]);
+ 
   // const receivedNickname = useState("");
   // const content = useState("");
   const [note, setNote] = useState({
@@ -39,8 +44,8 @@ function NoteForm() {
   const change = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setNote({ ...note, [name]: value });
-  };
+    setNote({...note, [name]:value})  
+};
 
   const handleSend = (e) => {
     e.preventDefault();
@@ -82,17 +87,16 @@ function NoteForm() {
             <div className="send-window">
               <div className="send-area">
                 <span>받는사람</span>
-                <input
-                  type="text"
-                  maxLength={20}
-                  name="receiverNickname"
-                  onChange={change}
-                  placeholder="보내는 사람의 이메일을 입력해 주세요."
-                  className="note-email"
-                />
-                <button type="button" className="send-btn" onClick={handleSend}>
-                  보내기
-                </button>
+                {
+                  nickname != '' &&
+                  <input type="text" maxLength={20} name= "receiverNickname" onChange={change} value={nickname} className='note-email' id='note-email'/>
+                }
+                {
+                  nickname == '' &&
+                   <input type="text" maxLength={20} name= "receiverNickname" onChange={change} placeholder='보내는 사람의 닉네임을 입력해 주세요.' className='note-email'  id='note-email'/>
+                }
+               
+                <button type='button' className='send-btn' onClick={handleSend}>보내기</button>
               </div>
               <div className="writing-area">
                 <textarea
