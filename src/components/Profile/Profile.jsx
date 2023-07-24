@@ -4,6 +4,7 @@ import { Link} from 'react-router-dom';
 import pro from '../../images/music/music-3.jpg'
 import styled from 'styled-components';
 import axios from 'axios';
+
 function Profile({isOpen, content, isClose}) {
   const [open, setOpen] = useState(false);
   const [imagename, setImagename] = useState('');
@@ -29,8 +30,6 @@ function Profile({isOpen, content, isClose}) {
   return (
     <>
       {/* 프로필 사진 */}
-      <a href="#;" onClick={handleModalOpen}>프로필</a>
-
       {/* 모달 */}
       <Dialog open={isOpen} onClose={isClose} style={{zIndex: '999999'}}>
         <DialogContent style={{width:'320px', height:'400px', display:'flex', flexDirection:'column', alignItems:'center'}}>

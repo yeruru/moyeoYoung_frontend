@@ -118,6 +118,10 @@ function Header() {
   const [comment, setComment] = useState([]);
 
 
+
+  //알람기능
+  
+
   return (
     <div className='mo-header' id='mo-header'>
       <div className='header-wrap'>
