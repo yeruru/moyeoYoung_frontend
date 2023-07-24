@@ -9,9 +9,15 @@ function MyFeed() {
 
   const memberId = useLocation().pathname.split("/")[2];
 
-  useEffect(()=>[
-    axios.get(`http://localhost:8090/feed/getmemberId`)
-  ])
+  useEffect(()=>{
+    axios.get(`http://localhost:8090/feed/selectfeeds/${memberId}`)
+    .then(res=>{
+      console.log(res.data);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+},[memberId])
 
   return (
     <div className='wrap'>

@@ -29,7 +29,11 @@ function NoteForm() {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
   const location = useLocation();
-  // const { receiverNickname } = location.state;
+
+  console.log(location);
+
+  const { receiverNickname } = location.state;
+
   useEffect(()=>{
     setNickname(location.pathname.split("/")[2]);
   },[location]);

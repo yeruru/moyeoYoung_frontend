@@ -277,6 +277,8 @@ function Header() {
           </ul>
         </div>
       </div>
+      {/* 모임방 투두 팡파레 */}
+      <canvas id="my-canvas"></canvas> 
     </div>
   );
 }
