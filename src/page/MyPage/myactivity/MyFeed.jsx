@@ -1,9 +1,18 @@
-import React from 'react'
+import React ,{useEffect, useState} from 'react';
+import {useLocation} from 'react-router-dom';
 import MyActivityNav from './MyActivityNav';
 import myIco from '../../../images/my/my-ico.png';
 import MyPage from '../MyPage';
+import axios from 'axios';
 
 function MyFeed() {
+
+  const memberId = useLocation().pathname.split("/")[2];
+
+  useEffect(()=>[
+    axios.get(`http://localhost:8090/feed/getmemberId`)
+  ])
+
   return (
     <div className='wrap'>
       <div className='mypage-title-box'>

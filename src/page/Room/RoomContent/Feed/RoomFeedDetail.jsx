@@ -37,34 +37,35 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
         })
     },[]);
 
-
     useEffect(()=>{
-        axios.get(`http://localhost:8090/feed/detailfeed/${content}`)
-        .then(res=>{
-            setFeedDetail(prevFeedDetail => ({
-                ...prevFeedDetail,
-                title : res.data.title,
-                content : res.data.content,
-                filename : res.data.filename,
-                roomcreateDate : res.data.roomCreateDate
-            }));
-        })
-        .catch(err=>{
+        if(isOpen==true){
+            axios.get(`http://localhost:8090/feed/detailfeed/${content}`)
+            .then(res=>{
+                setFeedDetail(prevFeedDetail => ({
+                    ...prevFeedDetail,
+                    title : res.data.title,
+                    content : res.data.content,
+                    filename : res.data.filename,
+                    roomcreateDate : res.data.roomCreateDate
+                }));
+            })
+            .catch(err=>{
+    
+            });
 
-        });
-
-        axios.get(`http://localhost:8090/feed/selectcomment/${content}`,{
-            headers: {
-                'Authorization': `Bearer ${accessToken}`
-            }   
-        })
-        .then(res=>{
-            setComment(res.data);
-        })
-        .catch(err=>{
-            
-        });
-    },[content]);
+            axios.get(`http://localhost:8090/feed/selectcomment/${content}`,{
+                headers: {
+                    'Authorization': `Bearer ${accessToken}`
+                }   
+            })
+            .then(res=>{
+                setComment(res.data);
+            })
+            .catch(err=>{
+                
+            });
+        }    
+    },[content, isOpen]);
 
     const fetchComment = () => {
             axios.get(`http://localhost:8090/feed/selectcomment/${content}`,{
@@ -81,7 +82,6 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
             })
 
         };
-
     const commentSubmit = (e) => {
         e.preventDefault();
         const formData = new FormData();
@@ -118,6 +118,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
             fetchComment();
         })
         .catch(err => {
+
         })
     };
 // console.log(comment[0].memberId);
