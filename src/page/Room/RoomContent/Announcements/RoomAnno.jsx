@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import Pagination from '@mui/material/Pagination';
+
+const itemsPerPage = 10;
 
 function RoomAnno() {
     const navigate = useNavigate();
 
     const [notices, setNotices] = useState([]);
+    const [page, setPage] = useState(1);
     const { roomId } = useParams();
 
     useEffect(() => {
@@ -16,90 +20,110 @@ function RoomAnno() {
     }, [roomId]);
 
     const formatDate = (dateStr) => {
-      const date = new Date(dateStr);
-      const now = new Date();
-      const diffMs = now - date; // milliseconds difference
-      const diffSecs = Math.round(diffMs / 1000); // seconds difference
-      const diffMins = Math.round(diffSecs / 60); // minutes difference
-      const diffHrs = Math.round(diffMins / 60); // hours difference
-      const diffDays = Math.round(diffHrs / 24); // days difference
+        const date = new Date(dateStr);
+        const now = new Date();
+        const diffMs = now - date; // milliseconds difference
+        const diffSecs = Math.round(diffMs / 1000); // seconds difference
+        const diffMins = Math.round(diffSecs / 60); // minutes difference
+        const diffHrs = Math.round(diffMins / 60); // hours difference
+        const diffDays = Math.round(diffHrs / 24); // days difference
+  
+        if (diffSecs < 60) {
+            return `${diffSecs}초 전`;
+        } else if (diffMins < 60) {
+            return `${diffMins}분 전`;
+        } else if (diffHrs < 24) {
+            return `${diffHrs}시간 전`;
+        } else {
+            return `${diffDays}일 전`;
+        }
+    };
 
-      if (diffSecs < 60) {
-          return `${diffSecs}초 전`;
-      } else if (diffMins < 60) {
-          return `${diffMins}분 전`;
-      } else if (diffHrs < 24) {
-          return `${diffHrs}시간 전`;
-      } else {
-          return `${diffDays}일 전`;
-      }
-  };
+    const handlePageChange = (event, value) => {
+      setPage(value);
+    };
 
-  return (
-      <div style={styles.container}>
-          <h2 style={styles.title}>모임방 공지사항</h2>
-          <div>
-              {notices.map(notice => (
-                  <div style={styles.listItem} key={notice.id} onClick={() => navigate(`/roomMain/${roomId}/detailAnno/${notice.id}`)}> 
-                      <div style={styles.listTitle}>{notice.title}</div>
-                      <div style={styles.listInfo}>
-                          <span style={styles.listNickname}>{notice.nickname}</span>
-                          <span style={styles.listDate}>{notice.updatedAt ? `수정됨 · ${formatDate(notice.updatedAt)}` : formatDate(notice.createdAt)}</span>
-                      </div>
-                  </div>
-              ))}
-          </div>
-          <div style={styles.button} onClick={() => navigate(`/roomMain/writeAnno/${roomId}`)}>
-              글쓰기
-          </div>
-      </div>
-  );
-}
-
-const styles = {
-    container: {
-        padding: "20px",
-        fontFamily: "Arial, sans-serif"
-    },
-    title: {
-        marginBottom: "20px"
-    },
-    listItem: {
-        display: "flex",
-        flexDirection: "column",
-        justifyContent: "space-between",
-        padding: "20px",
-        border: "1px solid #ddd",
-        borderRadius: "5px",
-        marginBottom: "10px",
-        cursor: "pointer"
-    },
-    listTitle: {
-        fontSize: "20px",
-        fontWeight: "bold",
-        marginBottom: "10px"
-    },
-    listInfo: {
-        display: "flex",
-        justifyContent: "space-between",
-        fontSize: "12px",
-        color: "#888"
-    },
-    listNickname: {
-        marginRight: "10px"
-    },
-    listDate: {},
-    button: {
-        display: "inline-block",
-        marginTop: "20px",
-        padding: "10px 20px",
-        border: "none",
-        borderRadius: "5px",
-        backgroundColor: "#007bff",
-        color: "#fff",
-        cursor: "pointer",
-        textAlign: "center"
+    const style = {
+        container: {
+            padding: '20px',
+            fontFamily: 'Arial, sans-serif',
+            backgroundColor: 'white',
+        },
+        title: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            marginBottom: '10px'
+        },
+        table: {
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+        },
+        headerRow: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '10px',
+            borderBottom: '1px solid #ddd',
+            backgroundColor: '#ddd',
+        },
+        row: {
+            display: 'flex',
+            justifyContent: 'space-between',
+            padding: '10px',
+            borderBottom: '1px solid #ddd',
+            cursor: 'pointer',
+        },
+        thTitle: { flex: '6', textAlign: 'left' },
+        thAuthor: { flex: '2', textAlign: 'left' },
+        thDate: { flex: '2', textAlign: 'left' },
+        tdTitle: { flex: '6', textAlign: 'left', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+        tdAuthor: { flex: '2', textAlign: 'left', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+        tdDate: { flex: '2', textAlign: 'left', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' },
+        button: {
+            display: 'inline-block',
+            padding: '10px 20px',
+            border: 'none',
+            borderRadius: '5px',
+            backgroundColor: '#1EC078',
+            color: 'white',
+            cursor: 'pointer',
+        },
+        pagination: {
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            marginTop: '20px',
+        }
     }
-};
+
+    return (
+        <div style={style.container}>
+            <div style={style.title}>
+                <h2>모임방 공지사항</h2>
+                <div style={style.button} onClick={() => navigate(`/roomMain/writeAnno/${roomId}`)}>
+                    글쓰기
+                </div>
+            </div>
+            <div style={style.table}>
+                <div style={style.headerRow}>
+                    <div style={style.thTitle}>제목</div>
+                    <div style={style.thAuthor}>작성자</div>
+                    <div style={style.thDate}>날짜</div>
+                </div>
+                {notices.slice((page-1)*itemsPerPage, page*itemsPerPage).map(notice => (
+                    <div style={style.row} key={notice.id} onClick={() => navigate(`/roomMain/${roomId}/detailAnno/${notice.id}`)}>
+                        <div style={style.tdTitle}>{notice.title}</div>
+                        <div style={style.tdAuthor}>{notice.nickname}</div>
+                        <div style={style.tdDate}>{notice.updatedAt ? `${formatDate(notice.updatedAt)} · 수정됨` : formatDate(notice.createdAt)}</div>
+                    </div>
+                ))}
+            </div>
+            <div style={style.pagination}>
+                <Pagination count={Math.ceil(notices.length/itemsPerPage)} page={page} onChange={handlePageChange} />
+            </div>
+        </div>
+    );
+}
 
 export default RoomAnno;
