@@ -203,8 +203,7 @@ const OpenChat = () => {
         }
         console.log("여기에출력",memberInfo.username);
         setUsername(memberInfo.nickname);
-        //api에서 값을 많이받아올수 있도록 수정한 후에 적용 ㄱㄱ
-        // setProfileImage(memberInfo.profileImageUrl);
+
         sendSysMessage(` < ${memberInfo.nickname} > 님이 입장하셨습니다.`);  // 입장 공지메시지 전송
         setIsUserSet(true);
       };
@@ -245,16 +244,14 @@ const OpenChat = () => {
             <img src="/image/openchat/청년talk_배너.png" style={{ width: '400px', display: 'block', margin: '0 auto' }} />
             <div className="chat-container">
                 <div className="chat-room-buttons">
-                    <button onClick={() => handleRoomChange("room1")}>청년공간 같이가실분</button>
-                    <button onClick={() => handleRoomChange("room2")}>모임 같이 하실분</button>
-                    <button onClick={() => handleRoomChange("room3")}>자유TALK</button>
+                    <button className="menu-button" onClick={() => handleRoomChange("room1")}>청년공간 같이가실분</button>
+                    <button className="menu-button" onClick={() => handleRoomChange("room2")}>모임 같이 하실분</button>
+                    <button className="menu-button" onClick={() => handleRoomChange("room3")}>자유TALK</button>
                 </div>
+
                 {!isUserSet ?
-                    // 닉네임이 설정 안되어있으면 설정하는 폼
                     <button id='myButton' onClick={handleClick}>접속하기</button>
                     :
-                    
-                    // 닉네임이 설정되면 채팅방 렌더링
                     <>
                         {/* 메세지 리스트 렌더링 */}
                         <div className="chat-message-list">

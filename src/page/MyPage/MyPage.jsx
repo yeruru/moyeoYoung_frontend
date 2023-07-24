@@ -16,6 +16,8 @@ import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Profile from '../../components/Profile/Profile';
 import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
+import { useNavigate } from 'react-router-dom';
+
 // TODO: 비밀번호 재설정시 유효성로직을 추가 ,  기본이미지 설정 로직 변경
 
 const MyPage = () => {
@@ -29,7 +31,7 @@ const MyPage = () => {
   const [memberId, setMemberId] = useState(0);
   const [profileModal,setProfileModal] = useState(false);
   const [nickname, setNickname] = useState("");
-
+  const navigate = useNavigate();
   useEffect(() => {
     // 유저 정보 가져오기
     axios
@@ -156,22 +158,28 @@ const MyPage = () => {
   };
 
   const handleWithdrawClick = () => {
-    const isConfirmed = window.confirm('탈퇴시 본인이 작성한 게시물 및 정보 등이 삭제 됩니다. \n정말 탈퇴하시겠습니까?');
-    if (isConfirmed) {
-      axios.delete(`http://localhost:8090/delete/${memberId}`)
-        .then((response) => {
-          // 성공적인 응답 처리, 예를 들면 사용자에게 성공 메시지를 보여줍니다.
-          alert('회원 탈퇴가 완료되었습니다.');
-          // 필요한 경우 사용자를 다른 페이지로 리디렉션하는 등의 추가 작업을 수행할 수 있습니다.
-        })
-        .catch((error) => {
-          // 에러 처리, 예를 들면 에러 메시지를 보여줍니다.
-          alert('회원 탈퇴에 실패하였습니다. 다시 시도해주세요.');
-        });
-    }
-  };
-  
+  const isConfirmed = window.confirm('탈퇴시 본인이 작성한 게시물 및 정보 등이 삭제 됩니다. \n정말 탈퇴하시겠습니까?');
+  if (isConfirmed) {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    };
 
+    axios.delete(`http://localhost:8090/member/delete/${memberId}`, config)
+      .then((response) => {
+        alert('회원 탈퇴가 완료되었습니다.');
+        localStorage.removeItem('accessToken');
+        window.location.href = '/';
+        
+      })
+      .catch((error) => {
+        alert('회원 탈퇴에 실패하였습니다. 다시 시도해주세요.');
+      });
+  }
+};
+  
+// 내 프로필 모달
   const openProfile = (feednickname) => {
     setNickname(feednickname);
     setProfileModal(!profileModal);
@@ -192,7 +200,7 @@ const MyPage = () => {
           <div className={`maypage-icon-nav-box-mo ${isBoxShown ? 'show' : ''}`}>
             <ul>
               <li><button onClick={()=>openProfile(formData.nickname)}>내 프로필</button></li>
-              <li><button  onClick={handleWithdrawClick}>회원 탈퇴</button></li>
+              <li><button onClick={handleWithdrawClick}>회원 탈퇴</button></li>
             </ul>
           </div>
         </div>
