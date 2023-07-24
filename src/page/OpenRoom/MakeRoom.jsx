@@ -90,8 +90,7 @@ function MakeRoom() {
         formData.append('roomCategory', room.roomCategory);
         formData.append('roomType', room.roomType);
         formData.append('file', file);
-        const accessToken = localStorage.getItem('accessToken'); 
-        console.log(accessToken);
+        const accessToken = localStorage.getItem('accessToken');  
         axios.post('http://localhost:8090/room/makeRoom', formData,{
             headers: {
                 'Authorization': `Bearer ${accessToken}`

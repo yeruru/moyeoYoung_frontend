@@ -34,6 +34,7 @@ function RoomMain() {
   /* MemberList 관련 */
   const [memberList, setMemberList] = useState([]);
   const [hostId, setHostId] = useState(0);
+  const [isJoin, setIsJoin] = useState(false);
 
 
   useEffect(() => {
@@ -41,13 +42,7 @@ function RoomMain() {
     const content = path.split('/')[path.split('/').length - 2];
     setSelectedContent(content); 
     
-    axiosURL.get(`/getroomMain/${roomId}`)
-      .then(res => {
-        setRoom(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+   
     //유저상태처리
     const isToken = localStorage.getItem('accessToken');
     if (isToken) {
@@ -73,8 +68,19 @@ function RoomMain() {
           console.log(err);
         })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location, isJoin, roomId]);
 
-  }, [location, userState,axiosURL, roomId]);
+  useEffect(()=>{
+    axiosURL.get(`/getroomMain/${roomId}`)
+    .then(res => {
+      setRoom(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
 
   const handleContentChange = (content) => {
     setSelectedContent(content);
@@ -94,7 +100,8 @@ function RoomMain() {
       })
         .then(res => {
           alert(res.data);
-          setUserState('okMember');
+          setUserState('okMember'); 
+          setIsJoin(true);
         })
         .catch(err => {
           alert(err);
