@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import MyPage from './MyPage';
 import myIco from '../../images/my/my-ico.png';
 import myIcon1 from '../../images/my/my-icon-1.svg';
@@ -8,8 +8,25 @@ import myIcon4 from '../../images/my/my-icon-4.svg';
 import "./MyPage.css";
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import axios from 'axios';
 
 function MypageMain() {
+  const [memberId, setMemberId] = useState();
+  const accessToken = localStorage.getItem("accessToken");
+  useEffect(()=>{
+    axios.get(`http://localhost:8090/feed/getmemberId`,  {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+    })
+    .then(res=>{
+      setMemberId(res.data);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  },[accessToken])
+
   return (
     <div className='mypageMain'>
       <div className='mypage-title-box'>
@@ -25,7 +42,7 @@ function MypageMain() {
               <ul style={{width:'100%', display:'flex', justifyContent:'space-evenly', flexWrap:'wrap'}}>
                 <li style={{width:'50%'}}>
                   <div style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}}>
-                    <a href="/myroom" className='my-icon-link'>
+                    <a href={`/myroom/${memberId}`} className='my-icon-link'>
                       <img src={myIcon1} alt="내모임방 아이콘" style={{width:'50px'}}/>
                     </a>
                     <span className='mypage-icon-text'>내 모임방</span>
@@ -33,7 +50,7 @@ function MypageMain() {
                 </li>
                 <li style={{width:'50%'}}>
                   <div style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}}>
-                    <a href="/myjoinroom" className='my-icon-link'>
+                    <a href={`/myjoinroom/${memberId}`} className='my-icon-link'>
                       <img src={myIcon2} alt="내모임방 아이콘" style={{width:'50px'}}/>
                     </a>
                     <span className='mypage-icon-text'>내 참여방</span>
@@ -41,7 +58,7 @@ function MypageMain() {
                 </li>
                 <li style={{width:'50%', marginTop:'40px'}}>
                   <div style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}}>
-                    <a href="/myfeed" className='my-icon-link'>
+                    <a href={`/myfeed/${memberId}`} className='my-icon-link'>
                       <img src={myIcon3} alt="내모임방 아이콘" style={{width:'50px'}}/>
                     </a>
                     <span className='mypage-icon-text'>내 피드</span>
@@ -49,7 +66,7 @@ function MypageMain() {
                 </li>
                 <li style={{width:'50%', marginTop:'40px'}}>
                   <div style={{display:'flex', justifyContent:'center', flexDirection:'column', alignItems:'center'}}>
-                    <a href="/mybookmark" className='my-icon-link'>
+                    <a href={`/mybookmark/${memberId}`} className='my-icon-link'>
                       <img src={myIcon4} alt="내모임방 아이콘" style={{width:'50px'}}/>
                     </a>
                     <span className='mypage-icon-text'>모임 북마크</span>
