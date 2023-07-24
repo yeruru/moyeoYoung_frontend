@@ -17,6 +17,8 @@ const Chat = (roomid) => {
 
     const [profile, setProfile] = useState();
 
+    
+
     useEffect(() => {
         // 유저 정보 가져오기
         axios
@@ -108,6 +110,7 @@ const Chat = (roomid) => {
             setSocketData(dataSet);
         }
     });
+
 
     const send = useCallback(() => {
         if(!chkLog) {

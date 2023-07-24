@@ -13,6 +13,7 @@ import axios from 'axios';
 import RoomFeedDetail from './RoomFeedDetail';
 import ModifyFeed from './ModifyFeed.jsx';
 import {useSelector} from 'react-redux';
+import Profile from '../../../../components/Profile/Profile';
 
 
 function RoomFeed({onContentChange}) {
@@ -23,9 +24,11 @@ function RoomFeed({onContentChange}) {
   const [modalOpen, setModalOpen] = useState(false);
   const [deleteModal, setDeleteModal] = useState(false);
   const [modifyModal, setModifyModal] = useState(false);
+  const [profileModal, setProfileModal] = useState(false);
   const [feedId, setFeedId] = useState();
   const [mfeedId, setMFeedId] = useState();
   const [memberId, setMemberId] = useState();
+  const [nickname, setNickname] = useState('');
   let { roomId } = useParams();
 
   const accessToken = localStorage.getItem("accessToken");
@@ -90,7 +93,6 @@ function RoomFeed({onContentChange}) {
     })
   }
   
-
   const modal = (p_feedId) => {
     setModalClicked(prevState => ({
       ...prevState,
@@ -101,7 +103,6 @@ function RoomFeed({onContentChange}) {
   const handleClick = (feedId) => {
     setLikes((prevLikes) => {
       const isLiked = prevLikes.includes(feedId);
-
       if(isLiked){
         decreaseLikeCount(feedId);
         axios.get(`http://localhost:8090/feed/delike/${feedId}`,{
@@ -201,6 +202,15 @@ function RoomFeed({onContentChange}) {
     })
   }
 
+  const openProfile = (feednickname) => {
+    setNickname(feednickname);
+    setProfileModal(!profileModal);
+  }
+
+  const ProfileCloseModal = () => {
+    setProfileModal(!profileModal);
+  }
+
   return (
     <div className='roomfeed'>
       <div className='room-box'>
@@ -219,7 +229,7 @@ function RoomFeed({onContentChange}) {
               <div className='feed' key={feed.feedId}>      
                 <div className='feedHeader'>
                   <div className='userheader'>
-                    <div className='userProfile' style={{backgroundImage : `url(http://localhost:8090/room/view/${feed.profilename})`}}></div>
+                    <div className='userProfile' onClick={()=>openProfile(feed.nickname)} style={{backgroundImage : `url(http://localhost:8090/room/view/${feed.profilename})`, cursor:'pointer'}}></div>
                     <span className='username'>{feed.nickname}</span>
                   </div>
                   <div className='drop-box'>
@@ -239,8 +249,6 @@ function RoomFeed({onContentChange}) {
                       </div>
                       </>
                     }
-                    
-                 
                     <div className={`checkbackground ${deleteModal ? 'show' : ''}`}  onClick={close}>
                     <div className='checkdelete' onClick={notclose}> 
                         <div className='checkword'>정말로 삭제하시겠습니까?</div>
@@ -333,6 +341,11 @@ function RoomFeed({onContentChange}) {
           onClose={ModifyCloseModal}
           roomId = {roomId}
           accessToken={accessToken}
+        />
+        <Profile
+          isOpen={profileModal}
+          content={nickname}
+          isClose={ProfileCloseModal}
         />
       </div>
     </div>

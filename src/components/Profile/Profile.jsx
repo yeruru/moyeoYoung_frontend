@@ -4,33 +4,40 @@ import { Link} from 'react-router-dom';
 import pro from '../../images/music/music-3.jpg'
 import styled from 'styled-components';
 import axios from 'axios';
-function Profile() {
-  // 모달
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
+function Profile({isOpen, content, isClose}) {
+  const [open, setOpen] = useState(false);
+  const [imagename, setImagename] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [profilecontent, setProfileContent] = useState('');
+  
+  useEffect(()=>{
+    if(isOpen==true){
+      axios.get(`http://localhost:8090/member/profile/${content}`)
+      .then(res=>{
+        setImagename(res.data.fileName);
+        setNickname(res.data.nickname);
+        setProfileContent(res.data.profileContent);
+      })
+      .catch(err=>{
+  
+      })
+    }
+  },[isOpen, content]);
 
 
   return (
     <>
-      {/* 프로필 사진 */}
-      <span onClick={handleModalOpen}>프로필</span>
-
       {/* 모달 */}
-      <Dialog open={isModalOpen} onClose={handleModalClose} style={{zIndex: '999999'}}>
+      <Dialog open={isOpen} onClose={isClose} style={{zIndex: '999999'}}>
         <DialogContent style={{width:'320px', height:'400px', display:'flex', flexDirection:'column', alignItems:'center'}}>
           <ProBox>
-            <img src={pro} alt="" style={{objectFit:'cover', width:'100%', height:'100%'}}/>
+            <img src={`http://localhost:8090/room/view/${imagename}`} alt="" style={{objectFit:'cover', width:'100%', height:'100%'}}/>
           </ProBox>
-          <h4 style={{fontSize:'30px', display:'block', marginBottom:'25px'}}>닉네임</h4>
+          <h4 style={{fontSize:'30px', display:'block', marginBottom:'25px'}}>{nickname}</h4>
           <ProTextBox>
-            <p>ddddddddddddddddddddddddddddddddddddssssssssssssssssssssssssssssssssssdddddddddddsssssssssssssssssssssssssssssssssssddddddddddddddssssssssssssssssssssssssssssssssddddddd</p>
+            <p>{profilecontent}</p>
           </ProTextBox>
-          <Link to="/noteform" onClick={handleModalClose} style={{display:'flex', backgroundColor:'#4e5157', color:'#fff', padding:'20px', justifyContent:'center' , borderRadius:'7px', width:'277px'}}>
+          <Link to={`/noteform/${nickname}`} onClick={isClose} style={{display:'flex', backgroundColor:'#4e5157', color:'#fff', padding:'20px', justifyContent:'center' , borderRadius:'7px', width:'277px'}}>
             쪽지 보내기
           </Link>
         </DialogContent>
