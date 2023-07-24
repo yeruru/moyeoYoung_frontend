@@ -39,8 +39,8 @@ function RoomMain() {
   useEffect(() => {
     const path = location.pathname;
     const content = path.split('/')[path.split('/').length - 2];
-    setSelectedContent(content);
-
+    setSelectedContent(content); 
+    
     axiosURL.get(`/getroomMain/${roomId}`)
       .then(res => {
         setRoom(res.data);

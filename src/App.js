@@ -74,21 +74,18 @@ function App() {
 
         {/* 마이페이지 */}
         <Route exact path="/mypagemain" element={<MypageMain />} />
-        <Route exact path="/myroom" element={<MyRoom />} />
-        <Route exact path="/myjoinroom" element={<MyJoinRoom />} />
-        <Route exact path="/myfeed" element={<MyFeed />} />
-        <Route exact path="/mybookmark" element={<MyBookmark />} />
+        <Route exact path="/myroom/:memberId" element={<MyRoom />} />
+        <Route exact path="/myjoinroom/:memberId" element={<MyJoinRoom />} />
+        <Route exact path="/myfeed/:memberId" element={<MyFeed />} />
+        <Route exact path="/mybookmark/:memberId" element={<MyBookmark />} />
         
-        
-        
-        
-
         <Route path="/roomMain/*" element={<RoomMain />} />
         <Route exact path="/youthspacedetail/:spaceId" element={<YouthSpaceDetail/>}/>
         {/* <Route exact path="/youthspacedetail:spaceid" element={<MakeRoom/>}/> */}
         <Route exact path="/note" element={<Note />} />
         <Route exact path="/sendnote" element={<SendNote />} />
         <Route exact path="/noteform" element={<NoteForm />} />
+        <Route exact path="/noteform/:nickname" element={<NoteForm />} />
         <Route exact path="/note/receive/:noteId" element={<DetailReceive />} />
         <Route exact path="/note/send/:noteId" element={<DetailSend />} />
 

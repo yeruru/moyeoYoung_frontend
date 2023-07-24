@@ -4,9 +4,11 @@ import './Note.css';
 import NoteMenu from './NoteMenu';
 import axios from 'axios';
 
+
 function DetailReceive() {
   const Location = useLocation().pathname;
   const noteId = Location.split('/')[3];
+  const [nickname , setNickname]= useState('');
   const navigate = useNavigate();
 
   const accessToken = localStorage.getItem('accessToken');
@@ -18,8 +20,7 @@ function DetailReceive() {
     status : ''
   });
 
-  console.log(note)
-
+console.log(note.senderNickname);
   useEffect(() =>{
     //받은쪽지함
     axios.get(`http://localhost:8090/note/received/detail/${noteId}`, {
@@ -35,7 +36,9 @@ function DetailReceive() {
     });
     console.log(accessToken);
 },[accessToken]);
-  //TODO: 답장하기로 닉네임 넣어놓는거 실패..
+
+  // TODO : 닉네임 넣어서 답장하기
+
 const handleReply = () => {
   navigate('/noteform', {
     state: {receiverNickname: note.senderNickname }

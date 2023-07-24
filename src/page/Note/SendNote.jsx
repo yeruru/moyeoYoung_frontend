@@ -38,7 +38,7 @@ function SentNote() {
               <table>
                 <thead>
                   <tr>
-                    <th scope='col' className='th-name'>보낸사람</th>
+                    <th scope='col' className='th-name'>받는사람</th>
                     <th scope='col' className='th-content'>내용</th>
                     <th scope='col' className='th-date'>날짜</th>
                   </tr>
@@ -47,7 +47,7 @@ function SentNote() {
                 {noteData.map((note) => (
                     <Link to={`/note/send/${note.noteId}`} key={note.noteId}>
                       <tr>
-                        <td className='td-name'><p>{note.senderNickname}</p></td>
+                        <td className='td-name'><p>{note.receiverNickname}</p></td>
                         <td className='td-content'><p>{note.content}</p></td>
                         <td className='td-date'><p>{note.sendDate}</p></td>
                       </tr>

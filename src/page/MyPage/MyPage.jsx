@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import "../../images/member/normal.png"
 import {
   TextField,
@@ -12,8 +12,11 @@ import axios from "axios";
 import "./MyPage.css";
 import styled from 'styled-components';
 import imge from '../../images/photo/profile.svg';
+import CameraEnhanceIcon from '@mui/icons-material/CameraEnhance';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import Profile from '../../components/Profile/Profile';
+import KeyboardArrowRightIcon from '@mui/icons-material/KeyboardArrowRight';
 // TODO: 비밀번호 재설정시 유효성로직을 추가 ,  기본이미지 설정 로직 변경
-
 
 const MyPage = () => {
   const accessToken = localStorage.getItem("accessToken");
@@ -53,6 +56,7 @@ const MyPage = () => {
 
   const [previewImage, setPreviewImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const fileInputRef = useRef(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -135,13 +139,57 @@ const MyPage = () => {
       });
   };
 
+  // 프로필 변경하기
+  const handleSelectImage = () => {
+    // input 파일 선택 창 열기
+    fileInputRef.current?.click();
+  };
+
+
+  // 회원탈퇴 모달창
+  const [isBoxShown, setIsBoxShown] = useState(false);
+
+  const handleMoreVertIconClick = () => {
+    setIsBoxShown(!isBoxShown);
+  };
+
+  const handleWithdrawClick = () => {
+    const isConfirmed = window.confirm('탈퇴시 본인이 작성한 게시물 및 정보 등이 삭제 됩니다. \n정말 탈퇴하시겠습니까?');
+    if (isConfirmed) {
+      // TODO: Implement the actual member withdrawal logic here
+      // You can make an API call to the server to perform the withdrawal action.
+      // Once the withdrawal is successful, you can display a success message or redirect the user to a different page.
+      
+      // For example:
+      // makeWithdrawalRequest()
+      //   .then(response => {
+      //     alert('회원 탈퇴가 완료되었습니다.');
+      //     // Redirect to another page or perform any other action as needed.
+      //   })
+      //   .catch(error => {
+      //     alert('회원 탈퇴에 실패하였습니다. 다시 시도해주세요.');
+      //   });
+    }
+  };
+
+
+
+
   return (
     <div className="MyPage">
       <div className="mypage-contnent" style={{height:'100%'}}>
-
+        <div className="mypage-icon-nav-box" style={{display:'flex', justifyContent:'flex-end', alignItems:'center'}}>
+          <MoreVertIcon onClick={handleMoreVertIconClick}/>
+          <div className={`maypage-icon-nav-box-mo ${isBoxShown ? 'show' : ''}`}>
+            <ul>
+              {/* <li><Profile style={{width:'100%', display:'block'}}/></li> */}
+              <li><button  onClick={handleWithdrawClick}>회원 탈퇴</button></li>
+            </ul>
+          </div>
+        </div>
         <div className="mypage-box" style={{height:'100%'}}>
           {/* 프로필 데이터 */}
-          <div className="mypage-data" style={{height:'90%'}}>
+          <div className="mypage-data" style={{height:'86%'}}>
             <div>
                 <img
                   src={previewImage}
@@ -150,45 +198,33 @@ const MyPage = () => {
             </div>
             <h2>{formData.nickname}</h2>
             <p>{formData.profileContent}</p>
-            <p>가입일: {formData.regdate}</p>
-          </div>
-
-          <div className="mypage-box">
-            <Button type="button" variant="outlined" fullWidth onClick={handleModalOpen}>
-              프로필 수정
-            </Button>
+            <Button type="button" variant="outlined" fullWidth onClick={handleModalOpen} style={{fontFamily:'inherit', border:'0', fontSize:'20px', color:'#666666'}}>프로필 정보 변경<KeyboardArrowRightIcon/></Button>
           </div>
         </div>
-
       </div>
         {/* 프로필 수정 모달 */}
       <div>
-        <Dialog open={isModalOpen} onClose={handleModalClose}>
-          <DialogTitle>프로필 수정</DialogTitle>
-          <DialogContent>
-            {/* <form onSubmit={handleProfileUpdate} method="get"> */}
+        <Dialog open={isModalOpen} onClose={handleModalClose} style={{zIndex: '999999'}}>
+          <DialogTitle className="dialogtitle-mo" style={{fontFamily:'inherit'}}>프로필 정보 변경</DialogTitle>
+          <DialogContent style={{width:'540px'}}>
+            <div className="pro-modify-box">
+              <span onClick={handleSelectImage} ><CameraEnhanceIcon/></span>
               <input
                 type="file"
                 accept="image/*"
+                ref={fileInputRef}
+                style={{ display: 'none' }}
                 onChange={handleImageUpload}
               />
-              {previewImage && (
-                <div className="mypage-img-box">
-                  {previewImage ? ( // previewImage가 존재할 때만 이미지 렌더링
-                    <img
-                      src={previewImage}
-                      alt="프로필 사진"
-                      style={{ width: "200px" }}
-                    />
-                  ) : (
-                    <img
-                      src={imge}
-                      alt="기본 프로필 사진"
-                      style={{ width: "200px" }}
-                    />
-                  )}
-                </div>
-              )}
+                {previewImage && (
+                  <div className="mypage-img-box">
+                      <img
+                        src={previewImage}
+                        alt="프로필 사진"
+                      />
+                  </div>
+                )}
+              </div>
               <TextField
                 name="nickname"
                 label="Nickname"
@@ -211,6 +247,7 @@ const MyPage = () => {
                 rows={4}
                 margin="normal"
               />
+              <p style={{fontSize:'14px'}}>가입일: {formData.regdate}</p>
               <DialogActions>
                 <Button onClick={handleModalClose} color="secondary">
                   취소
