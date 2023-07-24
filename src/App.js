@@ -12,7 +12,7 @@ import Footer from "./page/Main/Footer";
 import WhatYouth from "./page/YouthSpace/WhatYouth"; 
 
 import { YouthSpaceList } from "./page/YouthSpace/YouthSpaceList";
-import { YouthSpaceDetail } from "./page/YouthSpace/YouthSpaceDetail"; 
+import { YouthSpaceDetail } from "./page/YouthSpace/YouthSpaceDetail";  
 
 import Login from "./page/Login/Login";
 import SignUp from "./page/Login/SignUp";
@@ -47,6 +47,7 @@ function App() {
         <Route exact path="/youthspacelist/:page" element={<YouthSpaceList/>}/>
         <Route exact path="/roomlist/:page" element={<RoomList/>}/>
         <Route exact path="/makeroom" element={<MakeRoom/>}/>
+        <Route  path="/roomMain/roomMember/:roomId" element={<RoomMain />} />
         {/* <Route path="/settingroom" element={<SettingRoom/>}/> */}
         <Route exact path="/settingroom/:roomId" element={<SettingRoom/>}/>
         <Route exact path="/chat/:roomId" element={<Chat/>}/>

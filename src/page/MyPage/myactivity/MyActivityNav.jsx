@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import '../MyPage.css';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 
 function MyActivityNav() {
 
   const [isAllVaild, setIsAllVaild] = useState(null);
+  const [memberId, setMemberId] = useState();
 
   useEffect(() => {
     // 컴포넌트가 마운트될 때 현재 URL에 따라 상태 초기화
@@ -24,6 +26,21 @@ function MyActivityNav() {
     }
   }, []);
 
+  const accessToken = localStorage.getItem("accessToken");
+  useEffect(()=>{
+    axios.get(`http://localhost:8090/feed/getmemberId`,  {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+    })
+    .then(res=>{
+      setMemberId(res.data);
+    })
+    .catch(err=>{
+      console.log(err);
+    })
+  },[accessToken])
+
   const handleBtnClick = (target) => {
     setIsAllVaild((prev) => (prev === target ? null : target));
   };
@@ -34,7 +51,7 @@ function MyActivityNav() {
         <a href="/mypagemain" className='send-btn'>마이페이지 &nbsp; &gt;</a>
         <ul>
           <li>
-            <a href="/myroom" className={`note-a ${isAllVaild === 'myroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myroom')}>내 모임방
+            <a href={`/myroom/${memberId}`} className={`note-a ${isAllVaild === 'myroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myroom')}>내 모임방
             </a>
           </li>
           <li>

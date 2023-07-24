@@ -118,6 +118,10 @@ function Header() {
   const [comment, setComment] = useState([]);
 
 
+
+  //알람기능
+  
+
   return (
     <div className='mo-header' id='mo-header'>
       <div className='header-wrap'>
@@ -273,6 +277,8 @@ function Header() {
           </ul>
         </div>
       </div>
+      {/* 모임방 투두 팡파레 */}
+      <canvas id="my-canvas"></canvas> 
     </div>
   );
 }
