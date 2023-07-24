@@ -110,7 +110,7 @@ const OpenChat = () => {
                 `/app/chat/${room}/sendMessage`,
                 {},
                 JSON.stringify({ 
-                    from: username, 
+                    msgFrom: username, 
                     text: isImageUrl ? null : processedMessageToSend, 
                     image: isImageUrl ? messageToSend : null, 
                     profileImage: profileImage
@@ -137,7 +137,7 @@ const OpenChat = () => {
 
     // 공지 메시지를 전송합니다.
     const sendSysMessage = (message) => {
-        stompClient.send(`/app/chat/${room}/sendMessage`, {}, JSON.stringify({ from: "", text: message, profileImage: "/image/openchat/white.png" }));
+        stompClient.send(`/app/chat/${room}/sendMessage`, {}, JSON.stringify({ msgFrom: "", text: message, profileImage: "/image/openchat/white.png" }));
     }
 
     //gif관련 및 모달관련
@@ -258,14 +258,14 @@ const OpenChat = () => {
                         {msg.map((message, i) =>
                             <div 
                                 key={i} 
-                                className={`chat-message ${message.from === username ? 'own-message' : 'other-message'} ${message.from !== username && (i === 0 || msg[i-1].from !== message.from) ? 'first-in-sequence' : ''}`}
+                                className={`chat-message ${message.msgFrom === username ? 'own-message' : 'other-message'} ${message.msgFrom !== username && (i === 0 || msg[i-1].msgFrom !== message.msgFrom) ? 'first-in-sequence' : ''}`}
                             >
-                                {(i === 0 || msg[i-1].from !== message.from) && message.from !== username && (
+                                {(i === 0 || msg[i-1].msgFrom !== message.msgFrom) && message.msgFrom !== username && (
                                     <img src={message.profileImage} alt="profile" className="profile-pic"/>
                                 )}
-                                <div className={`message-box ${message.from === username ? 'own-message-box' : 'other-message-box'}`}>
-                                    {(i === 0 || msg[i-1].from !== message.from) && <span className="username">{message.from}</span>}
-                                    <div className={`message-content ${message.from === username ? 'own-message-content' : 'other-message-content'}`}>
+                                <div className={`message-box ${message.msgFrom === username ? 'own-message-box' : 'other-message-box'}`}>
+                                    {(i === 0 || msg[i-1].msgFrom !== message.msgFrom) && <span className="username">{message.msgFrom}</span>}
+                                    <div className={`message-content ${message.msgFrom === username ? 'own-message-content' : 'other-message-content'}`}>
                                         {message.image ? <img src={message.image} alt="content" className="limited-image" /> :
                                         <span dangerouslySetInnerHTML={{__html: message.text}} />}
                                     </div>
