@@ -278,7 +278,7 @@ function Header() {
         </div>
       </div>
       {/* 모임방 투두 팡파레 */}
-      <canvas id="my-canvas" style={{display: 'none'}}></canvas>
+      <canvas id="my-canvas" style={{display: 'none'}}></canvas> 
     </div>
   );
 }
