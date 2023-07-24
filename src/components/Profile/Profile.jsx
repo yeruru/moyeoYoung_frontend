@@ -4,15 +4,48 @@ import { Link} from 'react-router-dom';
 import pro from '../../images/music/music-3.jpg'
 import styled from 'styled-components';
 import axios from 'axios';
-function Profile() {
-  // 모달
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
+
+
+
+const Profile = ({ nickname }) => {
+  const [profileData, setProfileData] = useState('');
+
+   // 모달
+   const [isModalOpen, setIsModalOpen] = useState(false);
+   const handleModalOpen = () => {
+     setIsModalOpen(true);
+   };
+   const handleModalClose = () => {
+     setIsModalOpen(false);
+   };
+
+  useEffect(() => {
+    const fetchProfileData = async () => {
+      try {
+        // JWT 토큰을 로컬 스토리지에서 가져오기
+        const token = localStorage.getItem("accessToken");
+        if (!token) {
+          throw new Error("로그인이 필요합니다.");
+        }
+
+        // 프로필 조회 API 호출
+        const response = await axios.get(`http://localhost:8090/member/profile/${nickname}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        setProfileData(response.data);
+      } catch (error) {
+        console.error(error.message);
+        // 에러 처리 로직 추가
+      }
+    };
+
+    fetchProfileData();
+  }, [nickname]);
+
+ 
 
 
   return (
