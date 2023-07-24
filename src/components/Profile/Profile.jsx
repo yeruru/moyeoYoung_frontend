@@ -15,10 +15,11 @@ function Profile() {
   };
 
 
+
   return (
     <>
       {/* 프로필 사진 */}
-      <span onClick={handleModalOpen}>프로필</span>
+      <a href="#;" onClick={handleModalOpen}>프로필</a>
 
       {/* 모달 */}
       <Dialog open={isModalOpen} onClose={handleModalClose} style={{zIndex: '999999'}}>
@@ -28,7 +29,7 @@ function Profile() {
           </ProBox>
           <h4 style={{fontSize:'30px', display:'block', marginBottom:'25px'}}>닉네임</h4>
           <ProTextBox>
-            <p>ddddddddddddddddddddddddddddddddddddssssssssssssssssssssssssssssssssssdddddddddddsssssssssssssssssssssssssssssssssssddddddddddddddssssssssssssssssssssssssssssssssddddddd</p>
+
           </ProTextBox>
           <Link to="/noteform" onClick={handleModalClose} style={{display:'flex', backgroundColor:'#4e5157', color:'#fff', padding:'20px', justifyContent:'center' , borderRadius:'7px', width:'277px'}}>
             쪽지 보내기
