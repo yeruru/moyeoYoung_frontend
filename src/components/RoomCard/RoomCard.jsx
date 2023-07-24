@@ -4,7 +4,6 @@ import './RoomCard.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link,useNavigate  } from 'react-router-dom';
- 
 export const RoomCard = ({ isBookmark, item }) => { 
   const [backColor, setBackColor] = useState('');
   const [detail, setDetail] = useState(item.roomContent.replace(/<br\/>/g, ''));
@@ -73,6 +72,5 @@ export const RoomCard = ({ isBookmark, item }) => {
         </div> 
         </Link> 
     </div>
-
   )
 }

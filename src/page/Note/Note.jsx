@@ -1,109 +1,96 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Note.css';
 import usePagination from '@mui/material/usePagination';
 import { Pagination} from '@mui/material';
-
-
+import { Link, useLocation } from 'react-router-dom';
+import NoteMenu from './NoteMenu';
+import axios from 'axios';
 
 function Note() {
-  const [isCheckedAll, setIsCheckedAll] = useState(false);
-  const [isCheckedItems, setIsCheckedItems] = useState([]);
-  const [tableData, setTableData] = useState([
-    {
-      id: 1,
-      name: '이예림0000000000',
-      content: '안녕하세요~~~ 모임에 가입하고 싶어용~~',
-      date: '2023-07-03'
-    },
-    {
-      id: 2,
-      name: '천승현',
-      content: '안녕하세요~~~ 모임에 가입하고 싶어용~~',
-      date: '2023-07-03'
-    },
-    {
-      id: 3,
-      name: '정세훈',
-      content: '안녕하세요~~~ 모임에 가입하고 싶어용~~',
-      date: '2023-07-03'
-    },
-    {
-      id: 4,
-      name: '홍성빈',
-      content: '안녕하세요~~~ 모임에 가입하고 싶어용~~dddddddddddddddddd',
-      date: '2023-07-03'
-    }
-  ]);
+  const accessToken = localStorage.getItem('accessToken');
+  const [noteId ,setNoteId] = useState(0);
+  //  useLocation().pathname.split('/')[3];
+  const [noteData, setNoteData] = useState([]);
+  useEffect(() =>{
+    //받은쪽지함
+    axios.get('http://localhost:8090/note/received', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+    })
+    .then((res) => {
+        setNoteData(res.data.notes);
+        console.log(res.data.notes.noteId);
+        setNoteId(res.data.notes[0].noteId);
+      })
+    .catch((err) => {
+      console.log(err);
+    });
+    console.log(accessToken);
+},[accessToken]);
 
-  const handleCheckAll = () => {
-    setIsCheckedAll(!isCheckedAll);
-    setIsCheckedItems([]);
-  };
-
-  const handleCheckItem = (index) => {
-    const updatedCheckedItems = [...isCheckedItems];
-    updatedCheckedItems[index] = !updatedCheckedItems[index];
-    setIsCheckedItems(updatedCheckedItems);
-    setIsCheckedAll(false);
-  };
-
-  const handleDeleteChecked = () => {
-    if (isCheckedAll) {
-      setTableData([]);
-      setIsCheckedItems([]);
-    } else {
-      const updatedTableData = tableData.filter((_, index) => !isCheckedItems[index]);
-      setTableData(updatedTableData);
-      setIsCheckedItems([]);
-    }
-  };
+const noteStatus = (noteId) => {
+  axios.post(`http://localhost:8090/note/${noteId}/read`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    },
+  })
+  .then((res) => {
+    axios.get('http://localhost:8090/note/received', {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+    })
+    .then((res) => {
+      setNoteData(res.data.notes);
+      console.log(res.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+  })
+  .catch((error) => {
+    // 오류 처리
+    console.error(error);
+  });
+};
 
   return (
-    <div className="note wrap">
-      <div className='note-flex'>
-        
-        <div>
+    <div className='wrap' style={{display:'flex', justifyContent: 'space-between', marginTop: '85px'}}>
+      <NoteMenu/>
+      <div className="note">
+        <div className='note-flex'>
           <div>
-          <button className='note-btn' onClick={handleDeleteChecked}>쪽지삭제</button>
-            <table>
-              <thead>
-                <tr>
-                  <th scope='col' className='check'>
-                    <input
-                      type="checkbox"
-                      checked={isCheckedAll}
-                      onChange={handleCheckAll}
-                    />
-                  </th>
-                  <th scope='col' className='th-name'>보낸사람</th>
-                  <th scope='col' className='th-content'>내용</th>
-                  <th scope='col' className='th-date'>날짜</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tableData.map((row, index) => (
-                  <tr key={row.id}>
-                    <td className='check'>
-                      <input
-                        type="checkbox"
-                        checked={isCheckedAll || isCheckedItems[index]}
-                        onChange={() => handleCheckItem(index)}
-                      />
-                    </td>
-                    <td className='td-name'><p>{row.name}</p></td>
-                    <td className='td-content'><p>{row.content}</p></td>
-                    <td className='td-date'><p>{row.date}</p></td>
+            <h3 className='note-title'>받은쪽지함</h3>
+            <div>
+              <table>
+                <thead>
+                  <tr>
+                    <th scope='col' className='th-name'>보낸사람</th>
+                    <th scope='col' className='th-content'>내용</th>
+                    <th scope='col' className='th-date'>날짜</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                {noteData.map((note) => (
+                    <Link to={`/note/receive/${note.noteId}`} key={note.noteId} onClick={()=> noteStatus(note.noteId)}>
+                      <tr style={{ backgroundColor: note.status ? 'lightgrey' : 'white' }}>
+                        <td className='td-name'><p>{note.senderNickname}</p></td>
+                        <td className='td-content'><p>{note.content}</p></td>
+                        <td className='td-date'><p>{note.sendDate}</p></td>
+                      </tr>
+                    </Link>
+                    ))}
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
+        <Pagination count={10} shape="rounded" 
+        style={{display: 'flex',
+                justifyContent: 'center',
+                marginTop: '30px'}}/>
       </div>
-      <Pagination count={10} shape="rounded" 
-      style={{display: 'flex',
-              justifyContent: 'center',
-              marginTop: '30px'}}/>
     </div>
   );
 }

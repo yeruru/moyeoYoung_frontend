@@ -5,17 +5,17 @@ import './Header.css';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MailIcon from '@mui/icons-material/Mail';
 import styled from 'styled-components';
-import imge from '../../images/photo/photo02.jpg';
 import ClearIcon from '@mui/icons-material/Clear';
 import { Link ,useNavigate  } from 'react-router-dom';
 import { clearTokens } from '../../persist-store';
-
-import { padding } from '@mui/system';
-
 import axios from 'axios';
+import "../../images/member/normal.png"
+import { assertConditionalExpression } from '@babel/types';
 
+import Profile from '../../components/Profile/Profile';
 
 function Header() {
+  const accessToken = localStorage.getItem("accessToken");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isAlarmBoxOpen, setAlarmBoxOpen] = useState(false);
   const toggleDropdown = () => {
@@ -34,6 +34,37 @@ function Header() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+
+  const [fileName, setFileName] = useState('normal.png');
+  const [previewImage, setPreviewImage] = useState(null);
+ 
+    
+
+  useEffect(() => {
+    // 유저 정보 가져오기
+    axios
+      .get("http://localhost:8090/member/mypage", {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        },
+      })
+      .then((res) => {
+        console.log(res.data.memberId);
+        console.log(res.data.email);
+        setFileName({
+          fileName: res.data.fileName
+        });
+        setPreviewImage(`http://localhost:8090/room/view/${res.data.fileName}`);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    console.log(accessToken);
+  }, [accessToken]);
+
+
+
+
   useEffect(() => {
     const token = localStorage.getItem('accessToken');
     const expirationTime = localStorage.getItem('expirationTime');
@@ -46,6 +77,7 @@ function Header() {
       localStorage.removeItem('refreshToken');
       alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
       navigate('/login');
+      document.location.reload();
     } else {
       setIsLoggedIn(token);
     }
@@ -85,8 +117,18 @@ function Header() {
 
   const [selectedButton, setSelectedButton] = useState('');
 
+
+
+
+  //프로필 하다가 말았음 
+  const [comment, setComment] = useState([]);
+
+
+  console.log(isLoggedIn);
+
+
   return (
-    <div className='mo-header'>
+    <div className='mo-header' id='mo-header'>
       <div className='header-wrap'>
         <div className='logo'>
           <h1>
@@ -110,10 +152,9 @@ function Header() {
                   </li>
                   <li> 
                     <Link to='/youthspacelist/1'>청년공간 찾아보기</Link>
- 
                   </li>
                   <li>
-                    <Link to='#'>청년TALK</Link>
+                    <Link to='/ws-chat'>청년TALK</Link>
                   </li>
                 </ul>
               </div>
@@ -204,13 +245,13 @@ function Header() {
               <li>
                 <div onMouseEnter={handleProMouseEnter} onMouseLeave={handleProMouseLeave}>
                   <Pro>
-                    <ProImg src={imge} />
+                      <ProImg src={previewImage} />
                   </Pro>
                   {isProBoxOpen && (
                     <ProBox className='showBox'>
                       <ul className='pro-box' style={{ backgroundColor: '#fff' }}>
                         <li>
-                          <Link to={'/mypage'} className='header-link'>
+                          <Link to={'/mypagemain'} className='header-link'>
                             마이페이지
                           </Link>
                         </li>
@@ -238,25 +279,7 @@ function Header() {
               </a>
             </li>
           )}
-            {/* <li className='noteLi'>
-              <NoteIconContainer onClick={handleNoteIconClick}>
-                <NotificationsIcon />
-              </NoteIconContainer>
-              {isNoteBoxOpen && (
-                <NoteBox>
-                  <ClearIcon onClick={handleNoteIconClick} style={{ float: 'right', top: '-20px', position: 'relative' }} />
-                  <p>알림이 없습니다</p>
-                </NoteBox>
-              )}
-            </li> */}
-            {/* <li>
-              <MailIcon />
-            </li>
-            <li>
-              <Pro>
-                <ProImg src={imge} />
-              </Pro>
-            </li> */}
+          <Profile/>
           </ul>
         </div>
       </div>
@@ -277,10 +300,9 @@ const Pro = styled.span`
 `;
 
 const ProImg = styled.img`
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+      width: 100%;
+    height: 100%;
+    object-fit: cover;
 `;
 
 const AlarmIconContainer = styled.div`

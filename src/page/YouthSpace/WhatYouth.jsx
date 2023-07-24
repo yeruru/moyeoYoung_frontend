@@ -82,7 +82,7 @@ return () => {
           <div className='what-text-ex'>
             <em>카페가 눈치 보일 땐?</em>
             <p>가까운 청년공간에서<br/>공부해 보세요!</p>
-            <a href='#'>더 알아보기</a>
+            <a href='/youthspacelist/1'>더 알아보기</a>
           </div>
           
         </section>
@@ -90,7 +90,7 @@ return () => {
           <div className='what-text-ex'>
             <em>모여YOUNG만의 단체톡</em>
             <p>청년TALK에서<br/>함께해요</p>
-            <a href='#'>더 알아보기</a>
+            <a href='/ws-chat'>더 알아보기</a>
           </div>
           <div className='what-img-box'>
             <img src={what2} alt="" />
@@ -105,7 +105,7 @@ return () => {
           <div className='what-text-ex'>
             <em>없는것 빼고 다 있는 모임!</em>
             <p>당신의 취미, 공부<br/>함께 해요 모여영 에서!</p>
-            <a href='#'>더 알아보기</a>
+            <a href='/roomlist/1'>더 알아보기</a>
           </div>
         </section>
         <div className='end-img'>
