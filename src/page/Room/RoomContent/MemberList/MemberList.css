@@ -1,0 +1,73 @@
+#memberList .wrap{
+    margin: 0 auto; 
+}
+#memberList .container{
+    margin: 0 auto; 
+    background-color: white;
+    width: 95%;
+    height: 90%;
+    border-radius: 10px;
+    border: 1px solid rgb(226, 226, 226);
+    padding: 5px;
+}
+#memberList .h2{
+    font-size: 23px;
+    font-weight: bold;
+    margin-left: 20px;
+    margin-top: 10%;
+    margin-bottom: 20px;
+    height: 30px;
+}
+#memberList .memberBox{
+    margin: 0 auto;
+    /* background-color: pink; */
+    width: 90%;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    /* padding: 5px; */
+    border-bottom: 1px solid rgb(239, 238, 238);
+}
+
+#memberList .memberBox:last-child{ 
+    border-bottom: none;  
+}
+#memberList .imgbox{
+    width: 70px; height: 70px;
+    margin-right: 20px;
+  
+}
+#memberList .imgbox img{
+    width: 100%; height: 100%; 
+    border-radius: 50px; 
+}
+#memberList .sec1{
+    display: flex;
+    align-items: center;
+}
+#memberList .sec2{
+
+}
+#memberList .nickname{
+    font-size: 18px;
+} 
+#memberList .host-icon-box{
+    visibility: hidden;
+    display: flex;
+    align-items: center;
+    background-color: var(--mo);
+    border-radius: 50px;  
+    padding: 1px 11px 0px 9px;
+    margin-left: 10px;
+    color: white;
+    font-size: 12px;
+}
+#memberList .host-icon-box .icon{
+    font-size: 18px; 
+    margin-right: 5px;
+    padding-top: 1px;
+}
+#memberList .host-icon-box.show{
+    visibility: visible;
+}

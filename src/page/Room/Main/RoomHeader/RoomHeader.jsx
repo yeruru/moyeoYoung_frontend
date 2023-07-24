@@ -52,7 +52,7 @@ function RoomHeader({ onContentChange }) {
         selected={selectedButton === 'roomMember'}
         >
           <SettingsIcon style={{marginRight:'7px'}}></SettingsIcon>
-          멤버설정
+          멤버보기
         </ButtonSt>
       </StyleLiM>
     </StyleUl>
