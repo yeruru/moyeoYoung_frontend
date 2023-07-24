@@ -27,9 +27,6 @@ const MyPage = () => {
     regdate: "",
   });
   const [memberId, setMemberId] = useState(0);
-  const [previewImage, setPreviewImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
 
   useEffect(() => {
     // 유저 정보 가져오기
@@ -40,7 +37,9 @@ const MyPage = () => {
         },
       })
       .then((res) => {
+        console.log(res.data.memberId);
         setMemberId(res.data.memberId);
+        console.log(res.data.email);
         setFormData({
           fileName: res.data.fileName,
           nickname: res.data.nickname,
@@ -52,12 +51,12 @@ const MyPage = () => {
       .catch((err) => {
         console.log(err);
       });
+    console.log(accessToken);
   }, [accessToken]);
 
   const [previewImage, setPreviewImage] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const fileInputRef = useRef(null);
-
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -77,6 +76,9 @@ const MyPage = () => {
     console.log(file);
     setPreviewImage(URL.createObjectURL(file));
   };
+
+  console.log(formData);
+
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -180,7 +182,7 @@ const MyPage = () => {
           <MoreVertIcon onClick={handleMoreVertIconClick}/>
           <div className={`maypage-icon-nav-box-mo ${isBoxShown ? 'show' : ''}`}>
             <ul>
-              <li><Profile style={{width:'100%', display:'block'}}/></li>
+              {/* <li><Profile style={{width:'100%', display:'block'}}/></li> */}
               <li><button  onClick={handleWithdrawClick}>회원 탈퇴</button></li>
             </ul>
           </div>
