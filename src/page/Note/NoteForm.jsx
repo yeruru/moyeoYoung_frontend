@@ -29,6 +29,7 @@ function NoteForm() {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem('accessToken');
   const location = useLocation();
+  console.log(location);
   useEffect(()=>{
     setNickname(location.pathname.split("/")[2]);
   },[location]);

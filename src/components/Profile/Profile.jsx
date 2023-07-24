@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from "react";
+import { useLocation } from 'react-router-dom';
 import { Dialog, DialogContent} from "@mui/material";
 import { Link} from 'react-router-dom';
 import pro from '../../images/music/music-3.jpg'
 import styled from 'styled-components';
 import axios from 'axios';
+
 function Profile({isOpen, content, isClose}) {
   const [open, setOpen] = useState(false);
   const [imagename, setImagename] = useState('');
   const [nickname, setNickname] = useState('');
   const [profilecontent, setProfileContent] = useState('');
+
   
   useEffect(()=>{
     if(isOpen==true){
@@ -25,11 +28,13 @@ function Profile({isOpen, content, isClose}) {
   },[isOpen, content]);
 
 
+  const location = useLocation();
+  const currentURL = location.pathname;
 
   return (
     <>
       {/* 프로필 사진 */}
-      <a href="#;" onClick={handleModalOpen}>프로필</a>
+      {/* <a href="#;" onClick={handleModalOpen}>프로필</a> */}
 
       {/* 모달 */}
       <Dialog open={isOpen} onClose={isClose} style={{zIndex: '999999'}}>
@@ -39,11 +44,13 @@ function Profile({isOpen, content, isClose}) {
           </ProBox>
           <h4 style={{fontSize:'30px', display:'block', marginBottom:'25px'}}>{nickname}</h4>
           <ProTextBox>
-            <p>{profilecontent}</p>
+            <p style={{textAlign:'center'}}>{profilecontent}</p>
           </ProTextBox>
-          <Link to={`/noteform/${nickname}`} onClick={isClose} style={{display:'flex', backgroundColor:'#4e5157', color:'#fff', padding:'20px', justifyContent:'center' , borderRadius:'7px', width:'277px'}}>
-            쪽지 보내기
-          </Link>
+          {!currentURL.includes('/mypagemain') && (
+            <Link to={`/noteform/${nickname}`} onClick={isClose} style={{display:'flex', backgroundColor:'#4e5157', color:'#fff', padding:'20px', justifyContent:'center' , borderRadius:'7px', width:'277px'}}>
+              쪽지 보내기
+            </Link>
+          )}
         </DialogContent>
       </Dialog>
     </>
