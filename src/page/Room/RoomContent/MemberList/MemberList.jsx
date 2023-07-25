@@ -5,14 +5,23 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import KeyRoundedIcon from '@mui/icons-material/KeyRounded';
+import Profile from '../../../../components/Profile/Profile';
 
 export const MemberList = ({memberList,hostId}) => { 
   
+  const [nickname, setNickname] = useState("");
+  const [profileModal ,setProfileModal] = useState(false);
+  const [kingMember, setKingMember] = useState(0);
+  const [deleteModal, setDeleteModal] = useState(false);
+  const [memberId, setMemberId] = useState(0);
+  const [loginMemberId, setLoginMemberId] = useState(0);
+  let { roomId } = useParams();
+
+  const accessToken = localStorage.getItem("accessToken");
   const test1 = () => {
-    const aceessToken = localStorage.getItem('accessToken');
     axios.get(`http://localhost:8090/member/madeRoomList`, {
       headers: {
-        'Authorization': `Bearer ${aceessToken}`
+        'Authorization': `Bearer ${accessToken}`
       },
     })
       .then((res) => {
@@ -22,11 +31,11 @@ export const MemberList = ({memberList,hostId}) => {
         console.log(err);
       })
   }
+
   const test2 = () => {
-    const aceessToken = localStorage.getItem('accessToken');
     axios.get(`http://localhost:8090/member/joinRoomList`, {
       headers: {
-        'Authorization': `Bearer ${aceessToken}`
+        'Authorization': `Bearer ${accessToken}`
       },
     })
       .then((res) => {
@@ -36,11 +45,11 @@ export const MemberList = ({memberList,hostId}) => {
         console.log(err);
       })
   }
+
   const test3 = () => {
-    const aceessToken = localStorage.getItem('accessToken');
     axios.get(`http://localhost:8090/member/roomListWithBookmark`, {
       headers: {
-        'Authorization': `Bearer ${aceessToken}`
+        'Authorization': `Bearer ${accessToken}`
       },
     })
       .then((res) => {
@@ -50,6 +59,59 @@ export const MemberList = ({memberList,hostId}) => {
         console.log(err);
       })
   }
+
+  useEffect(() => {
+    axios.get(`http://localhost:8090/feed/getmemberId`,{
+      headers: {
+          'Authorization': `Bearer ${accessToken}`
+      }
+    })
+    .then(res=>{
+      setLoginMemberId(res.data);
+    })
+    if (memberList.length > 0) {
+      setKingMember(memberList[0]);
+    }
+  }, [memberList]);
+
+  const openProfile = (feednickname) => {
+    setNickname(feednickname);
+    setProfileModal(!profileModal);
+  }
+
+  const ProfileCloseModal = () => {
+    setProfileModal(!profileModal);
+  }
+
+  const OpenModal = (modalMemberId) => {
+    setDeleteModal(!deleteModal);
+    setMemberId(modalMemberId);
+    document.getElementById("body").style.overflowY="hidden";
+  };
+
+  const close = () => {
+    setDeleteModal(!deleteModal);
+    document.getElementById("body").style.overflowY="scroll";
+  };
+
+  const notclose = (event) => {
+    event.stopPropagation();
+  }
+
+  const deletefeed = () => {
+    if (memberId) {
+      axios.post(`http://localhost:8090/room/deletemember/${memberId}/${roomId}`)
+      .then(res=>{  
+        document.location.href=`/roomMain/roomFeed/${roomId}`;
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+    } else {
+      console.log("memberId is not set.");
+    }
+  };
+
   return (
     <div id='memberList'>
       <div className='wrap'>
@@ -65,11 +127,11 @@ export const MemberList = ({memberList,hostId}) => {
               <div className='memberBox' key={index}>
                 <div className="sec1">
 
-                  <div className="imgbox">
+                  <div className="imgbox" onClick={()=>openProfile(member.nickname)} style={{cursor:'pointer'}}>
                     <img src={`http://localhost:8090/room/view/${member.fileName}`} />
                   </div>
 
-                  <div className='nickname'>{member.nickname}</div>
+                  <div className='nickname' onClick={()=>openProfile(member.nickname)} style={{cursor:'pointer'}}>{member.nickname}</div>
 
                   {/* <div className={`host-icon-box`}>` */} 
                   <div className={`host-icon-box ${hostId===member.memberId?'show':''}`}>
@@ -78,15 +140,45 @@ export const MemberList = ({memberList,hostId}) => {
                     </div><span>방장</span>
                   </div>
                 </div>
-
-                <div className="sec2">
-                  <div className='memberModal'>모달</div>
-                </div>
+                {
+                  kingMember.memberId == member.memberId &&  
+                  <div></div>
+                }
+                {
+                  kingMember.memberId != member.memberId && 
+                  <>
+                    <div className="sec2">
+                      {
+                        kingMember.memberId == loginMemberId &&
+                        <div className='memberModal' onClick={()=>OpenModal(member.memberId)}>강퇴</div>
+                      }
+                      {
+                         kingMember.memberId != loginMemberId && 
+                         <div></div>
+                      }
+                    </div>
+                    <div className={`checkbackground ${deleteModal ? 'show2' : ''}`}  onClick={close}>
+                        <div className='checkdelete' onClick={notclose}> 
+                            <div className='checkword'>강퇴하시겠습니까?</div>
+                            <div className='checkword2'>
+                                <div className='checkoutdelete' onClick={close}>취소</div>
+                                <div className='delete' onClick={deletefeed}>강퇴하기</div>
+                            </div>
+                        </div>
+                    </div>
+                  </>
+                }
               </div>
             ))
           }
         </div>
       </div>
+      <Profile
+          isOpen={profileModal}
+          content={nickname}
+          isClose={ProfileCloseModal}
+        />
     </div>
+    
   )
 }

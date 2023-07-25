@@ -194,7 +194,7 @@ const OpenChat = () => {
         borderRadius: '8px', // Button 모서리 둥글게
     };
       
-    const handleClick = async () => {
+    const handleClickChat = async () => {
         const accessToken = localStorage.getItem('accessToken');
         const memberInfo = await fetchMemberInfo(accessToken);
         if (memberInfo === null) {
@@ -250,7 +250,7 @@ const OpenChat = () => {
                 </div>
 
                 {!isUserSet ?
-                    <button id='myButton' onClick={handleClick}>접속하기</button>
+                    <button id='myButton' onClick={handleClickChat}>접속하기</button>
                     :
                     <>
                         {/* 메세지 리스트 렌더링 */}
