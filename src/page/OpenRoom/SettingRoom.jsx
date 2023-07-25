@@ -14,8 +14,8 @@ export const SettingRoom = () => {
     const inputRef = useRef();
     const [room, setRoom] = useState({})
     const [file, setFile] = useState();
-    const [modal, setModal] = useState(false);
-    // const [roomId, setRoomId] = useState();
+    const [modal, setModal] = useState(false); 
+    const [delModal, setDelModal] = useState(false);
     const [ContentText, setContentText] = useState('');
     const {roomId} = useParams();
     const accessToken = localStorage.getItem('accessToken');
@@ -24,9 +24,7 @@ export const SettingRoom = () => {
         baseURL: 'http://localhost:8090/room', // 기본 경로 설정
       });  
 
-    useEffect(()=>{
-        console.log(roomId);
-
+    useEffect(()=>{ 
         instance.get(`/getroomMain/${roomId}`)
         .then(res=>{
             setRoom({...res.data});
@@ -94,7 +92,7 @@ export const SettingRoom = () => {
         const value = e.target.value;
 
         setRoom({ ...room, [name]: value });
-    }
+    } 
 
 
     //==================================================================
@@ -178,8 +176,30 @@ export const SettingRoom = () => {
     const offModal = () => {
         setModal(false);
     }
-    return (
-        <>
+    
+    const deleteRoom=()=>{
+       setDelModal(true);
+    }
+    const offDeleteRoom=()=>{
+        setDelModal(false);
+     }
+
+    const delSubmit=()=>{ 
+        axios.delete(`http://localhost:8090/room/deleteRoom`, 
+        {
+         params:{
+            roomId:roomId,
+         }   
+        })
+        .then(res => {
+            alert(res.data);
+            document.location.href=`/`; 
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    return ( 
             <div id='make-room'>
                 <div className='wrap'>
                     <span className='bar'></span>
@@ -291,7 +311,7 @@ export const SettingRoom = () => {
                             </div>
                         </li>
                     </ul>
-                    
+                    <button onClick={deleteRoom} className='delete-room'>모임방 삭제하기</button>
                     <div className='sm-btns'>
                     <Link to="/roomlist"><input type='button' className='back-btn smb' value='취소하기' /></Link>
                         <input type='submit' className='submit-btn smb' value='변경하기' onClick={onModal} />
@@ -312,8 +332,20 @@ export const SettingRoom = () => {
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </>
+                <div id='delete-room-modal' className={`hidden ${delModal? 'play':''}`}>
+                    <div className="modal-box">
+                        <CloseIcon id="icon" onClick={offDeleteRoom} />
+                        <p className='txt'>정말로 방을 삭제하시겠습니까?<span><br/>이 작업은 취소할 수 없습니다.</span></p>
+                        <div className="modal-imgdiv">
+                            <img src="/image/group 67.svg" className='modal-img' alt='메세지 보내는 그림' />
+                        </div>
+                        <div className="modal-btns">
+                          <button type='button' className="btn btn1" onClick={offDeleteRoom}>돌아가기</button>
+                            <button type='submit' className="btn btn2" onClick={delSubmit}>삭제하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
     )
 }

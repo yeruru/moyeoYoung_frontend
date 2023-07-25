@@ -7,8 +7,7 @@ import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
 import KeyRoundedIcon from '@mui/icons-material/KeyRounded';
 import Profile from '../../../../components/Profile/Profile';
 
-export const MemberList = ({memberList,hostId}) => { 
-  
+export const MemberList = ({memberList,hostId}) => {  
   const [nickname, setNickname] = useState("");
   const [profileModal ,setProfileModal] = useState(false);
   const [kingMember, setKingMember] = useState(0);
@@ -111,16 +110,11 @@ export const MemberList = ({memberList,hostId}) => {
       console.log("memberId is not set.");
     }
   };
-
+ 
   return (
     <div id='memberList'>
       <div className='wrap'>
-        <p className="h2">멤버목록</p>
-        <div className='test'>
-          <button onClick={test1}>만든방</button>
-          <button onClick={test2}>가입한방</button>
-          <button onClick={test3}>북마크</button>
-        </div>
+        <p className="h2">멤버목록</p> 
         <div className='container'>
           {
             memberList.map((member, index) => (
