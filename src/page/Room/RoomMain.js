@@ -42,6 +42,7 @@ function RoomMain() {
   const [joining, setJoining] = useState(false);
   // 방 나가기
   const [isLeaveModal, setLeaveModal] = useState(false);
+  const [isView, setIsView] = useState(false);
 
   useEffect(() => {
     const path = location.pathname;
@@ -81,6 +82,7 @@ function RoomMain() {
     axiosURL.get(`/getroomMain/${roomId}`)
       .then(res => {
         setRoom(res.data);
+        setIsView(true);
       })
       .catch(err => {
         console.log(err);
@@ -155,7 +157,8 @@ function RoomMain() {
 
   return (
     <div className='roomh'>
-      <div className='flex-box'>
+      { isView && ( <>
+        <div className='flex-box'>
         <div className='room-header'>
           <div className='title-box'>
             <div className='img-box'><img src={`http://localhost:8090/room/view/${room.roomImage}`} className='img' alt='모임방 프로필 사진' /></div>
@@ -242,7 +245,8 @@ function RoomMain() {
             <button type='submit' className="btn btn2" onClick={leaveRoom}>삭제하기</button>
           </div>
         </div>
-      </div>
+      </div></>)
+}
     </div>
   );
 }
