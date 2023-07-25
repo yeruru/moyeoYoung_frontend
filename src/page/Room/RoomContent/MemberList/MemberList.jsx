@@ -2,8 +2,7 @@ import React from 'react'
 import './MemberList.css';
 import { useParams } from 'react-router';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import HomeRoundedIcon from '@mui/icons-material/HomeRounded';
+import axios from 'axios'; 
 import KeyRoundedIcon from '@mui/icons-material/KeyRounded';
 import Profile from '../../../../components/Profile/Profile';
 
@@ -17,48 +16,7 @@ export const MemberList = ({memberList,hostId}) => {
   let { roomId } = useParams();
 
   const accessToken = localStorage.getItem("accessToken");
-  const test1 = () => {
-    axios.get(`http://localhost:8090/member/madeRoomList`, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      },
-    })
-      .then((res) => {
-        console.log("만든방",res.data.list);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
-  const test2 = () => {
-    axios.get(`http://localhost:8090/member/joinRoomList`, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      },
-    })
-      .then((res) => {
-        console.log("가입한 방",res.data.list);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
-  const test3 = () => {
-    axios.get(`http://localhost:8090/member/roomListWithBookmark`, {
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      },
-    })
-      .then((res) => {
-        console.log("북마크",res.data.list);
-      })
-      .catch(err => {
-        console.log(err);
-      })
-  }
-
+  
   useEffect(() => {
     axios.get(`http://localhost:8090/feed/getmemberId`,{
       headers: {
@@ -71,7 +29,7 @@ export const MemberList = ({memberList,hostId}) => {
     if (memberList.length > 0) {
       setKingMember(memberList[0]);
     }
-  }, [memberList]);
+  }, [memberList, accessToken]);
 
   const openProfile = (feednickname) => {
     setNickname(feednickname);
@@ -122,7 +80,7 @@ export const MemberList = ({memberList,hostId}) => {
                 <div className="sec1">
 
                   <div className="imgbox" onClick={()=>openProfile(member.nickname)} style={{cursor:'pointer'}}>
-                    <img src={`http://localhost:8090/room/view/${member.fileName}`} />
+                    <img src={`http://localhost:8090/room/view/${member.fileName}`} alt='멤버프로필이미지'/>
                   </div>
 
                   <div className='nickname' onClick={()=>openProfile(member.nickname)} style={{cursor:'pointer'}}>{member.nickname}</div>
@@ -135,19 +93,19 @@ export const MemberList = ({memberList,hostId}) => {
                   </div>
                 </div>
                 {
-                  kingMember.memberId == member.memberId &&  
+                  kingMember.memberId === member.memberId &&  
                   <div></div>
                 }
                 {
-                  kingMember.memberId != member.memberId && 
+                  kingMember.memberId !== member.memberId && 
                   <>
                     <div className="sec2">
                       {
-                        kingMember.memberId == loginMemberId &&
+                        kingMember.memberId === loginMemberId &&
                         <div className='memberModal' onClick={()=>OpenModal(member.memberId)}>강퇴</div>
                       }
                       {
-                         kingMember.memberId != loginMemberId && 
+                         kingMember.memberId !== loginMemberId && 
                          <div></div>
                       }
                     </div>

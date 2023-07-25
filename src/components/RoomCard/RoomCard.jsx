@@ -5,8 +5,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link,useNavigate  } from 'react-router-dom';
 export const RoomCard = ({ isBookmark, item }) => { 
-  const [backColor, setBackColor] = useState('');
-  const [detail, setDetail] = useState(item.roomContent.replace(/<br\/>/g, ''));
+  const [backColor, setBackColor] = useState(''); 
   const instance = axios.create({
     baseURL: 'http://localhost:8090/room', // 기본 경로 설정
   });
@@ -23,6 +22,7 @@ export const RoomCard = ({ isBookmark, item }) => {
       case '동아리': setBackColor('pink'); break;
       case '친목': setBackColor('yellow'); break;
       case '기타': setBackColor('gray'); break;
+      default :setBackColor('gray'); 
     }
   }, [])
 
@@ -58,9 +58,9 @@ export const RoomCard = ({ isBookmark, item }) => {
  
           bookmark
         </span></button>
-        <img src={`http://localhost:8090/room/view/${item.roomImage}`} className='card-img' />
+        <img src={`http://localhost:8090/room/view/${item.roomImage}`} className='card-img' alt='방 썸네일 사진' />
         <p className='p2'>{item.roomTitle}</p>
-        <p className="intro">{detail}</p>
+        <p className="intro">{item.roomContent}</p>
 
         <div className='mini-sec'>
           <p className={`p3 ${backColor}`}>#{item.roomCategory}</p>

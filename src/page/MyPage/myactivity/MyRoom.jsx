@@ -1,7 +1,6 @@
 import React from 'react'
 import MyActivityNav from './MyActivityNav';
-import myIco from '../../../images/my/my-ico.png';
-import MyPage from '../MyPage';
+import myIco from '../../../images/my/my-ico.png'; 
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { RoomCard } from '../../../components/RoomCard/RoomCard';

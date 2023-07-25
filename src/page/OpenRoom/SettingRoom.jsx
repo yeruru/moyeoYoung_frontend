@@ -140,6 +140,7 @@ export const SettingRoom = () => {
             case 'b6': setRoom({ ...room, 'roomCategory': '동아리' }); break;
             case 'b7': setRoom({ ...room, 'roomCategory': '친목' }); break;
             case 'b8': setRoom({ ...room, 'roomCategory': '기타' }); break;
+            default : setRoom({ ...room, 'roomCategory': '기타' }); 
         }
 
     }
@@ -154,6 +155,7 @@ export const SettingRoom = () => {
             case '동아리': setActiveCate('b6'); break;
             case '친목': setActiveCate('b7'); break;
             case '기타': setActiveCate('b8'); break;
+            default : setActiveCate('b8');
         }
 
     }
@@ -221,7 +223,7 @@ export const SettingRoom = () => {
                             <p className="txt1">대표사진 선택</p>
                             <div className='img-box'>
                                 <div className='select-img-div'>
-                                    <img src={imgSrc} className='select-img' name="roomImage" accept="image/**" required />
+                                    <img src={imgSrc} className='select-img' name="roomImage" accept="image/**" required alt='선택한이미지' />
                                 </div>
                                 <ul className='imgs'>
                                     {/* <div className='imgs'> */}
@@ -230,13 +232,13 @@ export const SettingRoom = () => {
                                         <p className='p5'>사진을 업로드 하세요.</p>
                                     </li>
                                     <input type='file' className='upload' name="roomImage" ref={inputRef} id='file' onChange={inputImg} />
-                                    <li><img src="/image/room_basic2.jpg" alt="" className='img selectable' name='room_basic2.jpg' onClick={basicImg} /></li>
-                                    <li><img src="/image/room_basic3.jpg" alt="" className='img selectable' name='room_basic3.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic2.jpg" alt="기본이미지2" className='img selectable' name='room_basic2.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic3.jpg" alt="기본이미지3" className='img selectable' name='room_basic3.jpg' onClick={basicImg} /></li>
                                     {/* </div> */}
                                     {/* <div className='imgs'> */}
-                                    <li><img src="/image/room_basic4.jpg" alt="" className='img selectable' name='room_basic4.jpg' onClick={basicImg} /></li>
-                                    <li><img src="/image/room_basic5.jpg" alt="" className='img selectable' name='room_basic5.jpg' onClick={basicImg} /></li>
-                                    <li><img src="/image/room_basic6.jpg" alt="" className='img selectable' name='room_basic6.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic4.jpg" alt="기본이미지4" className='img selectable' name='room_basic4.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic5.jpg" alt="기본이미지5" className='img selectable' name='room_basic5.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic6.jpg" alt="기본이미지6" className='img selectable' name='room_basic6.jpg' onClick={basicImg} /></li>
                                     {/* </div> */}
                                 </ul>
                             </div>
@@ -265,39 +267,39 @@ export const SettingRoom = () => {
                             <div className='cate-box'>
                                 <div className='cate-btns'>
                                     <button id='b1' className={`cate-btn ${activeCate === 'b1' ? 'change' : ''}`} onClick={cateBtn} value="취업준비">
-                                        <img id='b1' src="/image/icon/icon1.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b1' src="/image/icon/icon1.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘' />
                                         <p id='b1' className='txt4' onClick={cateBtn}>취업준비</p>
                                     </button>
 
                                     <button id='b2' className={`cate-btn ${activeCate === 'b2' ? 'change' : ''}`} onClick={cateBtn} value="스터디">
-                                        <img id='b2' src="/image/icon/icon2.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b2' src="/image/icon/icon2.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b2' className='txt4' onClick={cateBtn}>스터디</p>
                                     </button>
 
                                     <button id='b3' className={`cate-btn ${activeCate === 'b3' ? 'change' : ''}`} onClick={cateBtn} value="과외/멘토">
-                                        <img id='b3' src="/image/icon/icon3.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b3' src="/image/icon/icon3.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b3' className='txt4' onClick={cateBtn}>과외/멘토</p>
                                     </button>
 
                                     <button id='b4' className={`cate-btn ${activeCate === 'b4' ? 'change' : ''}`} onClick={cateBtn} value="자기개발">
-                                        <img id='b4' src="/image/icon/icon4.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b4' src="/image/icon/icon4.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b4' className='txt4' onClick={cateBtn}>자기개발</p>
                                     </button>
                                 </div>
 
                                 <div className='cate-btns'>
                                     <button id='b5' className={`cate-btn ${activeCate === 'b5' ? 'change' : ''}`} onClick={cateBtn} value="프로젝트">
-                                        <img id='b5' src="/image/icon/icon5.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b5' src="/image/icon/icon5.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b5' className='txt4' onClick={cateBtn}>프로젝트</p>
                                     </button>
 
                                     <button id='b6' className={`cate-btn ${activeCate === 'b6' ? 'change' : ''}`} onClick={cateBtn} value="동아리">
-                                        <img id='b6' src="/image/icon/icon6.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b6' src="/image/icon/icon6.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b6' className='txt4' onClick={cateBtn}>동아리</p>
                                     </button>
 
                                     <button id='b7' className={`cate-btn ${activeCate === 'b7' ? 'change' : ''}`} onClick={cateBtn} value="친목">
-                                        <img id='b7' src="/image/icon/icon7.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b7' src="/image/icon/icon7.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b7' className='txt4' onClick={cateBtn}>친목</p>
                                     </button>
 

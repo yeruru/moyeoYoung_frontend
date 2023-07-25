@@ -9,17 +9,17 @@ import WriteAnno from './RoomContent/Announcements/WriteAnno';
 import DetailAnno from './RoomContent/Announcements/DetailAnno';
 import EditAnno from './RoomContent/Announcements/EditAnno';
 import Dashboard from './RoomContent/dashboard/Dashboard';
-import test from '../../images/illust/test.jpg';
+// import test from '../../images/illust/test.jpg';
 import WriteFeed from './RoomContent/Feed/WriteFeed';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import ModifyFeed from './RoomContent/Feed/ModifyFeed';
-import Chat from '../Chat/Chat';
+// import Chat from '../Chat/Chat';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import { MemberList } from './RoomContent/MemberList/MemberList';
-import { Login } from '@mui/icons-material';
+// import { Login } from '@mui/icons-material';
 import _ from 'lodash';
-
+import CloseIcon from '@mui/icons-material/Close';
 
 
 function RoomMain() {
@@ -40,13 +40,15 @@ function RoomMain() {
   const [logInId, setLogInId] = useState(0);
   const [isJoin, setIsJoin] = useState(false);
   const [joining, setJoining] = useState(false);
+  // 방 나가기
+  const [isLeaveModal, setLeaveModal] = useState(false);
 
   useEffect(() => {
     const path = location.pathname;
     const content = path.split('/')[path.split('/').length - 2];
-    setSelectedContent(content); 
-    
-   
+    setSelectedContent(content);
+
+
     //유저상태처리
     const isToken = localStorage.getItem('accessToken');
     if (isToken) {
@@ -72,26 +74,26 @@ function RoomMain() {
           console.log(err);
         })
     }
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [location, isJoin, roomId]);
 
-  useEffect(()=>{
+  useEffect(() => {
     axiosURL.get(`/getroomMain/${roomId}`)
-    .then(res => {
-      setRoom(res.data);
-    })
-    .catch(err => {
-      console.log(err);
-    })
-     // eslint-disable-next-line react-hooks/exhaustive-deps
-  },[])
-  
+      .then(res => {
+        setRoom(res.data);
+      })
+      .catch(err => {
+        console.log(err);
+      })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleContentChange = (content) => {
     setSelectedContent(content);
     // navigate(`/roomMain/${content}`);
     navigate(`/roomMain/${content}/${roomId}`);
-  }; 
-   const joinRoom = _.debounce((e) => {
+  };
+  const joinRoom = _.debounce((e) => {
     if (joining) {
       return;
     }
@@ -110,7 +112,7 @@ function RoomMain() {
       })
         .then(res => {
           alert(res.data);
-          setUserState('okMember'); 
+          setUserState('okMember');
           setIsJoin(true);
         })
         .catch(err => {
@@ -120,15 +122,33 @@ function RoomMain() {
           setJoining(false); // 가입 완료
         });
     }
-  }, 500); 
+  }, 500);
   const openCustomWindow = () => {
-    if(userState!=='okMember'){
+    if (userState !== 'okMember') {
       alert("멤버만 입장할 수 있습니다!");
-    }else{
+    } else {
       const width = 400;
       const height = 600;
-      window.open(`http://localhost:3000/chat/${roomId}`, '_blank', `width=${width}, height=${height}`) 
+      window.open(`http://localhost:3000/chat/${roomId}`, '_blank', `width=${width}, height=${height}`)
     }
+  }
+  const offLeaveModal=()=>{
+    setLeaveModal(false);
+  }
+  const leaveRoomModal = () => {
+    setLeaveModal(true);
+  }
+  const leaveRoom = () => {
+    axiosURL.post(`/deletemember/${logInId}/${roomId}`)
+      .then((res) => {
+        alert('탈퇴가 완료되었습니다');
+        setUserState('noMember');
+        document.location.href = `/roomMain/dashboard/${roomId}`;
+      })
+      .catch((err) => {
+        console.log(err);
+      })
+
   }
 
   return (
@@ -154,41 +174,61 @@ function RoomMain() {
             )
           }
           <RoomHeader onContentChange={handleContentChange} />
+          {userState === 'okMember' &&
+            <div className='leave-room-div'>
+              <button onClick={leaveRoomModal} className='leave-room'>방 나가기</button>
+            </div>
+          }
+
+
         </div>
-        { room.roomType==='close' && userState !== 'okMember' &&
-         <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
-          <div className='w-p'> 
-           <img src='/image/Group 51.svg' alt="No access" width="600" height="200" />
-           <p className='not-access'>멤버에게만 공개된 방입니다!</p> 
-          </div>
+        {room.roomType === 'close' && userState !== 'okMember' &&
+          <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
+            <div className='w-p'>
+              <img src='/image/Group 51.svg' alt="No access" width="600" height="200" />
+              <p className='not-access'>멤버에게만 공개된 방입니다!</p>
+            </div>
           </div>
         }
-        { (room.roomType==='open' || userState === 'okMember') &&
+        {(room.roomType === 'open' || userState === 'okMember') &&
           <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
-          {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} />} {/* 대시보드 컴포넌트 추가 */}
-          {selectedContent === 'roomFeed' && <RoomFeed onContentChange={handleContentChange} />}
+            {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} />} {/* 대시보드 컴포넌트 추가 */}
+            {selectedContent === 'roomFeed' && <RoomFeed onContentChange={handleContentChange} />}
 
-          {/* 세훈의 공지사항 페이지 */}
-          {selectedContent === 'roomAnno' && <RoomAnno />}
-          {selectedContent === 'writeAnno' && <WriteAnno />}
-          {selectedContent === 'detailAnno' && <DetailAnno />}
-          {selectedContent === 'editAnno' && <EditAnno />}
- 
-          {selectedContent === 'writefeed' && <WriteFeed roomId={roomId} />}
-          {selectedContent === 'modifyfeed' && <ModifyFeed />}
+            {/* 세훈의 공지사항 페이지 */}
+            {selectedContent === 'roomAnno' && <RoomAnno />}
+            {selectedContent === 'writeAnno' && <WriteAnno />}
+            {selectedContent === 'detailAnno' && <DetailAnno />}
+            {selectedContent === 'editAnno' && <EditAnno />}
 
-          {/* 멤버리스트 */}
-          {
-            selectedContent === 'roomMember' &&
-            <MemberList hostId={room.memberId} memberList={memberList} />
-          }
-        </div>
+            {selectedContent === 'writefeed' && <WriteFeed roomId={roomId} />}
+            {selectedContent === 'modifyfeed' && <ModifyFeed />}
+
+            {/* 멤버리스트 */}
+            {
+              selectedContent === 'roomMember' &&
+              <MemberList hostId={room.memberId} memberList={memberList} />
+            }
+          </div>
         }
         <div className='play'>
           <RoomPlay />
           <div>
             <button className="Chatbutton" onClick={openCustomWindow} >
               <ChatBubbleIcon style={{ position: 'relative', top: '2px', paddingRight: '10px' }} />모임톡방 입장</button>
+          </div>
+        </div>
+      </div> 
+      <div id='leave-room-modal' className={`hidden ${isLeaveModal ? 'show' : ''}`}>
+        <div className="modal-box">
+          <CloseIcon id="icon" onClick={offLeaveModal} />
+          <p className='txt'>정말로 방을 나가시겠습니까?</p>
+          <div className="modal-imgdiv">
+            <img src="/image/group 67.svg" className='modal-img' alt='메세지 보내는 그림' />
+          </div>
+          <div className="modal-btns">
+            <button type='button' className="btn btn1" onClick={offLeaveModal}>돌아가기</button>
+            <button type='submit' className="btn btn2" onClick={leaveRoom}>삭제하기</button>
           </div>
         </div>
       </div>
