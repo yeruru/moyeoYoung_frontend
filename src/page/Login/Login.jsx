@@ -7,7 +7,7 @@ const Login = () => {
         <div className='Login wrap'>
             <div className='login-component'>
                 <LoginForm/>
-                <Social/>
+                {/* <Social/> */}
             </div>
         </div>
     );

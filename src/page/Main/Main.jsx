@@ -131,7 +131,7 @@ const searchByWord = (p_page) => {
           <SwiperSlide style={{ backgroundColor: '#e1fde3' }}>
             <div className='slid'>
               <div className='banner-wrap'>
-                <a href="#;" className='atag'>
+                <a href="/ws-chat" className='atag'>
                   <div>
                     <em style={{ backgroundColor: '#000' }}>청년TALK</em>
                     <h2>
@@ -150,7 +150,7 @@ const searchByWord = (p_page) => {
           <SwiperSlide style={{ backgroundColor: '#000' }}>
             <div className='slide'>
               <div className='banner-wrap'>
-                <a href="#;" style={{ color: '#fff' }} className='atag'>
+                <a href="/roomlist/1" style={{ color: '#fff' }} className='atag'>
                   <div>
                     <em style={{ backgroundColor: 'var(--mo)' }}>고민은 이제 그만!</em>
                     <h2>
@@ -169,7 +169,7 @@ const searchByWord = (p_page) => {
           <SwiperSlide style={{ backgroundColor: '#fbfbf3' }}>
             <div className='slide'>
               <div className='banner-wrap'>
-                <a href="#;" className='atag'>
+                <a href="/youthspacelist/1" className='atag'>
                   <div>
                     <em style={{ backgroundColor: '#ff8261', color: '#fff' }}>청년공간이란?</em>
                     <h2>

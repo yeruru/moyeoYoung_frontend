@@ -30,14 +30,17 @@ function NoteForm() {
   const accessToken = localStorage.getItem("accessToken");
   const location = useLocation();
 
-  console.log(location);
-
-  const { receiverNickname } = location.state;
-
   useEffect(()=>{
-    setNickname(location.pathname.split("/")[2]);
+    const encodedNickname = location.pathname.split("/")[2];
+    if(encodedNickname == undefined){
+      return;
+    }
+    const decodedNickname = decodeURIComponent(encodedNickname);
+    setNickname(decodedNickname);
   },[location]);
- 
+
+
+
   // const receivedNickname = useState("");
   // const content = useState("");
   const [note, setNote] = useState({

@@ -10,6 +10,8 @@ const styles = {
         borderRadius: '10px',
         boxShadow: '0px 0px 10px 2px rgba(0,0,0,0.1)',
         marginTop: '2rem',
+        background: '#fff',
+        fontFamily: 'inherit'
     },
     title: {
         fontSize: '2rem',
@@ -38,9 +40,11 @@ const styles = {
     },
     deleteButton: {
         background: 'red',
+        fontFamily: 'inherit'
     },
     editButton: {
         background: 'blue',
+        fontFamily: 'inherit'
     },
     buttonContainer: {
       display: 'flex',
@@ -55,13 +59,18 @@ const styles = {
       color: 'white',
   },
   deleteButton: {
-      background: 'red',
+        color: '#515151;',  
+      fontFamily: 'inherit'
   },
   editButton: {
-      background: 'blue',
+      background: '#fff',
+      color: '#515151;',
+      fontFamily: 'inherit'
   },
   backButton: {
-      background: 'green',
+      background: '#fff',
+      color: '#515151;',
+      fontFamily: 'inherit'
   },
 };
 
