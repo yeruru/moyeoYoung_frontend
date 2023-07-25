@@ -44,3 +44,18 @@
 .mypageMain .mypage-icon-text {display: block; margin-top: 20px; font-size: 18px;}
 
 
+/* MyBookmark */
+/* 
+#myBookmark .empty-item-box {  width: 80%; margin: 0 auto; text-align: center; }
+#myBookmark .empty-img-box { width: 300px; margin: 0 auto; margin-top: 9%; margin-bottom: 7%; }
+#myBookmark .empty-p { font-size: 20px; color: rgb(101, 101, 101); }
+#myBookmark .card-ul { display: flex; width: 800px; justify-content: space-evenly;  flex-wrap: wrap;}
+#myBookmark .hidden-li {visibility: hidden;width: 220px;height: 260px; border-radius: 22px;background: #FFF;box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);margin:10px;margin-bottom: 20px;padding-bottom: 5px; } */
+
+/* MyBookmark , myRoom, myJoinRoom*/
+.myRoom .empty-item-box {  width: 80%; margin: 0 auto; text-align: center; }
+.myRoom .empty-img-box { width: 300px; margin: 0 auto; margin-top: 9%; margin-bottom: 7%; }
+.myRoom .empty-p { font-size: 20px; color: rgb(101, 101, 101); }
+.myRoom .card-ul { display: flex; width: 800px; justify-content: space-evenly;  flex-wrap: wrap;}
+.myRoom .hidden-li {visibility: hidden;width: 220px;height: 260px; border-radius: 22px;background: #FFF;box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.10);margin:10px;margin-bottom: 20px;padding-bottom: 5px; }
+.myRoom .go-btn{ width: 200px; height: 50px; margin: 0 auto; background-color: #494949; color: white; border-radius: 7px; line-height: 50px; margin-top: 30px;}

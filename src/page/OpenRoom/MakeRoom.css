@@ -16,7 +16,7 @@
     /* border-top: 2px solid rgb(230, 230, 230);  */
     border-bottom: 1px solid   rgb(208, 208, 208);   
     padding-bottom: 20px;
-    margin: 50px auto 50px auto;
+    margin: 50px auto 20px auto;
 }
 
 #make-room .h1{
@@ -254,6 +254,7 @@
     /* box-shadow : 0px 0px 4px 1px var(--mo); */
 }
 #make-room .sm-btns{
+    clear: both;
    display: flex; 
    justify-content: center; 
    margin-bottom: 50px;
@@ -280,10 +281,7 @@
     background-color:#1DC078;
     color: white;
     border: 1px solid #1DC078;
-}
-
-
-
+} 
 
 #make-room .back-btn:hover{
     background-color: rgb(246, 246, 246); 
@@ -416,3 +414,122 @@
 }
 
 /* SettingRoom */
+#make-room .delete-room{
+    float: right;
+    border: none;
+    background-color: transparent;
+    color: rgb(163, 163, 163);
+    padding-right: 20px;
+} 
+
+/*del-modal*/
+
+#delete-room-modal{ 
+    position:fixed;
+    top:0;
+    right: 0;
+    width:100vw;
+    height: 100vw;
+    background-color: rgb(0, 0, 0,0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+
+}
+#delete-room-modal.hidden{
+    visibility: hidden;
+}
+#delete-room-modal.hidden.play{
+    visibility: visible;
+}
+
+
+#delete-room-modal .modal-box{
+    width: 460px;
+    height: 320px; 
+    top:0;
+    bottom:0;
+    right: 0;
+    left: 0;
+    margin: auto;
+    position:fixed;
+    background-color: white;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center; 
+    cursor: pointer;
+} 
+
+#delete-room-modal #icon{
+    position:absolute;
+    right: 0;
+    top:0;
+    margin-right: 15px;
+    margin-top:15px;
+    width:35px;
+}
+#delete-room-modal .txt{
+    margin-top: 10px;
+    font-size: 18px; 
+    font-weight: bold;
+    text-align: center;
+}
+#delete-room-modal .txt span{
+    margin-top: 10px;
+    font-size: 15px; 
+    font-weight: bold;
+    color: red;
+    line-height: 25px; 
+    
+}
+#delete-room-modal .modal-imgdiv{
+    margin-top:35px;
+    margin-bottom: 20px;
+    width: 200px; 
+} 
+#delete-room-modal .modal-btns{
+    margin-top: 10px;
+    display: flex;
+}
+#delete-room-modal .btn{
+    width: 160px;
+    height: 50px;
+    border-radius: 5px;
+  
+}
+#delete-room-modal .btn1{
+    margin-right: 10px;
+    background: white; 
+    color:#8C8C8C;
+    border:1px solid #ababab;
+}
+#delete-room-modal .btn2{
+    margin-left: 10px;
+    background: #1DC078;
+    color:white;
+    border:none;
+
+}
+
+#delete-room-modal .btn:focus,
+#delete-room-modal .btn:active{
+    outline: none;
+}
+#delete-room-modal .btn1:hover{
+    cursor: pointer;
+    background: rgb(245, 245, 245); 
+}
+#delete-room-modal .btn2:hover{
+    cursor: pointer;
+    background: #1aac6a;  
+}
+#delete-room-modal .btn1:active{
+    background: rgb(240, 240, 240);  
+}
+#delete-room-modal .btn2:active{
+    background: rgb(22, 158, 97);
+    
+}

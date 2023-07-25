@@ -55,15 +55,15 @@ function MyActivityNav() {
             </a>
           </li>
           <li>
-            <a href="/myjoinroom" className={`note-a ${isAllVaild === 'myjoinroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myjoinroom')}>내 참여방
+            <a href={`/myjoinroom/${memberId}`}className={`note-a ${isAllVaild === 'myjoinroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myjoinroom')}>내 참여방
             </a>
           </li>
           <li>
-            <a href="/myfeed" className={`note-a ${isAllVaild === 'myfeed' ? 'click' : ''}`} onClick={() => handleBtnClick('myfeed')}>피드 목록
+            <a href={`/myfeed/${memberId}`} className={`note-a ${isAllVaild === 'myfeed' ? 'click' : ''}`} onClick={() => handleBtnClick('myfeed')}>피드 목록
             </a>
           </li>
           <li>
-            <a href="/mybookmark" className={`note-a ${isAllVaild === 'mybookmark' ? 'click' : ''}`} onClick={() => handleBtnClick('mybookmark')}>관심 목록
+            <a href={`/mybookmark/${memberId}`} className={`note-a ${isAllVaild === 'mybookmark' ? 'click' : ''}`} onClick={() => handleBtnClick('mybookmark')}>관심 목록
             </a>
           </li>
         </ul>
