@@ -102,7 +102,7 @@ function RoomMain() {
       navigate('/login');
     } else {
       setJoining(true); // 가입 시작
-
+      
       axiosURL.post('/joinRoom', { roomId: roomId }, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
@@ -163,9 +163,10 @@ function RoomMain() {
           </div>
           </div>
         }
-        { (room.roomType==='open' || userState === 'okMember') &&
+        { (room.roomType==='open' || userState === 'noMember') &&
           <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
           {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} />} {/* 대시보드 컴포넌트 추가 */}
+
           {selectedContent === 'roomFeed' && <RoomFeed onContentChange={handleContentChange} />}
 
           {/* 세훈의 공지사항 페이지 */}
