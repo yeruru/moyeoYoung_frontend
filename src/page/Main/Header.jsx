@@ -55,7 +55,6 @@ function Header() {
         setPreviewImage(`http://localhost:8090/room/view/${res.data.fileName}`);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, [accessToken]);
 
@@ -92,6 +91,7 @@ function Header() {
     localStorage.removeItem('accessToken'); // 로컬 스토리지에서 토큰 제거
     localStorage.removeItem('refreshToken');
     navigate('/login');
+    window.location.reload();
     // document.location.href = '/login'; // 로그아웃 후 홈페이지로 리다이렉트
   };
 

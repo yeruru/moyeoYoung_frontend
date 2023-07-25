@@ -54,7 +54,7 @@ function MyActivityNav() {
             <a href={`/myroom/${memberId}`} className={`note-a ${isAllVaild === 'myroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myroom')}>내 모임방
             </a>
           </li>
-          <li>
+          <li> 
             <a href={`/myjoinroom/${memberId}`}className={`note-a ${isAllVaild === 'myjoinroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myjoinroom')}>내 참여방
             </a>
           </li>

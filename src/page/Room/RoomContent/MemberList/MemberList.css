@@ -36,19 +36,19 @@
 #memberList .imgbox{
     width: 70px; height: 70px;
     margin-right: 20px;
-  
 }
 #memberList .imgbox img{
     width: 100%; height: 100%; 
-    border-radius: 50px; 
+    border-radius: 50px;
+    object-fit: cover; 
 }
 #memberList .sec1{
     display: flex;
     align-items: center;
 }
-#memberList .sec2{
+/* #memberList .sec2{
 
-}
+} */
 #memberList .nickname{
     font-size: 18px;
 } 
@@ -70,4 +70,91 @@
 }
 #memberList .host-icon-box.show{
     visibility: visible;
+}
+
+#memberList .memberModal{
+    height : 35px;
+    width : 70px;
+    background-color: rgb(96, 96, 96);
+    line-height: 35px;
+    text-align: center;
+    color : white;
+    cursor: pointer;
+    border-radius: 10px;
+    font-size: 15px;
+    font-weight: 400;
+}
+
+#memberList .checkbackground{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+    z-index: 10005;
+
+    display: none;
+}
+
+#memberList .checkdelete{
+    position : fixed;
+    width : 470px;
+    height : 180px;
+    background-color: white;
+    border: 1px solid #c3c0c0;
+    top : 50%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+    z-index : 1000;
+    border-radius: 20px;
+}
+
+#memberList .checkword {
+    position : absolute;
+    width: 450px;
+    top : 28%;
+    left : 50%;
+    font-size: 24px;
+    text-align: center;
+    transform: translate(-50%, -50%);
+}
+
+#memberList .checkword2 {
+    position : absolute;
+    display: flex;
+    top : 65%;
+    left : 50%;
+    transform: translate(-50%, -50%);
+}
+
+#memberList .checkoutdelete{
+    margin-right: 20px;
+    text-align: center;
+    width : 100px;
+    height: 33px;
+    background-color: white;
+    font-size: 17px;
+    line-height: 33px;
+    color : black;
+    border: 2px solid #d4d4d4;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+#memberList .delete{
+    margin-left: 20px;
+    text-align: center;
+    width : 100px;
+    height: 33px;
+    background-color: red;
+    font-size: 17px;
+    line-height: 33px;
+    color : white;
+    border-radius: 7px;
+    cursor: pointer;
+}
+
+#memberList .show2{
+    display : block
 }
