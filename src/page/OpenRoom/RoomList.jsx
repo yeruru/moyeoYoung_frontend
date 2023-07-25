@@ -150,7 +150,7 @@ function RoomList() {
     <div id='room-list'>
       <div className='wrap'>
         <div className='search-box'>
-          <img src='/image/Group 14.svg' className='center-img' />
+          <img src='/image/Group 14.svg' className='center-img' alt='기본이미지'/>
           <div className='search-position'><input type='text' className='search-text' name='word' placeholder='모임을 검색해 보세요.' onChange={(e) => setWord(e.target.value)} />
             <button type='button' onClick={callWord}><span className="material-symbols-outlined search-icon">
               search
@@ -185,7 +185,7 @@ function RoomList() {
               {roomList.length === 0 &&
                 <div className='empty-item-box'>
                   <div className='empty-img-box'>
-                    <img src={nothing} /></div>
+                    <img src={nothing} alt='기본이미지'/></div>
                   <p className='empty-p'>모임방이 존재하지 않습니다!</p>
                 </div>
               }
