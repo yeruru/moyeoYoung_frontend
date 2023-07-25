@@ -104,7 +104,7 @@ function RoomMain() {
       navigate('/login');
     } else {
       setJoining(true); // 가입 시작
-
+      
       axiosURL.post('/joinRoom', { roomId: roomId }, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
@@ -189,7 +189,7 @@ function RoomMain() {
               <p className='not-access'>멤버에게만 공개된 방입니다!</p>
             </div>
           </div>
-        }
+        } 
         {(room.roomType === 'open' || userState === 'okMember') &&
           <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
             {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} />} {/* 대시보드 컴포넌트 추가 */}
@@ -209,7 +209,7 @@ function RoomMain() {
               selectedContent === 'roomMember' &&
               <MemberList hostId={room.memberId} memberList={memberList} />
             }
-          </div>
+          </div> 
         }
         <div className='play'>
           <RoomPlay />

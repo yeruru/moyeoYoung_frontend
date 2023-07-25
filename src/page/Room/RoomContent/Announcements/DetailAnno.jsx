@@ -147,25 +147,25 @@ const styles = {
     };
 
     return (
-          <div style={styles.container}>
-              {notice && (
-                  <>
-                      <div style={styles.title}>{notice.title}</div>
-                      <div style={styles.authorAndDate}>
-                          작성자: {notice.nickname} <br/>
-                          {notice.updatedAt ? `수정일: ${formatDate(notice.updatedAt)}` : `작성일: ${formatDate(notice.createdAt)}`}
-                      </div>
-                      <div style={styles.content}>{notice.content}</div>
-                      <div style={styles.buttonContainer}>
-                          <button style={{...styles.button, ...styles.backButton}} onClick={handleBackToList}>목록으로</button>
-                          <div>
-                              <button style={{...styles.button, ...styles.editButton}} onClick={handleEdit}>수정하기</button>
-                              <button style={{...styles.button, ...styles.deleteButton}} onClick={handleDelete}>삭제하기</button>
-                          </div>
-                      </div>
-                  </>
-              )}
-          </div>
+        <div style={styles.container}>
+          {notice && (
+            <>
+              <div style={styles.title}>{notice.title}</div>
+              <div style={styles.authorAndDate}>
+                작성자: {notice.nickname} <br/>
+                {notice.updatedAt ? `수정일: ${formatDate(notice.updatedAt)}` : `작성일: ${formatDate(notice.createdAt)}`}
+              </div>
+              <div style={styles.content} dangerouslySetInnerHTML={{ __html: notice.content }}></div>
+              <div style={styles.buttonContainer}>
+                <button style={{...styles.button, ...styles.backButton}} onClick={handleBackToList}>목록으로</button>
+                <div>
+                  <button style={{...styles.button, ...styles.editButton}} onClick={handleEdit}>수정하기</button>
+                  <button style={{...styles.button, ...styles.deleteButton}} onClick={handleDelete}>삭제하기</button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       );
     }
 export default DetailAnno;
