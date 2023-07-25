@@ -5,7 +5,7 @@ import Pagination from '@mui/material/Pagination';
 
 const itemsPerPage = 10;
 
-function RoomAnno() {
+function RoomAnno({state, room}) {
     const navigate = useNavigate();
 
     const [notices, setNotices] = useState([]);
@@ -101,9 +101,13 @@ function RoomAnno() {
         <div style={style.container}>
             <div style={style.title}>
                 <h2>모임방 공지사항</h2>
-                <div style={style.button} onClick={() => navigate(`/roomMain/writeAnno/${roomId}`)}>
-                    글쓰기
-                </div>
+                {
+                    state === 'okMember' && 
+                    <div style={style.button} onClick={() => navigate(`/roomMain/writeAnno/${roomId}`)}>
+                        글쓰기
+                    </div>
+
+                }
             </div>
             <div style={style.table}>
                 <div style={style.headerRow}>

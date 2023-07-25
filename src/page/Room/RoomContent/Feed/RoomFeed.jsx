@@ -15,7 +15,7 @@ import ModifyFeed from './ModifyFeed.jsx';
 import Profile from '../../../../components/Profile/Profile';
 
 
-function RoomFeed({onContentChange}) {
+function RoomFeed({onContentChange, state}) {
   const [likes, setLikes] = useState([]);
   const [modalClicked, setModalClicked] = useState(false);
   const [feed, setFeed] = useState([]);
@@ -31,6 +31,7 @@ function RoomFeed({onContentChange}) {
   let { roomId } = useParams();
 
   const accessToken = localStorage.getItem("accessToken");
+
 
   useEffect(() => {
     const handleClickOutsideModal = (event) => {
@@ -99,38 +100,42 @@ function RoomFeed({onContentChange}) {
   };
 
   const handleClick = (feedId) => {
-    setLikes((prevLikes) => {
-      const isLiked = prevLikes.includes(feedId);
-      if(isLiked){
-        decreaseLikeCount(feedId);
-        axios.get(`http://localhost:8090/feed/delike/${feedId}`,{
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-          }
-        })
-        .then(res=>{
-          console.log(res);
-        })
-        .catch(err=>{
-          console.log(err);
-        })
-        return prevLikes.filter((id) => id !== feedId)
-      }else{
-        increaseLikeCount(feedId);
-        axios.get(`http://localhost:8090/feed/like/${feedId}`,{
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-          }
-        })
-        .then(res=>{
-          console.log(res);
-        })
-        .catch(err=>{
-          console.log(err);
-        })
-        return [...prevLikes, feedId];
-      }
-    });
+    if(state === 'okMember'){
+      setLikes((prevLikes) => {
+        const isLiked = prevLikes.includes(feedId);
+        if(isLiked){
+          decreaseLikeCount(feedId);
+          axios.get(`http://localhost:8090/feed/delike/${feedId}`,{
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+            }
+          })
+          .then(res=>{
+            console.log(res);
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+          return prevLikes.filter((id) => id !== feedId)
+        }else{
+          increaseLikeCount(feedId);
+          axios.get(`http://localhost:8090/feed/like/${feedId}`,{
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+            }
+          })
+          .then(res=>{
+            console.log(res);
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+          return [...prevLikes, feedId];
+        }
+      });
+    }else{
+      alert("비회원이거나 방 멤버에 참여하고있지않습니다")
+    }
   };
 
   const increaseLikeCount = (feedId) => {
@@ -154,9 +159,14 @@ function RoomFeed({onContentChange}) {
   }
 
   const detail = (feedId) =>{
-    setFeedId(feedId);
-    setModalOpen(true);
-    document.getElementById("body").style.overflowY="hidden";
+    if(state === 'okMember'){
+      setFeedId(feedId);
+      setModalOpen(true);
+      document.getElementById("body").style.overflowY="hidden";
+    }else{
+      alert("비회원이거나 방 멤버에 참여하고있지않습니다");
+    }
+
   }
 
   const modify = (feedId) => {
@@ -215,7 +225,11 @@ function RoomFeed({onContentChange}) {
   return (
     <div className='roomfeed'>
       <div className='room-box'>
-        <div className='writeFeed' style={{cursor:'pointer'}} onClick={() => location('writefeed')}>작성하기</div> 
+        {
+            state === 'okMember' && 
+            <div className='writeFeed' style={{cursor:'pointer'}} onClick={() => location('writefeed')}>작성하기</div> 
+        }
+ 
         {
           feed.length == 0 &&
           <div className='empty-item-box'>

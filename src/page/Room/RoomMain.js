@@ -131,6 +131,8 @@ function RoomMain() {
     }
   }
 
+  console.log(userState);
+
   return (
     <div className='roomh'>
       <div className='flex-box'>
@@ -155,7 +157,8 @@ function RoomMain() {
           }
           <RoomHeader onContentChange={handleContentChange} />
         </div>
-        { room.roomType==='close' && userState !== 'okMember' &&
+        { 
+        (room.roomType==='close' && userState !== 'okMember' && selectedContent !=='dashboard') &&
          <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
           <div className='w-p'> 
            <img src='/image/Group 51.svg' alt="No access" width="600" height="200" />
@@ -163,14 +166,21 @@ function RoomMain() {
           </div>
           </div>
         }
-        { (room.roomType==='open' || userState === 'noMember') &&
+        { 
+        (room.roomType==='close' && userState !== 'okMember' && selectedContent ==='dashboard') &&
           <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
-          {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} />} {/* 대시보드 컴포넌트 추가 */}
+            <Dashboard roomId={roomId} room={room} state={userState} roomstate={room.roomType}/>
+          </div>
+        }
+        
+        { (room.roomType==='open' || userState === 'okMember') &&
+          <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
+          {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} state={userState} roomstate={room.roomType}/>} {/* 대시보드 컴포넌트 추가 */}
 
-          {selectedContent === 'roomFeed' && <RoomFeed onContentChange={handleContentChange} />}
+          {selectedContent === 'roomFeed' && <RoomFeed onContentChange={handleContentChange} state={userState} room={room.roomType}/>}
 
           {/* 세훈의 공지사항 페이지 */}
-          {selectedContent === 'roomAnno' && <RoomAnno />}
+          {selectedContent === 'roomAnno' && <RoomAnno state={userState} room={room.roomType}/>}
           {selectedContent === 'writeAnno' && <WriteAnno />}
           {selectedContent === 'detailAnno' && <DetailAnno />}
           {selectedContent === 'editAnno' && <EditAnno />}
