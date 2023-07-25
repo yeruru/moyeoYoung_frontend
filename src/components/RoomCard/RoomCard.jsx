@@ -4,6 +4,8 @@ import './RoomCard.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link,useNavigate  } from 'react-router-dom';
+import HttpsIcon from '@mui/icons-material/Https';
+
 export const RoomCard = ({ isBookmark, item }) => { 
   const [backColor, setBackColor] = useState(''); 
   const instance = axios.create({
@@ -11,6 +13,7 @@ export const RoomCard = ({ isBookmark, item }) => {
   });
   const [bookmark, setBookmark] = useState(isBookmark);
   const navigate  = useNavigate();
+  const [isClosed,setIsClosed] = useState();
 
   useEffect(() => {
     switch (item.roomCategory) {
@@ -23,6 +26,11 @@ export const RoomCard = ({ isBookmark, item }) => {
       case '친목': setBackColor('yellow'); break;
       case '기타': setBackColor('gray'); break;
       default :setBackColor('gray'); 
+    }
+    if(item.roomType==='close'){
+      setIsClosed(true);
+    }else{
+      setIsClosed(false);
     }
   }, [])
 
@@ -59,15 +67,17 @@ export const RoomCard = ({ isBookmark, item }) => {
           bookmark
         </span></button>
         <img src={`http://localhost:8090/room/view/${item.roomImage}`} className='card-img' alt='방 썸네일 사진' />
-        <p className='p2'>{item.roomTitle}</p>
+       <p className='p2'>{item.roomTitle}</p>
         <p className="intro">{item.roomContent}</p>
 
         <div className='mini-sec'>
           <p className={`p3 ${backColor}`}>#{item.roomCategory}</p>
-          <div className='mini-sec2'>
+          <div className='mini-sec2'> 
+            { isClosed &&
+              <HttpsIcon className='httpsIcon'/>}
             <span className="material-symbols-outlined group-icon">
               group
-            </span><span className='p4'>{item.roomUserCnt}</span>
+            </span><span className='p4'>{item.roomUserCnt}</span> 
           </div>
         </div> 
         </Link> 
