@@ -14,6 +14,7 @@
     width: 100%;
     height: 160px;
     display: inline-block;
+    object-fit: cover;
 }
 
 #room-card .p2{
@@ -50,7 +51,7 @@
     color: gray;
     padding-top: 10px;  
     position: absolute;
-    right: 39px;
+    right: 29px;
     bottom: 0px; 
     
 }
@@ -140,5 +141,23 @@
 
 #room-card .gray{
     background-color: rgb(212, 212, 212);
+}
+ 
+
+#room-card .https-box{
+    /* display: flex;
+    align-items: center;
+    justify-content: space-between; */
+}
+ 
+
+#room-card .httpsIcon{
+    font-size: 15px;
+    padding-right: 12px;
+    display: inline;
+    position: absolute;
+    right: 47px; 
+    bottom: 4px;
+    color: gray;
 }
  
