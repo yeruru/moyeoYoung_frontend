@@ -73,7 +73,7 @@ const styles = {
 
     useEffect(() => {
         if (!isNaN(annoId) && !isNaN(roomId)) {
-            axios.get(`http://localhost:8090/rooms/${roomId}/notices/${annoId}`)
+            axios.get(process.env.REACT_APP_BURL+`/rooms/${roomId}/notices/${annoId}`)
                 .then(response => {
                     setNotice(response.data);
                     console.log(response.data);
@@ -86,7 +86,7 @@ const styles = {
             const accessToken = localStorage.getItem('accessToken');
             if (accessToken) {
                 try {
-                    const response = await fetch('http://localhost:8090/member/mypage', {
+                    const response = await fetch(process.env.REACT_APP_BURL+'/member/mypage', {
                         headers: {
                             'Authorization': `Bearer ${accessToken}`
                         }
@@ -122,7 +122,7 @@ const styles = {
     
       const confirmDelete = window.confirm('정말 삭제하시겠습니까?');
       if (confirmDelete) {
-        axios.delete(`http://localhost:8090/rooms/${roomId}/notices/${annoId}`)
+        axios.delete(process.env.REACT_APP_BURL+`/rooms/${roomId}/notices/${annoId}`)
           .then(response => {
             navigate(`/roomMain/roomAnno/${roomId}`);
           });

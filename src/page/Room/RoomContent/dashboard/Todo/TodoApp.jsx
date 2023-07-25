@@ -11,7 +11,7 @@ function TodoApp({roomId}) {
 
   useEffect(() => {
     // Load todos from backend
-    axios.get(`http://localhost:8090/todos/${roomId}`)
+    axios.get(process.env.REACT_APP_BURL+`/todos/${roomId}`)
       .then((response) => {
         setTodos(response.data);
       })
@@ -21,7 +21,7 @@ function TodoApp({roomId}) {
   }, [roomId]);
 
   function addTodo(todo) {
-    axios.post(`http://localhost:8090/todos/${roomId}`, todo)
+    axios.post(process.env.REACT_APP_BURL+`/todos/${roomId}`, todo)
       .then((response) => {
         setTodos(prevTodos => [...prevTodos, response.data]);
       })
@@ -49,7 +49,7 @@ function TodoApp({roomId}) {
       }, 3000);
     }
 
-    axios.put(`http://localhost:8090/todos/${id}`, updatedTodo)
+    axios.put(process.env.REACT_APP_BURL+`/todos/${id}`, updatedTodo)
       .then((response) => {
         setTodos(
           todos.map((todo) => todo.id === id ? response.data : todo)
@@ -61,7 +61,7 @@ function TodoApp({roomId}) {
   }
 
   function removeTodo(id) {
-    axios.delete(`http://localhost:8090/todos/${id}`)
+    axios.delete(process.env.REACT_APP_BURL+`/todos/${id}`)
       .then(() => {
         setTodos(todos.filter((todo) => todo.id !== id));
       })
@@ -71,7 +71,7 @@ function TodoApp({roomId}) {
   }
 
   function updateTodo(updatedTodo) {
-    axios.put(`http://localhost:8090/todos/${updatedTodo.id}`, updatedTodo)
+    axios.put(process.env.REACT_APP_BURL+`/todos/${updatedTodo.id}`, updatedTodo)
       .then((response) => {
         setTodos(todos.map((todo) => todo.id === response.data.id ? response.data : todo));
       })

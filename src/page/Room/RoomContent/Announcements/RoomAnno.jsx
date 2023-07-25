@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import Pagination from '@mui/material/Pagination';
+import nothing from '../../../../images/Group 153.svg'
 
 const itemsPerPage = 10;
 
@@ -13,7 +14,7 @@ function RoomAnno() {
     const { roomId } = useParams();
 
     useEffect(() => {
-        axios.get(`http://localhost:8090/rooms/${roomId}/notices`)
+        axios.get(process.env.REACT_APP_BURL+`/rooms/${roomId}/notices`)
             .then(response => {
                 setNotices(response.data);
             });
@@ -94,6 +95,13 @@ function RoomAnno() {
             justifyContent: 'center',
             alignItems: 'center',
             marginTop: '20px',
+        },
+        emptyItemBox: {
+            height : '500px',
+            width: '60%',
+            margin: '140px auto 0px auto',
+            textAlign: 'center',
+        
         }
     }
 
@@ -101,29 +109,44 @@ function RoomAnno() {
         <div style={style.container}>
             <div style={style.title}>
                 <h2>모임방 공지사항</h2>
+                
                 <div style={style.button} onClick={() => navigate(`/roomMain/writeAnno/${roomId}`)}>
                     글쓰기
                 </div>
             </div>
-            <div style={style.table}>
-                <div style={style.headerRow}>
-                    <div style={style.thTitle}>제목</div>
-                    <div style={style.thAuthor}>작성자</div>
-                    <div style={style.thDate}>날짜</div>
-                </div>
-                {notices.slice((page-1)*itemsPerPage, page*itemsPerPage).map(notice => (
-                    <div style={style.row} key={notice.id} onClick={() => navigate(`/roomMain/${roomId}/detailAnno/${notice.id}`)}>
-                        <div style={style.tdTitle}>{notice.title}</div>
-                        <div style={style.tdAuthor}>{notice.nickname}</div>
-                        <div style={style.tdDate}>{notice.updatedAt ? `${formatDate(notice.updatedAt)} · 수정됨` : formatDate(notice.createdAt)}</div>
+    
+            {notices.length === 0 ? (
+                <div style={style.emptyItemBox}>
+                    <div>
+                        <img src={nothing} style={{width : '200px', marginBottom:'40px'}}/>
                     </div>
-                ))}
-            </div>
-            <div style={style.pagination}>
-                <Pagination count={Math.ceil(notices.length/itemsPerPage)} page={page} onChange={handlePageChange} />
-            </div>
+                    <p>공지사항이 존재하지 않습니다</p>
+                </div>
+            ) : (
+                <>
+                    <div style={style.table}>
+                        <div style={style.headerRow}>
+                            <div style={style.thTitle}>제목</div>
+                            <div style={style.thAuthor}>작성자</div>
+                            <div style={style.thDate}>날짜</div>
+                        </div>
+                        {
+                        notices.slice((page-1)*itemsPerPage, page*itemsPerPage).map(notice => (
+                            <div style={style.row} key={notice.id} onClick={() => navigate(`/roomMain/${roomId}/detailAnno/${notice.id}`)}>
+                                <div style={style.tdTitle}>{notice.title}</div>
+                                <div style={style.tdAuthor}>{notice.nickname}</div>
+                                <div style={style.tdDate}>{notice.updatedAt ? `${formatDate(notice.updatedAt)} · 수정됨` : formatDate(notice.createdAt)}</div>
+                            </div>
+                        ))
+                        }
+                    
+                    </div>
+                    <div style={style.pagination}>
+                        <Pagination count={Math.ceil(notices.length/itemsPerPage)} page={page} onChange={handlePageChange} />
+                    </div>
+                </>
+            )}
         </div>
     );
 }
-
-export default RoomAnno;
+    export default RoomAnno;

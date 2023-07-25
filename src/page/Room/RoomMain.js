@@ -163,7 +163,7 @@ function RoomMain() {
           </div>
           </div>
         }
-        { (room.roomType==='open' || userState === 'noMember') &&
+        { (room.roomType==='open' || userState === 'okMember') &&
           <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
           {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} />} {/* 대시보드 컴포넌트 추가 */}
 
