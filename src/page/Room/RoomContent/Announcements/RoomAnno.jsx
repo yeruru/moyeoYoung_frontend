@@ -47,7 +47,6 @@ function RoomAnno({state, room}) {
     const style = {
         container: {
             padding: '20px',
-            fontFamily: 'Arial, sans-serif',
             backgroundColor: 'white',
         },
         title: {

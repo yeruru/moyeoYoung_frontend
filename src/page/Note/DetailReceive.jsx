@@ -49,15 +49,16 @@ const handleDeleteNote = () => {
         Authorization: `Bearer ${accessToken}`
       }
     })
-    .then(() => {
+    .then((res) => {
       alert('쪽지를 삭제하였습니다.');
-      navigate("/note");  
-      })
+      navigate('/note'); // Note 컴포넌트로 이동
+    })
     .catch((err) => {
       console.log(err);
       alert('쪽지 삭제에 실패하였습니다.');
     });
 };
+
 
 
   return (
