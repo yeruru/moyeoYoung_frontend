@@ -20,7 +20,6 @@ function DetailReceive() {
     status : ''
   });
 
-console.log(note.senderNickname);
   useEffect(() =>{
     //받은쪽지함
     axios.get(`http://localhost:8090/note/received/detail/${noteId}`, {
@@ -40,9 +39,7 @@ console.log(note.senderNickname);
   // TODO : 닉네임 넣어서 답장하기
 
 const handleReply = () => {
-  navigate('/noteform', {
-    state: {receiverNickname: note.senderNickname }
-});
+  navigate(`/noteform/${note.senderNickname}`);
 };
 
 const handleDeleteNote = () => {

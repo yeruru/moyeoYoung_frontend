@@ -91,6 +91,7 @@ function Header() {
     localStorage.removeItem('accessToken'); // 로컬 스토리지에서 토큰 제거
     localStorage.removeItem('refreshToken');
     navigate('/login');
+    window.location.reload();
     // document.location.href = '/login'; // 로그아웃 후 홈페이지로 리다이렉트
   };
 
@@ -276,6 +277,8 @@ function Header() {
           </ul>
         </div>
       </div>
+      {/* 모임방 투두 팡파레 */}
+      <canvas id="my-canvas" style={{display: 'none'}}></canvas> 
     </div>
   );
 }

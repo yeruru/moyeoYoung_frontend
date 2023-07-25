@@ -17,6 +17,10 @@ import ModifyFeed from './RoomContent/Feed/ModifyFeed';
 import Chat from '../Chat/Chat';
 import ChatBubbleIcon from '@mui/icons-material/ChatBubble';
 import { MemberList } from './RoomContent/MemberList/MemberList';
+import { Login } from '@mui/icons-material';
+import _ from 'lodash';
+
+
 
 function RoomMain() {
   const location = useLocation();
@@ -33,21 +37,16 @@ function RoomMain() {
   const [userState, setUserState] = useState('noUser');
   /* MemberList 관련 */
   const [memberList, setMemberList] = useState([]);
-  const [hostId, setHostId] = useState(0);
-
+  const [logInId, setLogInId] = useState(0);
+  const [isJoin, setIsJoin] = useState(false);
+  const [joining, setJoining] = useState(false);
 
   useEffect(() => {
     const path = location.pathname;
     const content = path.split('/')[path.split('/').length - 2];
     setSelectedContent(content); 
     
-    axiosURL.get(`/getroomMain/${roomId}`)
-      .then(res => {
-        setRoom(res.data);
-      })
-      .catch(err => {
-        console.log(err);
-      })
+   
     //유저상태처리
     const isToken = localStorage.getItem('accessToken');
     if (isToken) {
@@ -60,7 +59,7 @@ function RoomMain() {
         .then((res) => {
           const members = res.data.list;
           setMemberList(members);
-          setHostId(res.data.hostId);
+          setLogInId(res.data.logInId);
           //방 멤버와 로그인된 아이디를 비교 
           const ismember = members.some((item) => res.data.logInId === item.memberId);
           if (ismember) {
@@ -73,20 +72,37 @@ function RoomMain() {
           console.log(err);
         })
     }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location, isJoin, roomId]);
 
-  }, [location,roomId]);
-
+  useEffect(()=>{
+    axiosURL.get(`/getroomMain/${roomId}`)
+    .then(res => {
+      setRoom(res.data);
+    })
+    .catch(err => {
+      console.log(err);
+    })
+     // eslint-disable-next-line react-hooks/exhaustive-deps
+  },[])
+  
   const handleContentChange = (content) => {
     setSelectedContent(content);
     // navigate(`/roomMain/${content}`);
     navigate(`/roomMain/${content}/${roomId}`);
-  };
-  const joinRoom = (e) => {
+  }; 
+   const joinRoom = _.debounce((e) => {
+    if (joining) {
+      return;
+    }
+
     if (userState === 'noUser') {
       e.preventDefault();
       alert("로그인이 필요합니다!");
       navigate('/login');
     } else {
+      setJoining(true); // 가입 시작
+
       axiosURL.post('/joinRoom', { roomId: roomId }, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
@@ -94,17 +110,25 @@ function RoomMain() {
       })
         .then(res => {
           alert(res.data);
-          setUserState('okMember');
+          setUserState('okMember'); 
+          setIsJoin(true);
         })
         .catch(err => {
           alert(err);
         })
+        .finally(() => {
+          setJoining(false); // 가입 완료
+        });
     }
-  }
+  }, 500); 
   const openCustomWindow = () => {
-    const width = 400;
-    const height = 600;
-    window.open(`http://localhost:3000/chat/${roomId}`, '_blank', `width=${width}, height=${height}`)
+    if(userState!=='okMember'){
+      alert("멤버만 입장할 수 있습니다!");
+    }else{
+      const width = 400;
+      const height = 600;
+      window.open(`http://localhost:3000/chat/${roomId}`, '_blank', `width=${width}, height=${height}`) 
+    }
   }
 
   return (
@@ -114,15 +138,33 @@ function RoomMain() {
           <div className='title-box'>
             <div className='img-box'><img src={`http://localhost:8090/room/view/${room.roomImage}`} className='img' alt='모임방 프로필 사진' /></div>
             <h2>{room.roomTitle}</h2>
-            <Link to={`/settingroom/${roomId}`}>모임 정보 수정 &gt;</Link>
+            {
+              room.memberId === logInId &&
+              <Link to={`/settingroom/${roomId}`}>모임 정보 수정 &gt;</Link>
+            }
           </div>
           {
-            userState !== 'okMember' &&
-            <button onClick={joinRoom} className='join-btn'>가입하기</button>
+            // userState !== 'okMember' &&
+            // <button onClick={joinRoom} className='join-btn'>가입하기</button>
+
+            userState !== 'okMember' && (
+              <button onClick={joinRoom} className='join-btn' disabled={joining}>
+                가입하기
+              </button>
+            )
           }
           <RoomHeader onContentChange={handleContentChange} />
         </div>
-        <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
+        { room.roomType==='close' && userState !== 'okMember' &&
+         <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
+          <div className='w-p'> 
+           <img src='/image/Group 51.svg' alt="No access" width="600" height="200" />
+           <p className='not-access'>멤버에게만 공개된 방입니다!</p> 
+          </div>
+          </div>
+        }
+        { (room.roomType==='open' || userState === 'okMember') &&
+          <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
           {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} />} {/* 대시보드 컴포넌트 추가 */}
           {selectedContent === 'roomFeed' && <RoomFeed onContentChange={handleContentChange} />}
 
@@ -131,17 +173,17 @@ function RoomMain() {
           {selectedContent === 'writeAnno' && <WriteAnno />}
           {selectedContent === 'detailAnno' && <DetailAnno />}
           {selectedContent === 'editAnno' && <EditAnno />}
-
-
+ 
           {selectedContent === 'writefeed' && <WriteFeed roomId={roomId} />}
           {selectedContent === 'modifyfeed' && <ModifyFeed />}
 
           {/* 멤버리스트 */}
           {
             selectedContent === 'roomMember' &&
-            <MemberList hostId={hostId} memberList={memberList} />
+            <MemberList hostId={room.memberId} memberList={memberList} />
           }
         </div>
+        }
         <div className='play'>
           <RoomPlay />
           <div>

@@ -62,7 +62,7 @@ function WriteAnno() {
             imageUrl: imageUrl,
             roomId: roomId,
         };
-
+        console.log(notice);
         axios.post(`http://localhost:8090/rooms/${Number(roomId)}/notices`, notice)
             .then(response => {
                 navigate(`/roomMain/roomAnno/${roomId}`)

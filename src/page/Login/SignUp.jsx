@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, Button, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio } from '@mui/material';
 import axios from 'axios';
-import './SignUp.css';
+import './signup.css';
 
 const SignUp = () => {
   const [formData, setFormData] = useState({
@@ -67,6 +67,12 @@ const SignUp = () => {
       });
   };
 
+  const [passwordConfirmation, setPasswordConfirmation] = useState('');
+
+  const isPasswordValid = () => {
+    return formData.password === passwordConfirmation;
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
 
@@ -95,6 +101,11 @@ const SignUp = () => {
       return;
     }
 
+    if (!isPasswordValid()) {
+      alert('비밀번호가 일치하지 않습니다.');
+      return;
+    }
+
     axios
       .post('http://localhost:8090/auth/signup', {
         email: formData.email,
@@ -115,22 +126,26 @@ const SignUp = () => {
       });
   };
 
+  
+
   return (
     <div className='wrap'>
       <h2 className='singup-title'>회원가입</h2>
       <div className='signup-main'>
         <form onSubmit={handleSubmit} style={{ maxWidth: '400px', margin: '0 auto' }}>
-          <TextField
-            name="email"
-            label="Email"
-            value={formData.email}
-            color='success'
-            onChange={handleChange}
-            fullWidth
-            margin="normal"
-            helperText={isEmailDuplicated ? '중복된 이메일입니다.' : '사용 가능한 이메일입니다.'}
-            error={isEmailDuplicated}
-          />
+        <TextField
+          name="email"
+          label="이메일"
+          value={formData.email}
+          color="success"
+          onChange={handleChange}
+          fullWidth
+          margin="normal"
+          helperText={
+            formData.email !== '' ? (isEmailDuplicated ? '중복된 이메일입니다.' : '사용 가능한 이메일입니다.') : ''
+          }
+          error={isEmailDuplicated}
+        />
           <Button variant="outlined" color='success' onClick={handleEmailCheck}>이메일 중복 확인</Button>
           {!isEmailSent ? (
             <>
@@ -155,7 +170,7 @@ const SignUp = () => {
           )}
           <TextField
             name="password"
-            label="Password"
+            label="비밀번호"
             type="password"
             value={formData.password}
             color='success'
@@ -165,21 +180,46 @@ const SignUp = () => {
             margin="normal"
           />
           <TextField
+            name="passwordConfirmation"
+            label="비밀번호 확인"
+            type="password"
+            value={passwordConfirmation}
+            color="success"
+            onChange={(event) => setPasswordConfirmation(event.target.value)}
+            fullWidth
+            margin="normal"
+            helperText={
+              formData.password !== '' && passwordConfirmation !== ''
+                ? formData.password === passwordConfirmation
+                  ? '비밀번호가 일치합니다.'
+                  : '비밀번호가 일치하지 않습니다.'
+                : ''
+            }
+            error={formData.password !== passwordConfirmation && passwordConfirmation !== ''}
+          />
+          <TextField
             name="nickname"
-            label="Nickname"
+            label="닉네임"
             placeholder='닉네임은 2자 이상 20자 이하로 입력해주세요.'
             value={formData.nickname}
             color='success'
             onChange={handleChange}
             fullWidth
             margin="normal"
-            helperText={isNicknameDuplicated ? '중복된 닉네임입니다.' : '사용 가능한 닉네임입니다.'}
+            helperText={
+              formData.nickname !== ''
+                ? isNicknameDuplicated
+                  ? '중복된 닉네임입니다.'
+                  : '사용 가능한 닉네임입니다.'
+                : ''
+            }
             error={isNicknameDuplicated}
           />
           <Button variant="outlined" color='success' onClick={handleNicknameCheck}>닉네임 중복 확인</Button>
           <TextField
+            style={{fontFamily:'inherit'}}
             name="profileContent"
-            label="Profile Content"
+            label="자기소개"
             placeholder='자기소개는 100자 미만으로 작성해주세요.'
             multiline
             rows={4}

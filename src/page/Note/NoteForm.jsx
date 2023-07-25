@@ -29,7 +29,11 @@ function NoteForm() {
   const navigate = useNavigate();
   const accessToken = localStorage.getItem("accessToken");
   const location = useLocation();
+
+  console.log(location);
+
   const { receiverNickname } = location.state;
+
   useEffect(()=>{
     setNickname(location.pathname.split("/")[2]);
   },[location]);
@@ -48,9 +52,10 @@ function NoteForm() {
 };
 
   const handleSend = (e) => {
+    const recivername = document.getElementById("note-email").value;
     e.preventDefault();
     const formData = new FormData();
-    formData.append("receiverNickname", note.receiverNickname);
+    formData.append("receiverNickname", recivername);
     formData.append("content", note.content);
     axios
       .post("http://localhost:8090/note/send", formData, {

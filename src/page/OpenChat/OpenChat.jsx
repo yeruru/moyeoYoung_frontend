@@ -110,7 +110,7 @@ const OpenChat = () => {
                 `/app/chat/${room}/sendMessage`,
                 {},
                 JSON.stringify({ 
-                    from: username, 
+                    msgFrom: username, 
                     text: isImageUrl ? null : processedMessageToSend, 
                     image: isImageUrl ? messageToSend : null, 
                     profileImage: profileImage
@@ -137,7 +137,7 @@ const OpenChat = () => {
 
     // 공지 메시지를 전송합니다.
     const sendSysMessage = (message) => {
-        stompClient.send(`/app/chat/${room}/sendMessage`, {}, JSON.stringify({ from: "", text: message, profileImage: "/image/openchat/white.png" }));
+        stompClient.send(`/app/chat/${room}/sendMessage`, {}, JSON.stringify({ msgFrom: "", text: message, profileImage: "/image/openchat/white.png" }));
     }
 
     //gif관련 및 모달관련
@@ -203,8 +203,7 @@ const OpenChat = () => {
         }
         console.log("여기에출력",memberInfo.username);
         setUsername(memberInfo.nickname);
-        //api에서 값을 많이받아올수 있도록 수정한 후에 적용 ㄱㄱ
-        // setProfileImage(memberInfo.profileImageUrl);
+
         sendSysMessage(` < ${memberInfo.nickname} > 님이 입장하셨습니다.`);  // 입장 공지메시지 전송
         setIsUserSet(true);
       };
@@ -245,30 +244,28 @@ const OpenChat = () => {
             <img src="/image/openchat/청년talk_배너.png" style={{ width: '400px', display: 'block', margin: '0 auto' }} />
             <div className="chat-container">
                 <div className="chat-room-buttons">
-                    <button onClick={() => handleRoomChange("room1")}>청년공간 같이가실분</button>
-                    <button onClick={() => handleRoomChange("room2")}>모임 같이 하실분</button>
-                    <button onClick={() => handleRoomChange("room3")}>자유TALK</button>
+                    <button className="menu-button" onClick={() => handleRoomChange("room1")}>청년공간 같이가실분</button>
+                    <button className="menu-button" onClick={() => handleRoomChange("room2")}>모임 같이 하실분</button>
+                    <button className="menu-button" onClick={() => handleRoomChange("room3")}>자유TALK</button>
                 </div>
+
                 {!isUserSet ?
-                    // 닉네임이 설정 안되어있으면 설정하는 폼
                     <button id='myButton' onClick={handleClickChat}>접속하기</button>
                     :
-                    
-                    // 닉네임이 설정되면 채팅방 렌더링
                     <>
                         {/* 메세지 리스트 렌더링 */}
                         <div className="chat-message-list">
                         {msg.map((message, i) =>
                             <div 
                                 key={i} 
-                                className={`chat-message ${message.from === username ? 'own-message' : 'other-message'} ${message.from !== username && (i === 0 || msg[i-1].from !== message.from) ? 'first-in-sequence' : ''}`}
+                                className={`chat-message ${message.msgFrom === username ? 'own-message' : 'other-message'} ${message.msgFrom !== username && (i === 0 || msg[i-1].msgFrom !== message.msgFrom) ? 'first-in-sequence' : ''}`}
                             >
-                                {(i === 0 || msg[i-1].from !== message.from) && message.from !== username && (
+                                {(i === 0 || msg[i-1].msgFrom !== message.msgFrom) && message.msgFrom !== username && (
                                     <img src={message.profileImage} alt="profile" className="profile-pic"/>
                                 )}
-                                <div className={`message-box ${message.from === username ? 'own-message-box' : 'other-message-box'}`}>
-                                    {(i === 0 || msg[i-1].from !== message.from) && <span className="username">{message.from}</span>}
-                                    <div className={`message-content ${message.from === username ? 'own-message-content' : 'other-message-content'}`}>
+                                <div className={`message-box ${message.msgFrom === username ? 'own-message-box' : 'other-message-box'}`}>
+                                    {(i === 0 || msg[i-1].msgFrom !== message.msgFrom) && <span className="username">{message.msgFrom}</span>}
+                                    <div className={`message-content ${message.msgFrom === username ? 'own-message-content' : 'other-message-content'}`}>
                                         {message.image ? <img src={message.image} alt="content" className="limited-image" /> :
                                         <span dangerouslySetInnerHTML={{__html: message.text}} />}
                                     </div>
