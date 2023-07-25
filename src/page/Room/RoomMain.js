@@ -74,7 +74,7 @@ function RoomMain() {
         })
     }
 
-  }, [location, userState,axiosURL, roomId]);
+  }, [location,roomId]);
 
   const handleContentChange = (content) => {
     setSelectedContent(content);

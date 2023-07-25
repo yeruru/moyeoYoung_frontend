@@ -194,7 +194,7 @@ const OpenChat = () => {
         borderRadius: '8px', // Button 모서리 둥글게
     };
       
-    const handleClick = async () => {
+    const handleClickChat = async () => {
         const accessToken = localStorage.getItem('accessToken');
         const memberInfo = await fetchMemberInfo(accessToken);
         if (memberInfo === null) {
@@ -251,7 +251,7 @@ const OpenChat = () => {
                 </div>
                 {!isUserSet ?
                     // 닉네임이 설정 안되어있으면 설정하는 폼
-                    <button id='myButton' onClick={handleClick}>접속하기</button>
+                    <button id='myButton' onClick={handleClickChat}>접속하기</button>
                     :
                     
                     // 닉네임이 설정되면 채팅방 렌더링

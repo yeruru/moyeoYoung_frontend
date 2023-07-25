@@ -49,7 +49,6 @@ const MyPage = () => {
         setPreviewImage(`http://localhost:8090/room/view/${res.data.fileName}`);
       })
       .catch((err) => {
-        console.log(err);
       });
     console.log(accessToken);
   }, [accessToken]);

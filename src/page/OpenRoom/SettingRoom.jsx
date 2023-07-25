@@ -37,8 +37,6 @@ export const SettingRoom = () => {
             settxtLength(txt.length);
             setContentText(txt); 
             setImgSrc(`http://localhost:8090/room/view/${res.data.roomImage}`)
-            
-             
         })
         .catch(err=>{
             console.log(err);

@@ -55,7 +55,6 @@ function Header() {
         setPreviewImage(`http://localhost:8090/room/view/${res.data.fileName}`);
       })
       .catch((err) => {
-        console.log(err);
       });
   }, [accessToken]);
 

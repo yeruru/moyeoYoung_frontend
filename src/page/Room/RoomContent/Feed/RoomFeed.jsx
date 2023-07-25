@@ -12,7 +12,6 @@ import nothing from '../../../../images/Group 153.svg'
 import axios from 'axios';
 import RoomFeedDetail from './RoomFeedDetail';
 import ModifyFeed from './ModifyFeed.jsx';
-import {useSelector} from 'react-redux';
 import Profile from '../../../../components/Profile/Profile';
 
 
@@ -67,22 +66,21 @@ function RoomFeed({onContentChange}) {
     axios.get(`http://localhost:8090/feed/selectfeed/${roomId}/`)
       .then(res=>{
         setFeed(res.data);
+        console.log(res.data);
       })
       .catch(err => {
 
       })
-  },[]);
-
-  useEffect(()=>{
-    axios.get(`http://localhost:8090/feed/getmemberId`,{
+      axios.get(`http://localhost:8090/feed/getmemberId`,{
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
-    })
-    .then(res=>{
-        setMemberId(res.data);
-    })
-},[]);
+      })
+      .then(res=>{
+          setMemberId(res.data);
+      })
+  },[accessToken]);
+
 
   const update = () => {
     axios.get(`http://localhost:8090/feed/selectfeed/${roomId}/`)
@@ -136,15 +134,19 @@ function RoomFeed({onContentChange}) {
   };
 
   const increaseLikeCount = (feedId) => {
-    let Count = document.getElementById(`likecount${feedId}`).innerHTML;
-    Count = (Number)(Count) + 1;
-    document.getElementById(`likecount${feedId}`).innerHTML = Count;
-  }
+    setFeed((prevFeed) => {
+      return prevFeed.map((feed) =>
+        feed.feedId === feedId ? { ...feed, likeCount: feed.likeCount + 1 } : feed
+      );
+    });
+  } 
 
   const decreaseLikeCount = (feedId) => {
-    let Count = document.getElementById(`likecount${feedId}`).innerHTML;
-    Count = Count - 1;
-    document.getElementById(`likecount${feedId}`).innerHTML = Count;
+    setFeed((prevFeed) => {
+      return prevFeed.map((feed) =>
+        feed.feedId === feedId ? { ...feed, likeCount: feed.likeCount - 1 } : feed
+      );
+    });
   }
 
   const location = (content) => {
@@ -192,7 +194,6 @@ function RoomFeed({onContentChange}) {
   }
 
   const deletefeed = () => { 
-    console.log(mfeedId);
     axios.post(`http://localhost:8090/feed/deletefeed/${mfeedId}`)
     .then(res => {
       console.log(res);
