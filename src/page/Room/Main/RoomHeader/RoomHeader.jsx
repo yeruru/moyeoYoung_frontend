@@ -72,26 +72,20 @@ function RoomHeader({ onContentChange }) {
           </ButtonSt>
       </StyleLi>
       <StyleLi>
-        {
-          userState === 'okMember' && 
             <ButtonSt
               onClick={() => handleLinkClick('roomAnno')}
               selected={selectedButton === 'roomAnno'}
             >
               모임 공지사항
-        </ButtonSt>
-        }
+        </ButtonSt>  
       </StyleLi>
       <StyleLi>
-      {
-        userState === 'okMember' && 
         <ButtonSt
           onClick={() => handleLinkClick('roomFeed')}
           selected={selectedButton === 'roomFeed'}
         >
           모임 피드
         </ButtonSt>
-      }
       </StyleLi>
       <StyleLiM>
       {
