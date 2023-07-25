@@ -195,14 +195,14 @@ function RoomMain() {
            <p className='not-access'>멤버에게만 공개된 방입니다!</p> 
           </div>
           </div>
-        }
+        } 
         { 
         (room.roomType==='close' && userState !== 'okMember' && selectedContent ==='dashboard') &&
           <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
             <Dashboard roomId={roomId} room={room} state={userState} roomstate={room.roomType}/>
           </div>
         }
-        
+         
         { (room.roomType==='open' || userState === 'okMember') &&
           <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
           {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} state={userState} roomstate={room.roomType}/>} {/* 대시보드 컴포넌트 추가 */}

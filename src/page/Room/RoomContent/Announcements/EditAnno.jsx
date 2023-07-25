@@ -58,7 +58,7 @@ function EditAnno() {
 
     useEffect(() => {
       if (!isNaN(annoId) && !isNaN(roomId)) {
-        axios.get(`http://localhost:8090/rooms/${roomId}/notices/${annoId}`)
+        axios.get(process.env.REACT_APP_BURL+`/rooms/${roomId}/notices/${annoId}`)
             .then(response => {
                 setTitle(response.data.title);
                 setContent(response.data.content);
@@ -69,7 +69,7 @@ function EditAnno() {
     const handleSubmit = event => {
         event.preventDefault();
 
-        axios.put(`http://localhost:8090/rooms/${roomId}/notices/${annoId}`, { title, content })
+        axios.put(process.env.REACT_APP_BURL+`/rooms/${roomId}/notices/${annoId}`, { title, content })
             .then(response => {
               navigate(`/roomMain/roomAnno/${roomId}`);
             });

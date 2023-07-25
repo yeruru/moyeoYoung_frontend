@@ -19,7 +19,7 @@ function WriteAnno() {
             const accessToken = localStorage.getItem('accessToken');
             if (accessToken) {
                 try {
-                    const response = await fetch('http://localhost:8090/member/mypage', {
+                    const response = await fetch(process.env.REACT_APP_BURL+'/member/mypage', {
                         headers: {
                             'Authorization': `Bearer ${accessToken}`
                         }
@@ -65,7 +65,7 @@ function WriteAnno() {
             roomId: roomId,
         };
         console.log(notice);
-        axios.post(`http://localhost:8090/rooms/${Number(roomId)}/notices`, notice)
+        axios.post(process.env.REACT_APP_BURL+`/rooms/${Number(roomId)}/notices`, notice)
             .then(response => {
                 navigate(`/roomMain/roomAnno/${roomId}`)
             });

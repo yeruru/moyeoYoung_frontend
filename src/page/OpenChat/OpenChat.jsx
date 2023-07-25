@@ -8,8 +8,6 @@ import Modal from 'react-modal';
 import Profile from '../../components/Profile/Profile';
 
 let stompClient;
-let ipmod = 1 ? 'http://localhost:8090/ws-chat' : 'http://211.108.241.185:8090/ws-chat'
-
 
 //react-modal 라이브러리는 모달이 열렸을 때 스크린 리더가 주요 컨텐츠를 인식하지 못하도록 하는 기능을 제공합니다. 
 //이렇게 하려면 setAppElement 메소드를 사용하여 애플리케이션의 루트 엘리먼트를 지정해야 합니다.
@@ -52,7 +50,7 @@ const OpenChat = () => {
 
     // 웹소켓 서버에 연결합니다.
     const connect = () => {
-        const socket = new SockJS(ipmod);
+        const socket = new SockJS(process.env.REACT_APP_BURL+'/ws-chat');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, onConnected, onError);
     };
@@ -226,7 +224,7 @@ const OpenChat = () => {
         try {
             console.log("시도중");
             // Provide full URL to the endpoint
-            const response = await fetch('http://localhost:8090/member/mypage', {
+            const response = await fetch(process.env.REACT_APP_BURL+'/member/mypage', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
