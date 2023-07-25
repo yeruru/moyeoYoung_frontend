@@ -5,7 +5,7 @@ import TodoList from './TodoList';
 import FilterButtons from './FilterButtons';
 import Confetti from 'confetti-js';
 
-function TodoApp({roomId}) {
+function TodoApp({roomId, state}) {
   const [todos, setTodos] = useState([]);
   const [filter, setFilter] = useState('all');
 
@@ -91,16 +91,20 @@ function TodoApp({roomId}) {
   });
 
   return (
-    <div style={{
-    display: 'flex',
-    flexDirection: 'column',
-    justifyContent: 'space-around',
-    alignItems: 'center',}}>
-      
-      <FilterButtons setFilter={setFilter} />
-      <AddTodoForm addTodo={addTodo} />
-      <TodoList todos={filteredTodos} toggleComplete={toggleComplete} removeTodo={removeTodo} updateTodo={updateTodo}/>
-    </div>
+    <>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-around',
+        alignItems: 'center',}}>
+          
+          <FilterButtons setFilter={setFilter} />
+          <AddTodoForm addTodo={addTodo} state={state}/>
+          <TodoList todos={filteredTodos} toggleComplete={toggleComplete} removeTodo={removeTodo} updateTodo={updateTodo}/>
+        </div>
+        
+    </>
+
   );
 }
 
