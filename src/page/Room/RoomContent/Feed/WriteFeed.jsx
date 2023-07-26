@@ -116,7 +116,7 @@ function WriteFeed ({roomId}){
         formData.append('filename', feed.filename);
         formData.append('files', files);
         Object.values(files).forEach((file)=> formData.append("files", file));
-        axios.post(`http://localhost:8090/feed/writefeed/${feed.roomId}`, formData,{
+        axios.post(`${process.env.REACT_APP_BURL}/feed/writefeed/${feed.roomId}`, formData,{
                 headers: {
                     "Content-Type": `multipart/form-data; `,
                     'Authorization': `Bearer ${accessToken}`,

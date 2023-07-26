@@ -38,7 +38,7 @@ const MyPage = () => {
   useEffect(() => {
     // 유저 정보 가져오기
     axios
-      .get("http://localhost:8090/member/mypage", {
+      .get(`${process.env.REACT_APP_BURL}/member/mypage`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         },
@@ -53,7 +53,7 @@ const MyPage = () => {
           profileContent: res.data.profileContent,
           regdate: res.data.regdate,
         });
-        setPreviewImage(`http://localhost:8090/room/view/${res.data.fileName}`);
+        setPreviewImage(`${process.env.REACT_APP_BURL}/room/view/${res.data.fileName}`);
       })
       .catch((err) => {
       });
@@ -102,7 +102,7 @@ const MyPage = () => {
     console.log(formData.fileName);
     console.log(formData.file);
     axios
-    .post(`http://localhost:8090/member/update/${memberId}`, form,{
+    .post(`${process.env.REACT_APP_BURL}/member/update/${memberId}`, form,{
       headers: {
         "Content-Type" : "multipart/form-data; charset= UTF-8",
       },
@@ -133,7 +133,7 @@ const MyPage = () => {
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
   const handleNicknameCheck = () => {
     axios
-      .get(`http://localhost:8090/auth/checkednick?nickname=${formData.nickname}`)
+      .get(`${process.env.REACT_APP_BURL}/auth/checkednick?nickname=${formData.nickname}`)
       .then((response) => {
         setIsNicknameDuplicated(response.data);
       })
@@ -166,7 +166,7 @@ const MyPage = () => {
       }
     };
 
-    axios.delete(`http://localhost:8090/member/delete/${memberId}`, config)
+    axios.delete(`${process.env.REACT_APP_BURL}/member/delete/${memberId}`, config)
       .then((response) => {
         alert('회원 탈퇴가 완료되었습니다.');
         localStorage.removeItem('accessToken');

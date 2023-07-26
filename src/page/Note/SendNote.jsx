@@ -16,7 +16,7 @@ function SentNote() {
   useEffect(() =>{
     //받은쪽지함
     axios
-      .get('http://localhost:8090/note/sent', {
+      .get(`${process.env.REACT_APP_BURL}/note/sent`, {
         params: {
           page: currentPage, // 현재 페이지 번호를 파라미터로 전달
           pageSize: pageSize,

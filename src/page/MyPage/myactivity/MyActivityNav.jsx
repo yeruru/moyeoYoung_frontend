@@ -28,7 +28,7 @@ function MyActivityNav() {
 
   const accessToken = localStorage.getItem("accessToken");
   useEffect(()=>{
-    axios.get(`http://localhost:8090/feed/getmemberId`,  {
+    axios.get(`${process.env.REACT_APP_BURL}/feed/getmemberId`,  {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },

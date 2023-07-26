@@ -22,7 +22,7 @@ function DetailReceive() {
 
   useEffect(() =>{
     //받은쪽지함
-    axios.get(`http://localhost:8090/note/received/detail/${noteId}`, {
+    axios.get(`${process.env.REACT_APP_BURL}/note/received/detail/${noteId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
@@ -44,7 +44,7 @@ const handleReply = () => {
 
 const handleDeleteNote = () => {
   axios
-    .delete(`http://localhost:8090/note/received/delete/${noteId}`, {
+    .delete(`${process.env.REACT_APP_BURL}/note/received/delete/${noteId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }

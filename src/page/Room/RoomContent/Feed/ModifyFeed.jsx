@@ -14,7 +14,7 @@ function ModifyFeed ({isOpen, content, onClose, roomId}) {
     const [modalOpen, setModalOpen] = useState(false);
 
     useEffect(() => {
-        axios.get(`http://localhost:8090/feed/detailfeed/${content}`)
+        axios.get(`${process.env.REACT_APP_BURL}/feed/detailfeed/${content}`)
         .then(res=>{
             setFeed(prevFeedDetail => ({
                 ...prevFeedDetail,
@@ -94,7 +94,7 @@ function ModifyFeed ({isOpen, content, onClose, roomId}) {
         formData.append('feedId', feed.feedId);
         formData.append('userId', feed.userId);
         formData.append('filename', feed.filename);
-        axios.post(`http://localhost:8090/feed/modifyfeed/${feed.feedId}`, formData)
+        axios.post(`${process.env.REACT_APP_BURL}/feed/modifyfeed/${feed.feedId}`, formData)
         .then(res => {
             console.log(res);
             document.location.href=`/roomMain/roomFeed/${roomId}`; 
@@ -118,7 +118,7 @@ function ModifyFeed ({isOpen, content, onClose, roomId}) {
                 {
                 feed.filename.toString().split(',').map((item, index) => ( // 여기서 맵 함수를 사용할 수 있도록 수정
                     <SwiperSlide key={index}>
-                        <div className='feedImg' style={{backgroundImage : `url(http://localhost:8090/room/view/${item})`}}>
+                        <div className='feedImg' style={{backgroundImage : `url(${process.env.REACT_APP_BURL}/room/view/${item})`}}>
                             <div className='feedX'onClick={() => feedImgDelete(index)}>X</div>
                         </div>
                     </SwiperSlide>

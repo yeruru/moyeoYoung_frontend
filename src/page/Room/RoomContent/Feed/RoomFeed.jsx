@@ -53,7 +53,7 @@ function RoomFeed({onContentChange, state}) {
 
   
   useEffect(()=>{
-    axios.get(`http://localhost:8090/feed/likelist`,{
+    axios.get(`${process.env.REACT_APP_BURL}/feed/likelist`,{
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       }})
@@ -64,7 +64,7 @@ function RoomFeed({onContentChange, state}) {
 
       });
 
-    axios.get(`http://localhost:8090/feed/selectfeed/${roomId}/`)
+    axios.get(`${process.env.REACT_APP_BURL}/feed/selectfeed/${roomId}/`)
       .then(res=>{
         setFeed(res.data);
         console.log(res.data);
@@ -72,7 +72,7 @@ function RoomFeed({onContentChange, state}) {
       .catch(err => {
 
       })
-      axios.get(`http://localhost:8090/feed/getmemberId`,{
+      axios.get(`${process.env.REACT_APP_BURL}/feed/getmemberId`,{
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
@@ -84,7 +84,7 @@ function RoomFeed({onContentChange, state}) {
 
 
   const update = () => {
-    axios.get(`http://localhost:8090/feed/selectfeed/${roomId}/`)
+    axios.get(`${process.env.REACT_APP_BURL}/feed/selectfeed/${roomId}/`)
     .then(res=>{
       setFeed(res.data);
     })
@@ -105,7 +105,7 @@ function RoomFeed({onContentChange, state}) {
         const isLiked = prevLikes.includes(feedId);
         if(isLiked){
           decreaseLikeCount(feedId);
-          axios.get(`http://localhost:8090/feed/delike/${feedId}`,{
+          axios.get(`${process.env.REACT_APP_BURL}/feed/delike/${feedId}`,{
             headers: {
               'Authorization': `Bearer ${accessToken}`,
             }
@@ -119,7 +119,7 @@ function RoomFeed({onContentChange, state}) {
           return prevLikes.filter((id) => id !== feedId)
         }else{
           increaseLikeCount(feedId);
-          axios.get(`http://localhost:8090/feed/like/${feedId}`,{
+          axios.get(`${process.env.REACT_APP_BURL}/feed/like/${feedId}`,{
             headers: {
               'Authorization': `Bearer ${accessToken}`,
             }
@@ -204,7 +204,7 @@ function RoomFeed({onContentChange, state}) {
   }
 
   const deletefeed = () => { 
-    axios.post(`http://localhost:8090/feed/deletefeed/${mfeedId}`)
+    axios.post(`${process.env.REACT_APP_BURL}/feed/deletefeed/${mfeedId}`)
     .then(res => {
       console.log(res);
       document.location.href=`/roomMain/roomFeed/${roomId}`;
@@ -244,7 +244,7 @@ function RoomFeed({onContentChange, state}) {
               <div className='feed' key={feed.feedId}>      
                 <div className='feedHeader'>
                   <div className='userheader'>
-                    <div className='userProfile' onClick={()=>openProfile(feed.nickname)} style={{backgroundImage : `url(http://localhost:8090/room/view/${feed.profilename})`, cursor:'pointer'}}></div>
+                    <div className='userProfile' onClick={()=>openProfile(feed.nickname)} style={{backgroundImage : `url(${process.env.REACT_APP_BURL}/room/view/${feed.profilename})`, cursor:'pointer'}}></div>
                     <span className='username'>{feed.nickname}</span>
                   </div>
                   <div className='drop-box'>
@@ -280,10 +280,10 @@ function RoomFeed({onContentChange, state}) {
                     feed.filename.split(",").length < 3 && 1 < feed.filename.split(",").length &&
                     <div className='feedimg'>
                       <div>
-                        <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
+                        <div className='bigimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[0]})`}}></div>
                       </div>
                       <div className='feedimg2'>
-                        <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
+                        <div className='smallimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[1]})`}}></div>
                         <div className='otherimg'  onClick={() => detail(`${feed.feedId}`)}  key={feed.feedId} style={{ cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
                       </div>
                   </div>
@@ -292,11 +292,11 @@ function RoomFeed({onContentChange, state}) {
                     feed.filename.split(",").length > 3 && 
                     <div className='feedimg'>
                       <div>
-                        <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
+                        <div className='bigimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[0]})`}}></div>
                       </div>
                       <div className='feedimg2'>
-                        <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
-                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+{feed.filename.split(",").length-3}</em></div>
+                        <div className='smallimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[1]})`}}></div>
+                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+{feed.filename.split(",").length-3}</em></div>
                       </div>
                   </div>
                   }
@@ -304,11 +304,11 @@ function RoomFeed({onContentChange, state}) {
                     feed.filename.split(",").length == 3 && 
                     <div className='feedimg'>
                       <div>
-                        <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
+                        <div className='bigimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[0]})`}}></div>
                       </div>
                       <div className='feedimg2'>
-                        <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
-                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
+                        <div className='smallimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[1]})`}}></div>
+                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
                       </div>
                   </div>
                   }
@@ -316,7 +316,7 @@ function RoomFeed({onContentChange, state}) {
                     feed.filename.split(",").length  == 1 && 
                     <div className='feedimg'>
                     <div>
-                      <div className='bigimg' onClick={() => detail(`${feed.feedId}`)} style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`, cursor : 'pointer',
+                      <div className='bigimg' onClick={() => detail(`${feed.feedId}`)} style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[0]})`, cursor : 'pointer',
                         height: 'auto',
                         minHeight: '250px',
                         width:'500px',

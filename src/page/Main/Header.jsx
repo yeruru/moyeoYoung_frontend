@@ -43,7 +43,7 @@ function Header() {
   useEffect(() => {
     // 유저 정보 가져오기
     axios
-      .get("http://localhost:8090/member/mypage", {
+      .get(`${process.env.REACT_APP_BURL}/member/mypage`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         },
@@ -52,7 +52,7 @@ function Header() {
         setFileName({
           fileName: res.data.fileName
         });
-        setPreviewImage(`http://localhost:8090/room/view/${res.data.fileName}`);
+        setPreviewImage(`${process.env.REACT_APP_BURL}/room/view/${res.data.fileName}`);
       })
       .catch((err) => {
       });

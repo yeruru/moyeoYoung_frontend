@@ -17,7 +17,7 @@ function MyFeed() {
   const [feed, setFeed] = useState([]);
 
   useEffect(()=>{
-    axios.get(`http://localhost:8090/feed/selectfeeds/${memberId}`)
+    axios.get(`${process.env.REACT_APP_BURL}/feed/selectfeeds/${memberId}`)
     .then(res=>{
       setFeed(res.data);
       console.log(res.data);
@@ -50,7 +50,7 @@ console.log(feed);
                             <SwiperSlide >
                                  <div className='myfeed' key={item.feedId}>
                                     <div className='feedImage'>
-                                      <img src={`http://localhost:8090/room/view/${item.filename.split(",")[0]}`}></img>
+                                      <img src={`${process.env.REACT_APP_BURL}/room/view/${item.filename.split(",")[0]}`}></img>
                                     </div>
                                     <div className='feedcontent'> 
                                       <div className='feedtitle'>{item.title}</div>

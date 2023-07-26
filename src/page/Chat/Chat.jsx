@@ -18,7 +18,7 @@ const Chat = () => {
   useEffect(() => {
     // 유저 정보 가져오기
     axios
-      .get("http://localhost:8090/member/mypage", {
+      .get(`${process.env.REACT_APP_BURL}/member/mypage`, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },
@@ -58,7 +58,7 @@ const Chat = () => {
 
           {item.name !== name && (
             <div className='profilePicture'>
-              <img src={`http://localhost:8090/feed/feedimg/${item.profile}`} alt='Profile' style={{
+              <img src={`${process.env.REACT_APP_BURL}/feed/feedimg/${item.profile}`} alt='Profile' style={{
                 width: "40px",
                 height: "40px",
                 borderRadius: "50%",
