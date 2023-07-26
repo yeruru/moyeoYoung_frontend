@@ -20,12 +20,12 @@ export const SettingRoom = () => {
     const {roomId} = useParams();
     const accessToken = localStorage.getItem('accessToken');
 
-    const instance = axios.create({
-        baseURL: 'http://localhost:8090/room', // 기본 경로 설정
+    const axiosURL = axios.create({
+        baseURL: process.env.REACT_APP_BURL+'/room', // 기본 경로 설정
       });  
 
     useEffect(()=>{ 
-        instance.get(`/getroomMain/${roomId}`)
+        axiosURL.get(`/getroomMain/${roomId}`)
         .then(res=>{
             setRoom({...res.data});
             switchCateId(res.data.roomCategory);
@@ -34,7 +34,7 @@ export const SettingRoom = () => {
             
             settxtLength(txt.length);
             setContentText(txt); 
-            setImgSrc(`http://localhost:8090/room/view/${res.data.roomImage}`)
+            setImgSrc(process.env.REACT_APP_BURL+`/room/view/${res.data.roomImage}`)
         })
         .catch(err=>{
             console.log(err);
@@ -110,7 +110,7 @@ export const SettingRoom = () => {
         formData.append('roomType', room.roomType);
         formData.append('file', file);
         
-        axios.post(`http://localhost:8090/room/makeRoom`, formData,{
+        axios.post(process.env.REACT_APP_BURL+`/room/makeRoom`, formData,{
             headers: {
                 'Authorization': `Bearer ${accessToken}`
               }
@@ -187,7 +187,7 @@ export const SettingRoom = () => {
      }
 
     const delSubmit=()=>{ 
-        axios.delete(`http://localhost:8090/room/deleteRoom`, 
+        axiosURL.delete(`/room/deleteRoom`, 
         {
          params:{
             roomId:roomId,

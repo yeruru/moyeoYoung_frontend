@@ -7,6 +7,9 @@ import axios from 'axios';
 import { Link  } from 'react-router-dom';
 
 function MakeRoom() {
+    const axiosURL = axios.create({
+        baseURL: process.env.REACT_APP_BURL+'/room', // 기본 경로 설정
+      });
     const [activeCate, setActiveCate] = useState('');
     const [txtLength, settxtLength] = useState('0');
     const [imgSrc, setImgSrc] = useState('/image/room_basic1.jpg');
@@ -91,7 +94,7 @@ function MakeRoom() {
         formData.append('roomType', room.roomType);
         formData.append('file', file);
         const accessToken = localStorage.getItem('accessToken');  
-        axios.post('http://localhost:8090/room/makeRoom', formData,{
+        axiosURL.post('/makeRoom', formData,{
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }

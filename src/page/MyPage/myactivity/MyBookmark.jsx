@@ -15,7 +15,7 @@ function MyBookmark() {
   const [noRoomList,setNoRoomList] = useState(false); 
   useEffect(()=>{
     const aceessToken = localStorage.getItem('accessToken');
-    axios.get(`http://localhost:8090/member/roomListWithBookmark`, {
+    axios.get(process.env.REACT_APP_BURL+`/member/roomListWithBookmark`, {
       headers: {
         'Authorization': `Bearer ${aceessToken}`
       },

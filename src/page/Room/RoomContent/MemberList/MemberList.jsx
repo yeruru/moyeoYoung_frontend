@@ -14,11 +14,15 @@ export const MemberList = ({memberList,hostId}) => {
   const [memberId, setMemberId] = useState(0);
   const [loginMemberId, setLoginMemberId] = useState(0);
   let { roomId } = useParams();
+  const axiosURL = axios.create({
+    baseURL: process.env.REACT_APP_BURL+'/room', // 기본 경로 설정
+  });
+
 
   const accessToken = localStorage.getItem("accessToken");
   
   useEffect(() => {
-    axios.get(`http://localhost:8090/feed/getmemberId`,{
+    axiosURL.get(`/feed/getmemberId`,{
       headers: {
           'Authorization': `Bearer ${accessToken}`
       }
@@ -57,7 +61,7 @@ export const MemberList = ({memberList,hostId}) => {
 
   const deletefeed = () => {
     if (memberId) {
-      axios.post(`http://localhost:8090/room/deletemember/${memberId}/${roomId}`)
+      axiosURL.post(`/room/deletemember/${memberId}/${roomId}`)
       .then(res=>{  
         document.location.href=`/roomMain/roomFeed/${roomId}`;
       })
@@ -80,7 +84,7 @@ export const MemberList = ({memberList,hostId}) => {
                 <div className="sec1">
 
                   <div className="imgbox" onClick={()=>openProfile(member.nickname)} style={{cursor:'pointer'}}>
-                    <img src={`http://localhost:8090/room/view/${member.fileName}`} alt='멤버프로필이미지'/>
+                    <img src={process.env.REACT_APP_BURL+`/room/view/${member.fileName}`} alt='멤버프로필이미지'/>
                   </div>
 
                   <div className='nickname' onClick={()=>openProfile(member.nickname)} style={{cursor:'pointer'}}>{member.nickname}</div>
