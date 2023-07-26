@@ -131,7 +131,7 @@ function RoomMain() {
     } else {
       const width = 400;
       const height = 600;
-      window.open(process.env.REACT_APP_BURL+`/chat/${roomId}`, '_blank', `width=${width}, height=${height}`)
+      window.open(`/chat/${roomId}`, '_blank', `width=${width}, height=${height}`)
     }
   }
   const offLeaveModal=()=>{

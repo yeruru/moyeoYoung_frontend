@@ -93,6 +93,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
         })
         .then(res=>{
             fetchComment();
+            document.getElementById("writecomment").value = '';
         })
         .catch(err=>{
         })
@@ -115,15 +116,12 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
         axios.post(`http://localhost:8090/feed/deletecomment/${commentId}`)
         .then(res => {
             setModal(!modal);
-            fetchComment();
+            document.getElementById("writecomment").value = '';
         })
         .catch(err => {
 
         })
     };
-// console.log(comment[0].memberId);
-// console.log(memberId);
-
 
     return(
         <div className="roomfeeddetail">
@@ -180,7 +178,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
                     }
                     </div>
                     <div className='commentInput'>
-                        <input className="writecomment" type='text' placeholder='댓글을 작성해주세요' onChange={commentChange}/>
+                        <input id="writecomment" className="writecomment" type='text' placeholder='댓글을 작성해주세요' onChange={commentChange}/>
                         <input className="commentsubmit" type='submit' onClick={commentSubmit}></input>
                     </div>
 
