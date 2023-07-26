@@ -20,6 +20,7 @@ function MyFeed() {
     axios.get(`http://localhost:8090/feed/selectfeeds/${memberId}`)
     .then(res=>{
       setFeed(res.data);
+      console.log(res.data);
     })
     .catch(err=>{
       console.log(err);
@@ -44,7 +45,7 @@ console.log(feed);
                         loop={false}
                         navigation={true}
                     >
-                    {
+                    {feed.length !== 0 &&
                         feed.map((item) => (
                             <SwiperSlide >
                                  <div className='myfeed' key={item.feedId}>
@@ -77,6 +78,16 @@ console.log(feed);
                         ))
                     }
                     </Swiper>
+                    {
+                      feed.length === 0 && 
+                      <ul className='card-ul'>
+                        <div className='empty-item-box'>
+                          <div className='empty-img-box'>
+                            <img src='/image/Group 153.svg' alt='비행기날라가는그림'/></div>
+                            <p className='empty-p'>피드가 존재하지 않습니다!</p>
+                        </div>
+                      </ul>
+                    }
         </div>
       </div>
     </div>
