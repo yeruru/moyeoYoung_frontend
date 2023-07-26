@@ -52,8 +52,12 @@ const LoginForm = () => {
       .then((res) => {
         const accessToken = res.data.accessToken;
         const refreshToken = res.data.refreshToken;
+        const accessTokenExpiresIn = res.data.accessTokenExpiresIn;
+
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("accessTokenExpiresIn", accessTokenExpiresIn);
+
         setAccessToken(accessToken);
         dispatch(setTokens({ accessToken }));
         dispatch({ type: "USERID", payload: res.data.memberId });

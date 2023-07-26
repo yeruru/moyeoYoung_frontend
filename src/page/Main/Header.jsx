@@ -41,22 +41,58 @@ function Header() {
     
 
   useEffect(() => {
+    // 토큰 만료 체크 함수
+    const checkTokenExpiration = () => {
+      const token = localStorage.getItem('accessToken');
+      const expirationTime = localStorage.getItem('accessTokenExpiresIn');
+      const currentTime = new Date().getTime();
+  
+      
+      // console.log("이게 token",token);
+      // console.log("이게 curTime",currentTime);
+      // console.log("이게 expireTime",expirationTime);
+      if (token && expirationTime && currentTime > expirationTime) {
+        // 토큰이 만료된 경우
+        dispatch(clearTokens());
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
+        navigate('/login');
+        window.location.reload();
+      } else {
+        setIsLoggedIn(token);
+      }
+    };
+  
     // 유저 정보 가져오기
-    axios
-      .get(`${process.env.REACT_APP_BURL}/member/mypage`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        },
-      })
-      .then((res) => {
-        setFileName({
-          fileName: res.data.fileName
+    const fetchUserInfo = () => {
+      axios
+        .get(`${process.env.REACT_APP_BURL}/member/mypage`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          },
+        })
+        .then((res) => {
+          setFileName({
+            fileName: res.data.fileName
+          });
+          setPreviewImage(`${process.env.REACT_APP_BURL}/room/view/${res.data.fileName}`);
+        })
+        .catch((err) => {
+          // Handle error here
         });
-        setPreviewImage(`${process.env.REACT_APP_BURL}/room/view/${res.data.fileName}`);
-      })
-      .catch((err) => {
-      });
-  }, [accessToken]);
+    };
+  
+    // 토큰이 변경될 때마다 유저 정보를 가져옵니다.
+    fetchUserInfo();
+  
+    // 유효성 검사를 시작하고 1분마다 반복합니다.
+    const intervalId = setInterval(checkTokenExpiration, 6000);
+  
+    // useEffect cleanup function에서 interval을 clear합니다.
+    return () => clearInterval(intervalId);
+  }, [accessToken]); // accessToken을 종속성 배열에 추가
+  
 
 
 
@@ -75,9 +111,11 @@ function Header() {
       navigate('/login');
       document.location.reload();
     } else {
-      setIsLoggedIn(token);
+      setIsLoggedIn(token);      
     }
   }, [dispatch, navigate]);
+
+  
   
   // 모달
   const handleNoteIconClick = () => {
