@@ -32,6 +32,9 @@ const MyPage = () => {
   const [profileModal,setProfileModal] = useState(false);
   const [nickname, setNickname] = useState("");
   const navigate = useNavigate();
+  const [previewImage, setPreviewImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const fileInputRef = useRef(null);
   useEffect(() => {
     // 유저 정보 가져오기
     axios
@@ -57,10 +60,6 @@ const MyPage = () => {
     console.log(accessToken);
   }, [accessToken]);
 
-  const [previewImage, setPreviewImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const fileInputRef = useRef(null);
-
   const handleInputChange = (event) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
@@ -76,7 +75,6 @@ const MyPage = () => {
       file: file,
       };
     });
-    console.log(file);
     setPreviewImage(URL.createObjectURL(file));
   };
 
@@ -127,7 +125,8 @@ const MyPage = () => {
   // 닉네임 중복 체크
   const handleChange = (event) => {
     const { name, value } = event.target;
-    setFormData({ ...formData, [name]: value });
+    console.log(event.target.name);
+    setFormData({[name]: value });
   };
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
   const handleNicknameCheck = () => {
