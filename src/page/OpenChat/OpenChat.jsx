@@ -130,7 +130,7 @@ const OpenChat = () => {
                 })
             );
         }
-
+       
         // If event.typedMsg exists, we assume the message was sent from the gif modal
         // so we do not reset the input field in that case.
         if (!(event && event.typedMsg)) {
@@ -211,9 +211,8 @@ const OpenChat = () => {
             alert('로그인이 필요합니다!');
             return;
         }
-        console.log("여기에출력",memberInfo.username);
         setUsername(memberInfo.nickname);
-
+        setProfileImage(memberInfo.fileName);
         sendSysMessage(` < ${memberInfo.nickname} > 님이 입장하셨습니다.`);  // 입장 공지메시지 전송
         setIsUserSet(true);
       };
@@ -270,13 +269,24 @@ const OpenChat = () => {
                                 key={i} 
                                 className={`chat-message ${message.msgFrom === username ? 'own-message' : 'other-message'} ${message.msgFrom !== username && (i === 0 || msg[i-1].msgFrom !== message.msgFrom) ? 'first-in-sequence' : ''}`}
                             >
-                                {(i === 0 || msg[i-1].msgFrom !== message.msgFrom) && message.msgFrom !== username && (
-                                    <img 
-                                    src={message.profileImage} 
-                                    alt="profile" 
-                                    className="profile-pic" 
-                                    onClick={() => handleProfileClick(message.msgFrom)} // 클릭 이벤트 추가
-                                  />
+                                {message.msgFrom !== "" ? (
+                                    (i === 0 || msg[i - 1].msgFrom !== message.msgFrom) && message.msgFrom !== username && (
+                                    // message.msgFrom이 비어있지 않으면서, 이전 메시지의 msgFrom과 다르고, username과도 다를 때에만 원본 이미지를 보여줍니다.
+                                    <img
+                                        src={process.env.REACT_APP_BURL + '/room/view/' + message.profileImage}
+                                        alt="profile"
+                                        className="profile-pic"
+                                        onClick={() => handleProfileClick(message.msgFrom)}
+                                    />
+                                    )
+                                ) : (
+                                    // message.msgFrom이 비어있으면 대체 이미지를 보여줍니다.
+                                    <img
+                                    src={message.profileImage}
+                                    alt="profile"
+                                    className="profile-pic"
+                                    onClick={() => handleProfileClick(message.msgFrom)}
+                                    />
                                 )}
                                 <div className={`message-box ${message.msgFrom === username ? 'own-message-box' : 'other-message-box'}`}>
                                     {(i === 0 || msg[i-1].msgFrom !== message.msgFrom) && <span className="username">{message.msgFrom}</span>}

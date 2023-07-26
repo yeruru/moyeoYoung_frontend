@@ -107,7 +107,7 @@ function RoomAnno({state, room}) {
     return (
         <div style={style.container}>
             <div style={style.title}>
-                <h2>모임방 공지사항</h2>
+                <h2 style={{ visibility: notices.length === 0 ? 'hidden' : 'visible' }}>모임방 공지사항</h2>
                 {
                     state === 'okMember' && 
                     <div style={style.button} onClick={() => navigate(`/roomMain/writeAnno/${roomId}`)}>
