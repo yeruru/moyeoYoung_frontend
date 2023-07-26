@@ -70,3 +70,8 @@
 #myfeed .myfeed{
     cursor: pointer;
 }
+
+#myfeed  .empty-item-box {  width: 80%; margin: 0 auto; text-align: center; }
+#myfeed  .empty-img-box { width: 300px; margin: 0 auto; margin-top: 9%; margin-bottom: 7%; }
+#myfeed .empty-p { font-size: 20px; color: rgb(101, 101, 101); }
+#myfeed .card-ul { display: flex; width: 800px; justify-content: space-evenly;  flex-wrap: wrap;}

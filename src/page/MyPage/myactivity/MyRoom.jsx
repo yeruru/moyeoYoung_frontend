@@ -15,7 +15,7 @@ function MyRoom() {
   const [noRoomList,setNoRoomList] = useState(false); 
   useEffect(() => {
     const aceessToken = localStorage.getItem('accessToken');
-    axios.get(`http://localhost:8090/member/madeRoomList`, {
+    axios.get(process.env.REACT_APP_BURL+`/member/madeRoomList`, {
       headers: {
         'Authorization': `Bearer ${aceessToken}`
       },

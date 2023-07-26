@@ -15,7 +15,7 @@ export const YouthSpaceList = () => {
     const [dongList, setDongList] = useState([]);
 
     const axiosURL = axios.create({
-        baseURL: 'http://localhost:8090/youth', // 기본 경로 설정
+        baseURL: process.env.REACT_APP_BURL+'/youth', // 기본 경로 설정
     });
     useEffect(() => {
         getSpaceList(1);

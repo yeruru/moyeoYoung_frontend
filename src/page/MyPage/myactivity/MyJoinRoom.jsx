@@ -17,7 +17,7 @@ function MyJoinRoom() {
   const [noRoomList,setNoRoomList] = useState(false); 
   useEffect(() => {
     const aceessToken = localStorage.getItem('accessToken');
-    axios.get(`http://localhost:8090/member/joinRoomList`, {
+    axios.get(process.env.REACT_APP_BURL+`/member/joinRoomList`, {
       headers: {
         'Authorization': `Bearer ${aceessToken}`
       },

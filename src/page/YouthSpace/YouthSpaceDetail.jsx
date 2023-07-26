@@ -14,22 +14,16 @@ export const YouthSpaceDetail = () => {
 
   useEffect(()=>{
     console.log(spaceId);
-    axios.get(`http://localhost:8090/youth/youthSpaceDetail/${spaceId}`)
+    axios.get(process.env.REACT_APP_BURL+`/youth/youthSpaceDetail/${spaceId}`)
     .then(res=>{
       setSpace(res.data.space);  
       setDetail(res.data.space.detail.replace(/<br\/>/g, '\n').replace(/\다. /g, '다.\n').replace(/○/g, '\n○').replace(/\n○/, '○'));
-      // console.log(res.data.space.detail.replace(/<br\/>|\. /g, '\n'));
-      // console.log(res.data.space.imgURLs);
       setImgURLs(res.data.space.imgURLs);
     })
     .catch(err=>{
       console.log(err);
     })
-  },[spaceId])
-  // const toText = (p_txt) =>{
-
-  //   formatted_text = re.sub(r'\.\s+', '.\n', text)
-  // }
+  },[spaceId]) 
   
   return (
     <div id="space-detail">
@@ -47,8 +41,7 @@ export const YouthSpaceDetail = () => {
             pagination={{ clickable: true }}
             autoplay={{ delay: 3000 }}
             loop={true}
-            className="swiper-container" >
-  
+            className="swiper-container" > 
               { 
               imgURLs.map((item, index)=>(
             <SwiperSlide key={index}> 
