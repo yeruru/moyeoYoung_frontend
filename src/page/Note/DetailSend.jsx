@@ -21,7 +21,7 @@ function DetailSent() {
   console.log(note)
   useEffect(() =>{
     //보낸쪽지함
-    axios.get(`http://localhost:8090/note/received/detail/${noteId}`, {
+    axios.get(`${process.env.REACT_APP_BURL}/note/received/detail/${noteId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
@@ -37,7 +37,7 @@ function DetailSent() {
 
 const handleDeleteNote = () => {
   axios
-    .delete(`http://localhost:8090/note/sent/delete/${noteId}`, {
+    .delete(`${process.env.REACT_APP_BURL}/note/sent/delete/${noteId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }

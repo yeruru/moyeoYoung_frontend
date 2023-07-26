@@ -16,7 +16,7 @@ function Note() {
   useEffect(() =>{
     //받은쪽지함
     axios
-      .get('http://localhost:8090/note/received', {
+      .get(`${process.env.REACT_APP_BURL}/note/received`, {
         params: {
           page: currentPage, // 현재 페이지 번호를 파라미터로 전달
           pageSize: pageSize,
@@ -37,13 +37,13 @@ function Note() {
   }, [accessToken, currentPage]);
 
 const noteStatus = (noteId) => {
-  axios.post(`http://localhost:8090/note/${noteId}/read`, {
+  axios.post(`${process.env.REACT_APP_BURL}/note/${noteId}/read`, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     },
   })
   .then((res) => {
-    axios.get('http://localhost:8090/note/received', {
+    axios.get(`${process.env.REACT_APP_BURL}/note/received`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },

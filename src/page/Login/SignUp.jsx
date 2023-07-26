@@ -26,7 +26,7 @@ const SignUp = () => {
 
   const handleEmailCheck = () => {
     axios
-      .get(`http://localhost:8090/auth/checkedemail?email=${formData.email}`)
+      .get(`${process.env.REACT_APP_BURL}/auth/checkedemail?email=${formData.email}`)
       .then((response) => {
         setIsEmailDuplicated(response.data);
       })
@@ -38,7 +38,7 @@ const SignUp = () => {
 
   const handleEmailSend = () => {
     axios
-      .post(`http://localhost:8090/auth/mailConfirm?email=${formData.email}`)
+      .post(`${process.env.REACT_APP_BURL}/auth/mailConfirm?email=${formData.email}`)
       .then((response) => {
         console.log('이메일 전송 성공:', response.data);
         setFormData({ ...formData, generatedCode: response.data, verificationCode: '' });
@@ -57,7 +57,7 @@ const SignUp = () => {
 
   const handleNicknameCheck = () => {
     axios
-      .get(`http://localhost:8090/auth/checkednick?nickname=${formData.nickname}`)
+      .get(`${process.env.REACT_APP_BURL}/auth/checkednick?nickname=${formData.nickname}`)
       .then((response) => {
         setIsNicknameDuplicated(response.data);
       })
@@ -107,7 +107,7 @@ const SignUp = () => {
     }
 
     axios
-      .post('http://localhost:8090/auth/signup', {
+      .post(`${process.env.REACT_APP_BURL}/auth/signup`, {
         email: formData.email,
         password: formData.password,
         nickname: formData.nickname,

@@ -61,7 +61,7 @@ function NoteForm() {
     formData.append("receiverNickname", recivername);
     formData.append("content", note.content);
     axios
-      .post("http://localhost:8090/note/send", formData, {
+      .post(`${process.env.REACT_APP_BURL}/note/send`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

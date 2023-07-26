@@ -16,7 +16,7 @@ function RoomHeader({ onContentChange }) {
 
   const [accessToken, setAccessToken] = useState('');
   const axiosURL = axios.create({
-    baseURL: 'http://localhost:8090/room', // 기본 경로 설정
+    baseURL: `${process.env.REACT_APP_BURL}/room`, // 기본 경로 설정
   });
 
   let { roomId } = useParams();

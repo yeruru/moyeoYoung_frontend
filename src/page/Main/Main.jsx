@@ -32,7 +32,7 @@ function Main() {
 
   const getRoomList = () => {
     axios
-      .get('http://localhost:8090/room/roomList/1',{
+      .get(`${process.env.REACT_APP_BURL}/room/roomList/1`,{
         headers: {
           'Authorization': `Bearer ${accessToken}`
         }
@@ -80,7 +80,7 @@ function Main() {
   const [place, setPlace] = useState('');
   const [dongList, setDongList] = useState([]);
   const axiosURL = axios.create({
-    baseURL: 'http://localhost:8090/youth', // 기본 경로 설정
+    baseURL:`${process.env.REACT_APP_BURL}/youth`, // 기본 경로 설정
 });
 useEffect(() => {
     getSpaceList(1);

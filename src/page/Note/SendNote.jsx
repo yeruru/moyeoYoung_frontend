@@ -15,7 +15,7 @@ function SentNote() {
   useEffect(() => {
     // 보낸쪽지함
     axios
-      .get('http://localhost:8090/note/sent', {
+      .get(`${process.env.REACT_APP_BURL}/note/sent`, {
         params: {
           page: currentPage,
           pageSize: pageSize,
