@@ -315,7 +315,7 @@ export const SettingRoom = () => {
                     </ul>
                     <button onClick={deleteRoom} className='delete-room'>모임방 삭제하기</button>
                     <div className='sm-btns'>
-                    <Link to="/roomlist"><input type='button' className='back-btn smb' value='취소하기' /></Link>
+                    <Link to={`/roomMain/dashboard/${room.roomId}`}><input type='button' className='back-btn smb' value='취소하기' /></Link>
                         <input type='submit' className='submit-btn smb' value='변경하기' onClick={onModal} />
                     </div>
 
@@ -329,7 +329,7 @@ export const SettingRoom = () => {
                             <img src="/image/group 67.svg" className='modal-img' alt='메세지 보내는 그림' />
                         </div>
                         <div className="modal-btns">
-                          <button type='button' className="btn btn1" onClick={offModal}>취소하기</button>
+                            <button type='button' className="btn btn1" onClick={offModal}>취소하기</button>
                             <button type='submit' className="btn btn2" onClick={submit}>변경하기</button>
                         </div>
                     </div>
