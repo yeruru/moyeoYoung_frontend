@@ -33,16 +33,19 @@ function RoomMain() {
     baseURL: process.env.REACT_APP_BURL+'/room', // 기본 경로 설정
   });
 
-  //유저상태 : 미로그인(noUser) / 멤버(okMember) / 멤버아님(noMember)
-  const [userState, setUserState] = useState('noUser');
+  //유저상태 : 미로그인(noUser) / 멤버(okMember) / 멤버아님(noMember) / 가입대기중(wMember)
+  const [userState, setUserState] = useState('');
   /* MemberList 관련 */
   const [memberList, setMemberList] = useState([]);
+  // const [waitingList, setWaitingList]=useState([]);
   const [logInId, setLogInId] = useState(0);
   const [isJoin, setIsJoin] = useState(false);
   const [joining, setJoining] = useState(false);
   // 방 나가기
   const [isLeaveModal, setLeaveModal] = useState(false);
+  const [isWaitingOk, setIsWaitingOk] = useState(false);
   const [isView, setIsView] = useState(false);
+
 
   useEffect(() => {
     const path = location.pathname;
@@ -52,25 +55,55 @@ function RoomMain() {
 
     //유저상태처리
     const isToken = localStorage.getItem('accessToken');
-    if (isToken) {
+    if(!isToken){
+      setUserState('noUser');
+    }
+    else{
       setAccessToken(isToken);
       axiosURL.get(`/memberList/${roomId}`, {
         headers: {
           'Authorization': `Bearer ${isToken}`
-        },
+        }, 
       })
         .then((res) => {
-          const members = res.data.list;
-          setMemberList(members);
-          setLogInId(res.data.logInId);
-          //방 멤버와 로그인된 아이디를 비교 
-          const ismember = members.some((item) => res.data.logInId === item.memberId);
-          if (ismember) {
-            setUserState('okMember');
-          } else {
-            setUserState('noMember');
-          }
-        })
+        //   const members = res.data.list;//가입된멤버리스트
+        //   setMemberList(members); 
+        //   const waiting = res.data.waitingList; //가입대기멤버리스트
+        //   // setWaitingList(waiting);
+
+        //   setLogInId(res.data.logInId);
+        //   //방 멤버와 로그인된 아이디를 비교 
+        //   const ismember = members.some((item) => res.data.logInId === item.memberId);
+        //   if (ismember) {
+        //     setUserState('okMember');
+        //   } else {
+        //     const isWaiting = waiting.some((item) => res.data.logInId === item.memberId);
+        //     if(isWaiting){
+        //       setUserState('wMember');
+        //     }else{
+        //       setUserState('noMember'); 
+        //     }
+        //   } 
+        // })
+        const { list, waitingList, logInId } = res.data;
+        setMemberList(list); 
+        setLogInId(logInId);
+        if(waitingList.length!==0){
+          setIsWaitingOk(true);
+        }
+  
+        // 방 멤버와 로그인된 아이디를 비교
+        const isMember = list&&list.some((item) => logInId === item.memberId);
+        const isWaiting =  waitingList&&waitingList.some((item) => logInId === item.memberId);
+  
+        if (isMember) {
+          setUserState('okMember');
+        } else if (isWaiting) {
+          setUserState('wMember');
+        } else {
+          setUserState('noMember');
+        }
+      })
         .catch(err => {
           console.log(err);
         })
@@ -104,10 +137,13 @@ function RoomMain() {
       e.preventDefault();
       alert("로그인이 필요합니다!");
       navigate('/login');
-    } else {
+    } else if(userState === 'wMember'){
+      e.preventDefault();
+      alert("가입신청이 대기중입니다!");
+    }else {
       setJoining(true); // 가입 시작
       
-      axiosURL.post('/joinRoom', { roomId: roomId }, {
+      axiosURL.post('/joinRoom', { roomId: roomId}, {
         headers: {
           'Authorization': `Bearer ${accessToken}`
         },
@@ -221,7 +257,7 @@ function RoomMain() {
             {/* 멤버리스트 */}
             {
               selectedContent === 'roomMember' &&
-              <MemberList hostId={room.memberId} memberList={memberList} />
+              <MemberList hostId={room.memberId} memberList={memberList} isWaitingOk={isWaitingOk} />
             }
           </div> 
         }
@@ -242,7 +278,7 @@ function RoomMain() {
           </div>
           <div className="modal-btns">
             <button type='button' className="btn btn1" onClick={offLeaveModal}>돌아가기</button>
-            <button type='submit' className="btn btn2" onClick={leaveRoom}>삭제하기</button>
+            <button type='submit' className="btn btn2" onClick={leaveRoom}>탈퇴하기</button>
           </div>
         </div>
       </div></>)

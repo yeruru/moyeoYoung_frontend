@@ -187,7 +187,7 @@ export const SettingRoom = () => {
      }
 
     const delSubmit=()=>{ 
-        axiosURL.delete(`/room/deleteRoom`, 
+        axiosURL.delete(`/deleteRoom`, 
         {
          params:{
             roomId:roomId,
