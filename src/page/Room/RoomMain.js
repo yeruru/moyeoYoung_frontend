@@ -131,7 +131,7 @@ function RoomMain() {
     } else {
       const width = 400;
       const height = 600;
-      window.open(REACT_APP_FURL+`/chat/${roomId}`, '_blank', `width=${width}, height=${height}`)
+      window.open(process.env.REACT_APP_BURL+`/chat/${roomId}`, '_blank', `width=${width}, height=${height}`)
     }
   }
   const offLeaveModal=()=>{
@@ -161,7 +161,7 @@ function RoomMain() {
         <div className='flex-box'>
         <div className='room-header'>
           <div className='title-box'>
-            <div className='img-box'><img src={REACT_APP_BURL+`/room/view/${room.roomImage}`} className='img' alt='모임방 프로필 사진' /></div>
+            <div className='img-box'><img src={process.env.REACT_APP_BURL+`/room/view/${room.roomImage}`} className='img' alt='모임방 프로필 사진' /></div>
             <h2>{room.roomTitle}</h2>
             {
               room.memberId === logInId &&
