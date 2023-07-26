@@ -15,24 +15,60 @@ function MyJoinRoom() {
   const containRoomCnt = (roomList.length) % 3;
   const emptyRoomCnt = 3 - containRoomCnt;
   const [noRoomList,setNoRoomList] = useState(false); 
-  useEffect(() => {
-    const aceessToken = localStorage.getItem('accessToken');
+  const [isMemberList,setIsMemberList]= useState(true); 
+  const [isWaitingList,setIsWaitingList]= useState(false); 
+  const aceessToken = localStorage.getItem('accessToken');
+
+  // const [waitingList,setWaitingList]=useState([]);
+  useEffect(() => { 
+    getMemberList(false);
+  }, [])
+  const getMemberList=(p_status)=>{
     axios.get(`${process.env.REACT_APP_BURL}/member/joinRoomList`, {
       headers: {
         'Authorization': `Bearer ${aceessToken}`
       },
     })
       .then((res) => {
-        setRoomList([...res.data.list]);
+        const {waitingList, enterList} = res.data.list;
+        if(p_status){ //가입 대기중인 방목록
+          setRoomList([...waitingList]);
+          if(waitingList.length===0){
+            setNoRoomList(true);
+          }else{
+            setNoRoomList(false);
+          }
+           
+        }else{ 
+          setRoomList([...enterList]);
+          if(enterList.length===0){
+            setNoRoomList(true);
+          }else{
+            setNoRoomList(false);
+          }
+        } 
         setIsBookmarks([...res.data.isBookmarks]);
-        if(res.data.list.length===0){
-          setNoRoomList(true);
-        }
+        
       })
       .catch(err => {
         console.log(err);
       })
-  }, [])
+  }
+  const clickMemberList =()=>{
+    if(!isMemberList){
+      setIsMemberList(true);
+    }
+    setIsWaitingList(false);
+    getMemberList(false);
+  }
+ 
+  const clickWaitingList =()=>{
+    if(!isWaitingList){
+      setIsWaitingList(true);
+    } 
+    setIsMemberList(false);
+    getMemberList(true); 
+  }
   return (
     
     <div className="myRoom">
@@ -44,6 +80,8 @@ function MyJoinRoom() {
         <div style={{ display: 'flex', justifyContent: 'space-between' }}>
           <MyActivityNav />
           <div style={{ width: '100%', boxSizing: 'border-box', padding: '20px' }}>
+        <button onClick ={clickMemberList} className={`h2 ${isMemberList?'select':''}`}>가입</button> 
+        <button onClick ={clickWaitingList} className={`h2 ${isWaitingList?'select':''}`}>대기중</button>  
             <div className="list-box">
               <ul className='card-ul'>
               {noRoomList&&

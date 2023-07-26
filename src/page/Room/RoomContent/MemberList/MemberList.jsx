@@ -5,8 +5,14 @@ import { useEffect, useState } from 'react';
 import axios from 'axios'; 
 import KeyRoundedIcon from '@mui/icons-material/KeyRounded';
 import Profile from '../../../../components/Profile/Profile';
+// import { WaitingLIst } from './WaitingLIst'; 
 
-export const MemberList = ({memberList,hostId}) => {  
+export const MemberList = ({memberList,hostId,isWaitingOk}) => {  
+  const accessToken = localStorage.getItem("accessToken");
+  const [isWaitingList,setIsWaitingList] = useState(false);
+  const [isMemberList,setIsMemberList] = useState(true);
+  // const [isSelect,setIsSelect] = useState(false);
+  // const [isView, setIsView] = useState(false);
   const [nickname, setNickname] = useState("");
   const [profileModal ,setProfileModal] = useState(false);
   const [kingMember, setKingMember] = useState(0);
@@ -14,12 +20,13 @@ export const MemberList = ({memberList,hostId}) => {
   const [memberId, setMemberId] = useState(0);
   const [loginMemberId, setLoginMemberId] = useState(0);
   let { roomId } = useParams();
+
+  const [list,setList] = useState([...memberList]);
   const axiosURL = axios.create({
-    baseURL: process.env.REACT_APP_BURL+'/room', // 기본 경로 설정
+    baseURL: process.env.REACT_APP_BURL, // 기본 경로 설정
   });
-
-
-  const accessToken = localStorage.getItem("accessToken");
+  const [notWaiting,setNotWaiting] = useState(false);
+  const [isWaiting, setIsWaiting] = useState(isWaitingOk);
   
   useEffect(() => {
     axiosURL.get(`/feed/getmemberId`,{
@@ -33,7 +40,33 @@ export const MemberList = ({memberList,hostId}) => {
     if (memberList.length > 0) {
       setKingMember(memberList[0]);
     }
-  }, [memberList, accessToken]);
+  }, [list, accessToken]);
+
+  //멤버리스트 받아오기 
+  const getMemberList =(p_status)=>{
+    axiosURL.get(`/room/memberList/${roomId}`, {
+      headers: {
+        'Authorization': `Bearer ${accessToken}`
+      }, 
+    })
+      .then(res=>{
+        //대기멤버목록
+        if(p_status){
+          setList([...res.data.waitingList]); 
+          if(res.data.waitingList.length===0){
+            setNotWaiting(true);
+            setIsWaiting(false);
+          }else{
+            setIsWaiting(true); 
+          }
+        }else{    //가입멤버목록
+          setList([...res.data.list]); 
+        } 
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+  }
 
   const openProfile = (feednickname) => {
     setNickname(feednickname);
@@ -72,14 +105,70 @@ export const MemberList = ({memberList,hostId}) => {
       console.log("memberId is not set.");
     }
   };
+
+  const clickMemberList =()=>{
+    if(!isMemberList){
+      setIsMemberList(true);
+    }
+    setIsWaitingList(false);
+    getMemberList(false);
+  }
  
+  const clickWaitingList =()=>{
+    if(!isWaitingList){
+      setIsWaitingList(true);
+    } 
+    setIsMemberList(false);
+    getMemberList(true); 
+  }
+  //가입승인 ,거절
+  const approve =(p_memberId)=>{ 
+    axiosURL.put(`/room/approveMember`, {
+      roomId: roomId,
+      memberId: p_memberId,
+    })
+    .then((res=>{
+      alert(res.data);
+      getMemberList(true);
+    }))
+    .catch(err=>{
+      console.log(err);
+    })
+  }
+  const reject =(p_memberId)=>{ 
+    axiosURL.post(`/room/rejectMember`, {
+      roomId: roomId,
+      memberId: p_memberId,
+    })
+    .then((res=>{
+      alert(res.data);
+      getMemberList(true);
+    }))
+    .catch(err=>{
+      console.log(err);
+    })
+  }
   return (
     <div id='memberList'>
       <div className='wrap'>
-        <p className="h2">멤버목록</p> 
-        <div className='container'>
-          {
-            memberList.map((member, index) => (
+        <div className='header-box'>  
+        <button onClick ={clickMemberList} className={`h2 ${isMemberList?'select':''}`}>멤버 목록</button>
+        {
+          loginMemberId === kingMember.memberId && 
+          <button onClick ={clickWaitingList} className={`h2 ${isWaitingList?'select':''}`}>가입대기<span className={`hide ${isWaiting? 'show':''}`}>new!</span></button> 
+        }
+        </div>
+        <div className='container'>  
+        {
+           isWaitingList && notWaiting && 
+          <div className='empty-item-box'>
+          <div className='empty-img-box'>
+            <img src='/image/Group 153.svg' style={{width : '200px', marginBottom:'40px'}}/></div>
+          <p className='empty-p'>대기중인 멤버가 없습니다!</p>
+        </div>
+        }
+          {  
+            list.map((member, index) => (
               <div className='memberBox' key={index}>
                 <div className="sec1">
 
@@ -97,15 +186,26 @@ export const MemberList = ({memberList,hostId}) => {
                   </div>
                 </div>
                 {
-                  kingMember.memberId === member.memberId &&  
-                  <div></div>
+                  // kingMember.memberId === member.memberId &&  
+                  // <div></div>
+
+                  isWaitingList &&
+
+                  <div className='waiting-btn-box'> 
+                  <div className='waiting-btn btn1' onClick={()=>{approve(member.memberId)}}>
+                  수락
+                  </div>
+                  <div className='waiting-btn btn2' onClick={()=>{reject(member.memberId)}}>
+                  거절
+                  </div>
+                  </div>
                 }
                 {
-                  kingMember.memberId !== member.memberId && 
+                  isMemberList && kingMember.memberId !== member.memberId && 
                   <>
                     <div className="sec2">
                       {
-                        kingMember.memberId === loginMemberId &&
+                        kingMember.memberId === loginMemberId && 
                         <div className='memberModal' onClick={()=>OpenModal(member.memberId)}>강퇴</div>
                       }
                       {
@@ -126,7 +226,7 @@ export const MemberList = ({memberList,hostId}) => {
                 }
               </div>
             ))
-          }
+          } 
         </div>
       </div>
       <Profile
