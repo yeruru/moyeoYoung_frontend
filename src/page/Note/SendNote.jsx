@@ -37,13 +37,13 @@ function SentNote() {
   }, [accessToken, currentPage]);
 
 const noteStatus = (noteId) => {
-  axios.post(`http://localhost:8090/note/${noteId}/sent`, {
+  axios.post(process.env.REACT_APP_BURL+`/note/${noteId}/sent`, {
     headers: {
       Authorization: `Bearer ${accessToken}`
     },
   })
   .then((res) => {
-    axios.get('http://localhost:8090/note/received', {
+    axios.get(process.env.REACT_APP_BURL+'/note/received', {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },

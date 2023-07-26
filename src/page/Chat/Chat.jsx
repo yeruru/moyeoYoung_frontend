@@ -98,7 +98,7 @@ const Chat = () => {
   }
 
   const webSocketLogin = useCallback(() => {
-    ws.current = new WebSocket(`ws://localhost:8090/chat/${roomId}`);
+    ws.current = new WebSocket(`${process.env.REACT_APP_WSURL}/chat/${roomId}`);
 
     ws.current.onmessage = (message) => {
       const dataSet = JSON.parse(message.data);
