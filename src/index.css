@@ -4,7 +4,7 @@ body {min-height: 300px; font-size: 16px; line-height: 1em; font-family: "NanumS
 a {text-decoration: none; color: #393939;}
 em {font: inherit; vertical-align: baseline;}
 img {width: 100%;}
-button {cursor: pointer;}
+button {cursor: pointer; font-family: inherit;}
 ul,li {list-style: none;}
 
 /* 글씨체 */

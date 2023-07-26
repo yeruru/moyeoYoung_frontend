@@ -80,8 +80,6 @@ const MyPage = () => {
     setPreviewImage(URL.createObjectURL(file));
   };
 
-  console.log(formData);
-
 
   const handleModalOpen = () => {
     setIsModalOpen(true);
@@ -89,6 +87,7 @@ const MyPage = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    window.location.reload(); 
   };
 
   const handleProfileUpdate = () => {
@@ -126,9 +125,11 @@ const MyPage = () => {
 
   // 닉네임 중복 체크
   const handleChange = (event) => {
-    const { name, value } = event.target;
+    const value = event.target.value;
+    const name = event.target.name;
     setFormData({ ...formData, [name]: value });
   };
+  
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
   const handleNicknameCheck = () => {
     axios
