@@ -17,8 +17,8 @@ function RoomList() {
   const [cateWord, setCateWord] = useState('');
   const containRoomCnt = (roomList.length) % 4;
   const emptyRoomCnt = 4 - containRoomCnt;
-  const instance = axios.create({
-    baseURL: 'http://localhost:8090/room', // 기본 경로 설정 
+  const axiosURL = axios.create({
+    baseURL:process.env.REACT_APP_BURL+'/room', // 기본 경로 설정 
   });
   const [isBookmarks, setIsBookmarks] = useState([]);
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ function RoomList() {
     setSearchWord(false); 
 
 
-    instance.get(`/roomList/${p_page}`, {
+    axiosURL.get(`/roomList/${p_page}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }
@@ -67,7 +67,7 @@ function RoomList() {
     setSearchCate(true);
     setSearchWord(false);
 
-    instance.get(`/roomListByCate/${p_page}`, {
+    axiosURL.get(`/roomListByCate/${p_page}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       },
@@ -99,7 +99,7 @@ function RoomList() {
     setSearchCate(false);
     setSearchWord(true);
 
-    instance.get(`/roomListByWord/${p_page}`, {
+    axiosURL.get(`/roomListByWord/${p_page}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }, params: {

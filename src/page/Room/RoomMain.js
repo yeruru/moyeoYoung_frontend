@@ -30,7 +30,7 @@ function RoomMain() {
   const [room, setRoom] = useState({ roomId: 0, roomTitle: '', roomContent: '', roomImage: '', roomCategory: '', roomCreateDate: '', roomType: '', userId: 0, roomUserCnt: 0 })
   let { roomId } = useParams();
   const axiosURL = axios.create({
-    baseURL: 'http://localhost:8090/room', // 기본 경로 설정
+    baseURL: process.env.REACT_APP_BURL+'/room', // 기본 경로 설정
   });
 
   //유저상태 : 미로그인(noUser) / 멤버(okMember) / 멤버아님(noMember)
@@ -131,7 +131,7 @@ function RoomMain() {
     } else {
       const width = 400;
       const height = 600;
-      window.open(`http://localhost:3000/chat/${roomId}`, '_blank', `width=${width}, height=${height}`)
+      window.open(REACT_APP_FURL+`/chat/${roomId}`, '_blank', `width=${width}, height=${height}`)
     }
   }
   const offLeaveModal=()=>{
@@ -161,7 +161,7 @@ function RoomMain() {
         <div className='flex-box'>
         <div className='room-header'>
           <div className='title-box'>
-            <div className='img-box'><img src={`http://localhost:8090/room/view/${room.roomImage}`} className='img' alt='모임방 프로필 사진' /></div>
+            <div className='img-box'><img src={REACT_APP_BURL+`/room/view/${room.roomImage}`} className='img' alt='모임방 프로필 사진' /></div>
             <h2>{room.roomTitle}</h2>
             {
               room.memberId === logInId &&
@@ -179,7 +179,7 @@ function RoomMain() {
             )
           }
           <RoomHeader onContentChange={handleContentChange} />
-          {userState === 'okMember' &&
+          {userState === 'okMember' && logInId !== room.memberId &&
             <div className='leave-room-div'>
               <button onClick={leaveRoomModal} className='leave-room'>방 나가기</button>
             </div>

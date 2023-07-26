@@ -8,8 +8,8 @@ import HttpsIcon from '@mui/icons-material/Https';
 
 export const RoomCard = ({ isBookmark, item }) => { 
   const [backColor, setBackColor] = useState(''); 
-  const instance = axios.create({
-    baseURL: 'http://localhost:8090/room', // 기본 경로 설정
+  const axiosURL = axios.create({
+    baseURL: process.env.REACT_APP_BURL+'/room', // 기본 경로 설정
   });
   const [bookmark, setBookmark] = useState(isBookmark);
   const navigate  = useNavigate();
@@ -42,7 +42,7 @@ export const RoomCard = ({ isBookmark, item }) => {
       navigate('/login');
   } 
   e.preventDefault();
-    instance.get(`/bookmark/${e.target.id}`, {
+    axiosURL.get(`/bookmark/${e.target.id}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
     }
@@ -66,7 +66,7 @@ export const RoomCard = ({ isBookmark, item }) => {
  
           bookmark
         </span></button>
-        <img src={`http://localhost:8090/room/view/${item.roomImage}`} className='card-img' alt='방 썸네일 사진' />
+        <img src={process.env.REACT_APP_BURL+`/room/view/${item.roomImage}`} className='card-img' alt='방 썸네일 사진' />
        <p className='p2'>{item.roomTitle}</p>
         <p className="intro">{item.roomContent}</p>
 
