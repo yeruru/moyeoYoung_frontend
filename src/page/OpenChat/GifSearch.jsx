@@ -17,7 +17,7 @@ const GifSearch = ({ onImageClick }) => {
 
   const searchGifs = async (term) => {
     if (term !== '') {
-      const response = await axios.get(process.env.REACT_APP_BURL+'search-gifs', {
+      const response = await axios.get(process.env.REACT_APP_BURL+'/search-gifs', {
         params: {
           q: term
         },

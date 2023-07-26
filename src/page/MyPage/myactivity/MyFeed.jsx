@@ -69,7 +69,7 @@ console.log(feed);
                                           {item.commentCount}
                                         </div>
                                         <div className='room'>
-                                          <a href={`http://localhost:3000/roomMain/roomFeed/${item.roomId}`}>방으로 이동{' >'}</a>
+                                          <a href={process.env.REACT_APP_FURL+`/roomMain/roomFeed/${item.roomId}`}>방으로 이동{' >'}</a>
                                         </div>
                                       </div>
                                     </div>
