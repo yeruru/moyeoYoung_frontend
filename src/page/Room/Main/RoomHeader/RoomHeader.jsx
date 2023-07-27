@@ -1,11 +1,61 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import styled from 'styled-components';
 import SettingsIcon from '@mui/icons-material/Settings';
+import axios from 'axios';
 
 function RoomHeader({ onContentChange }) {
   const [selectedButton, setSelectedButton] = useState('');
   const location = useLocation();
+  //유저상태 : 미로그인(noUser) / 멤버(okMember) / 멤버아님(noMember) / 가입대기상태: wMember
+  const [userState, setUserState] = useState('noUser');
+  /* MemberList 관련 */
+  // const [memberList, setMemberList] = useState([]);
+  const [logInId, setLogInId] = useState(0);
+  const [isJoin, setIsJoin] = useState(false);
+  const [accessToken, setAccessToken] = useState('');
+  const axiosURL = axios.create({
+    baseURL: `${process.env.REACT_APP_BURL}/room`, // 기본 경로 설정
+  });
+
+  let { roomId } = useParams();
+
+  useEffect(() => {
+    //유저상태처리
+    const isToken = localStorage.getItem('accessToken');
+    if (isToken) {
+      setAccessToken(isToken);
+      axiosURL.get(`/memberList/${roomId}`, {
+        headers: {
+          'Authorization': `Bearer ${isToken}`
+        }, 
+      })
+        .then((res) => {
+          const members = res.data.list; //가입멤버리스트
+          // setMemberList(members);
+          const waiting = res.data.waitingList; //가입대기멤버리스트
+          // setWaitingList(waiting);
+
+          setLogInId(res.data.logInId);
+          //방 멤버와 로그인된 아이디를 비교 
+          const ismember = members.some((item) => res.data.logInId === item.memberId);
+          if (ismember) {
+            setUserState('okMember');
+          } else {
+            const isWaiting = waiting.some((item) => res.data.logInId === item.memberId);
+            if(isWaiting){
+              setUserState('wMember');
+            }else{
+              setUserState('noMember'); 
+            }
+          } 
+        })
+        .catch(err => {
+          console.log(err);
+        })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location, isJoin, roomId]);
   
   useEffect(()=>{
     const content= location.pathname.split("/")[2];
@@ -21,20 +71,20 @@ function RoomHeader({ onContentChange }) {
   return (
     <StyleUl>
       <StyleLi>
-        <ButtonSt
+          <ButtonSt
           onClick={() => handleLinkClick('dashboard')}
           selected={selectedButton === 'dashboard'}
-        >
-          대시보드
-        </ButtonSt>
+          >
+            대시보드
+          </ButtonSt>
       </StyleLi>
       <StyleLi>
-        <ButtonSt
-          onClick={() => handleLinkClick('roomAnno')}
-          selected={selectedButton === 'roomAnno'}
-        >
-          모임 공지사항
-        </ButtonSt>
+            <ButtonSt
+              onClick={() => handleLinkClick('roomAnno')}
+              selected={selectedButton === 'roomAnno'}
+            >
+              모임 공지사항
+        </ButtonSt>  
       </StyleLi>
       <StyleLi>
         <ButtonSt
@@ -45,6 +95,8 @@ function RoomHeader({ onContentChange }) {
         </ButtonSt>
       </StyleLi>
       <StyleLiM>
+      {
+        userState === 'okMember' && 
         
         <ButtonSt 
         style={{display: 'flex', alignItems: 'center'}}
@@ -54,6 +106,7 @@ function RoomHeader({ onContentChange }) {
           <SettingsIcon style={{marginRight:'7px'}}></SettingsIcon>
           멤버보기
         </ButtonSt>
+        }
       </StyleLiM>
     </StyleUl>
   );

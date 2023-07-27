@@ -45,15 +45,19 @@ const LoginForm = () => {
   const login = (e) => {
     e.preventDefault();
     axios
-      .post("http://localhost:8090/auth/login", {
+      .post(`${process.env.REACT_APP_BURL}/auth/login`, {
         email: email,
         password: password,
       })
       .then((res) => {
         const accessToken = res.data.accessToken;
         const refreshToken = res.data.refreshToken;
+        const accessTokenExpiresIn = res.data.accessTokenExpiresIn;
+
         localStorage.setItem("accessToken", accessToken);
         localStorage.setItem("refreshToken", refreshToken);
+        localStorage.setItem("accessTokenExpiresIn", accessTokenExpiresIn);
+
         setAccessToken(accessToken);
         dispatch(setTokens({ accessToken }));
         dispatch({ type: "USERID", payload: res.data.memberId });
@@ -80,7 +84,7 @@ const LoginForm = () => {
   //이메일 체크
   const handleEmailExistenceCheck = () => {
     axios
-      .get(`http://localhost:8090/auth/checkedemail?email=${formData.email}`)
+      .get(`${process.env.REACT_APP_BURL}/auth/checkedemail?email=${formData.email}`)
       .then((response) => {
         const isEmailExist = response.data;
         console.log(formData.email);
@@ -99,7 +103,7 @@ const LoginForm = () => {
   //이메일로 인증코드전송
   const handleSendVerificationCode = () => {
     axios
-      .post(`http://localhost:8090/auth/mailConfirm?email=${formData.email}`)
+      .post(`${process.env.REACT_APP_BURL}/auth/mailConfirm?email=${formData.email}`)
       .then((response) => {
         const verificationCode = response.data;
         setFormData({
@@ -146,7 +150,7 @@ const LoginForm = () => {
 
 
     axios
-      .post("http://localhost:8090/member/passwdUpdate", formData, {
+      .post(`${process.env.REACT_APP_BURL}/member/passwdUpdate`, formData, {
         params: {
           email: formData.email,
         },

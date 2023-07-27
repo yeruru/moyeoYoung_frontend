@@ -15,7 +15,7 @@ function Profile({isOpen, content, isClose}) {
   
   useEffect(()=>{
     if(isOpen==true){
-      axios.get(`http://localhost:8090/member/profile/${content}`)
+      axios.get(`${process.env.REACT_APP_BURL}/member/profile/${content}`)
       .then(res=>{
         setImagename(res.data.fileName);
         setNickname(res.data.nickname);
@@ -38,7 +38,7 @@ function Profile({isOpen, content, isClose}) {
       <Dialog open={isOpen} onClose={isClose} style={{zIndex: '999999'}}>
         <DialogContent style={{width:'320px', height:'400px', display:'flex', flexDirection:'column', alignItems:'center'}}>
           <ProBox>
-            <img src={`http://localhost:8090/room/view/${imagename}`} alt="" style={{objectFit:'cover', width:'100%', height:'100%'}}/>
+            <img src={`${process.env.REACT_APP_BURL}/room/view/${imagename}`} alt="" style={{objectFit:'cover', width:'100%', height:'100%'}}/>
           </ProBox>
           <h4 style={{fontSize:'30px', display:'block', marginBottom:'25px'}}>{nickname}</h4>
           <ProTextBox>

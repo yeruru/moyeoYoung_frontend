@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
+import 'react-quill/dist/quill.snow.css'; // Quill의 snow 테마 CSS를 import합니다.
+import ReactQuill from 'react-quill'; // ReactQuill 컴포넌트를 import합니다.
 
 function WriteAnno() {
     const navigate = useNavigate();
@@ -17,7 +19,7 @@ function WriteAnno() {
             const accessToken = localStorage.getItem('accessToken');
             if (accessToken) {
                 try {
-                    const response = await fetch('http://localhost:8090/member/mypage', {
+                    const response = await fetch(process.env.REACT_APP_BURL+'/member/mypage', {
                         headers: {
                             'Authorization': `Bearer ${accessToken}`
                         }
@@ -63,7 +65,7 @@ function WriteAnno() {
             roomId: roomId,
         };
         console.log(notice);
-        axios.post(`http://localhost:8090/rooms/${Number(roomId)}/notices`, notice)
+        axios.post(process.env.REACT_APP_BURL+`/rooms/${Number(roomId)}/notices`, notice)
             .then(response => {
                 navigate(`/roomMain/roomAnno/${roomId}`)
             });
@@ -77,8 +79,9 @@ function WriteAnno() {
                 <input type="text" value={title} onChange={e => setTitle(e.target.value)} style={styles.input} />
 
                 <label style={styles.label}>내용</label>
-                <textarea value={content} onChange={e => setContent(e.target.value)} style={styles.textarea} />
-
+                <div style={styles.editorContainer}>
+                    <ReactQuill value={content} onChange={setContent} style={styles.editor} />
+                </div>
                 <input type="hidden" value={memberId} />
                 <input type="hidden" value={nickname} />
                 <input type="hidden" value={imageUrl} />
@@ -91,7 +94,8 @@ function WriteAnno() {
 const styles = {
     container: {
         padding: "20px",
-        fontFamily: "Arial, sans-serif"
+        fontFamily: "Arial, sans-serif",
+        backgroundColor: 'white',
     },
     title: {
         marginBottom: "20px"
@@ -128,7 +132,13 @@ const styles = {
         cursor: "pointer",
         width: "522px",
 
-    }
+    },
+    editorContainer:{
+        height: "300px", 
+    },
+    editor: {
+        height: "80%", 
+    },
 };
 
 export default WriteAnno;

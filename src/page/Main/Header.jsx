@@ -50,24 +50,59 @@ function Header() {
     
 
   useEffect(() => {
+    // 토큰 만료 체크 함수
+    const checkTokenExpiration = () => {
+      const token = localStorage.getItem('accessToken');
+      const expirationTime = localStorage.getItem('accessTokenExpiresIn');
+      const currentTime = new Date().getTime();
+  
+      
+      // console.log("이게 token",token);
+      // console.log("이게 curTime",currentTime);
+      // console.log("이게 expireTime",expirationTime);
+      if (token && expirationTime && currentTime > expirationTime) {
+        // 토큰이 만료된 경우
+        dispatch(clearTokens());
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
+        alert('토큰이 만료되었습니다. 다시 로그인해주세요.');
+        navigate('/login');
+        window.location.reload();
+      } else {
+        setIsLoggedIn(token);
+      }
+    };
+  
     // 유저 정보 가져오기
-     axios
-     .get("http://localhost:8090/member/mypage", {
-       headers: {
-         Authorization: `Bearer ${accessToken}`
-       },
-     })
-     .then((res) => {
-       setFileName(res.data.fileName);
-       setPreviewImage(`http://localhost:8090/room/view/${res.data.fileName}`);
-     })
-     .catch((err) => {
-       console.log(err);
-     });
 
-       // 알림 리스트 불러오기
+    const fetchUserInfo = () => {
+      axios
+        .get(`${process.env.REACT_APP_BURL}/member/mypage`, {
+          headers: {
+            Authorization: `Bearer ${accessToken}`
+          },
+        })
+        .then((res) => {
+           setFileName(res.data.fileName);
+          setPreviewImage(`${process.env.REACT_APP_BURL}/room/view/${res.data.fileName}`);
+        })
+        .catch((err) => {
+          // Handle error here
+        });
+    };
+  
+    // 토큰이 변경될 때마다 유저 정보를 가져옵니다.
+    fetchUserInfo();
+  
+    // 유효성 검사를 시작하고 31.2분마다 반복합니다.
+    const intervalId = setInterval(checkTokenExpiration, 190000);
+  
+    // useEffect cleanup function에서 interval을 clear합니다.
+    return () => clearInterval(intervalId);
+   // 알림 리스트 불러오기
     fetchNotifications();
-  }, [accessToken]);
+  }, [accessToken]); // accessToken을 종속성 배열에 추가
+  
 
 
 
@@ -86,9 +121,11 @@ function Header() {
       navigate('/login');
       document.location.reload();
     } else {
-      setIsLoggedIn(token);
+      setIsLoggedIn(token);      
     }
   }, [dispatch, navigate]);
+
+  
   
   // 모달
   const handleNoteIconClick = () => {
@@ -368,7 +405,7 @@ const getElapsedTime = (timestampString) => {
                           </Link>
                         </li>
                         <li>
-                          <Link to={'/mypage'} className='header-link'>
+                          <Link to={`/myroom/${memberId}`} className='header-link'>
                             내 모임
                           </Link>
                         </li>

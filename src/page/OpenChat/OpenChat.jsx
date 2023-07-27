@@ -5,10 +5,9 @@ import { Stomp } from '@stomp/stompjs';
 import './OpenChat.css'; // 스타일 파일을 불러옵니다.
 import GifSearch from './GifSearch';
 import Modal from 'react-modal';
+import Profile from '../../components/Profile/Profile';
 
 let stompClient;
-let ipmod = 1 ? 'http://localhost:8090/ws-chat' : 'http://211.108.241.185:8090/ws-chat'
-
 
 //react-modal 라이브러리는 모달이 열렸을 때 스크린 리더가 주요 컨텐츠를 인식하지 못하도록 하는 기능을 제공합니다. 
 //이렇게 하려면 setAppElement 메소드를 사용하여 애플리케이션의 루트 엘리먼트를 지정해야 합니다.
@@ -23,6 +22,20 @@ const OpenChat = () => {
     const [profileImage, setProfileImage] = useState(""); // 프로필 이미지
     const [isUserSet, setIsUserSet] = useState(false); // 사용자 설정 여부
     const [room, setRoom] = useState("room1"); // 현재 방
+    const [isGifModalOpen, setGifModalOpen] = useState(false); //gif관련 및 모달관련
+    const [isProfModalOpen, setIsProfModalOpen] = useState(false); // 모달이 열렸는지 여부를 저장하는 상태
+    const [selectedUser, setSelectedUser] = useState(''); // 선택된 사용자를 저장하는 상태
+
+    // 프로필 이미지를 클릭했을 때 호출되는 핸들러
+    const handleProfileClick = (user) => {
+        setSelectedUser(user);
+        setIsProfModalOpen(true);
+    };
+
+    // 모달을 닫는 함수
+    const closeProfModal = () => {
+        setIsProfModalOpen(false);
+    };
 
     // 컴포넌트가 마운트되거나 'room' 상태가 변경될 때 연결합니다.
     useEffect(() => {
@@ -37,7 +50,7 @@ const OpenChat = () => {
 
     // 웹소켓 서버에 연결합니다.
     const connect = () => {
-        const socket = new SockJS(ipmod);
+        const socket = new SockJS(process.env.REACT_APP_BURL+'/ws-chat');
         stompClient = Stomp.over(socket);
         stompClient.connect({}, onConnected, onError);
     };
@@ -117,7 +130,7 @@ const OpenChat = () => {
                 })
             );
         }
-
+       
         // If event.typedMsg exists, we assume the message was sent from the gif modal
         // so we do not reset the input field in that case.
         if (!(event && event.typedMsg)) {
@@ -140,21 +153,18 @@ const OpenChat = () => {
         stompClient.send(`/app/chat/${room}/sendMessage`, {}, JSON.stringify({ msgFrom: "", text: message, profileImage: "/image/openchat/white.png" }));
     }
 
-    //gif관련 및 모달관련
-    const [isModalOpen, setModalOpen] = useState(false);
-
     const handleGifButtonClick = () => {
-        setModalOpen(true);
+        setGifModalOpen(true);
       };
       
-    const handleCloseModal = () => {
-        setModalOpen(false);
+    const handleCloseGifModal = () => {
+        setGifModalOpen(false);
     };
 
     // 이미지 선택 핸들러를 수정합니다.
     const handleImageClick = (imageUrl) => {
         sendMessage({ typedMsg: imageUrl });
-        handleCloseModal();
+        handleCloseGifModal();
     };
     
     //gif관련 모달 스타일정의
@@ -194,16 +204,15 @@ const OpenChat = () => {
         borderRadius: '8px', // Button 모서리 둥글게
     };
       
-    const handleClick = async () => {
+    const handleClickChat = async () => {
         const accessToken = localStorage.getItem('accessToken');
         const memberInfo = await fetchMemberInfo(accessToken);
         if (memberInfo === null) {
             alert('로그인이 필요합니다!');
             return;
         }
-        console.log("여기에출력",memberInfo.username);
         setUsername(memberInfo.nickname);
-
+        setProfileImage(memberInfo.fileName);
         sendSysMessage(` < ${memberInfo.nickname} > 님이 입장하셨습니다.`);  // 입장 공지메시지 전송
         setIsUserSet(true);
       };
@@ -214,7 +223,7 @@ const OpenChat = () => {
         try {
             console.log("시도중");
             // Provide full URL to the endpoint
-            const response = await fetch('http://localhost:8090/member/mypage', {
+            const response = await fetch(process.env.REACT_APP_BURL+'/member/mypage', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -250,7 +259,7 @@ const OpenChat = () => {
                 </div>
 
                 {!isUserSet ?
-                    <button id='myButton' onClick={handleClick}>접속하기</button>
+                    <button id='myButton' onClick={handleClickChat}>접속하기</button>
                     :
                     <>
                         {/* 메세지 리스트 렌더링 */}
@@ -260,8 +269,24 @@ const OpenChat = () => {
                                 key={i} 
                                 className={`chat-message ${message.msgFrom === username ? 'own-message' : 'other-message'} ${message.msgFrom !== username && (i === 0 || msg[i-1].msgFrom !== message.msgFrom) ? 'first-in-sequence' : ''}`}
                             >
-                                {(i === 0 || msg[i-1].msgFrom !== message.msgFrom) && message.msgFrom !== username && (
-                                    <img src={message.profileImage} alt="profile" className="profile-pic"/>
+                                {message.msgFrom !== "" ? (
+                                    (i === 0 || msg[i - 1].msgFrom !== message.msgFrom) && message.msgFrom !== username && (
+                                    // message.msgFrom이 비어있지 않으면서, 이전 메시지의 msgFrom과 다르고, username과도 다를 때에만 원본 이미지를 보여줍니다.
+                                    <img
+                                        src={process.env.REACT_APP_BURL + '/room/view/' + message.profileImage}
+                                        alt="profile"
+                                        className="profile-pic"
+                                        onClick={() => handleProfileClick(message.msgFrom)}
+                                    />
+                                    )
+                                ) : (
+                                    // message.msgFrom이 비어있으면 대체 이미지를 보여줍니다.
+                                    <img
+                                    src={message.profileImage}
+                                    alt="profile"
+                                    className="profile-pic"
+                                    onClick={() => handleProfileClick(message.msgFrom)}
+                                    />
                                 )}
                                 <div className={`message-box ${message.msgFrom === username ? 'own-message-box' : 'other-message-box'}`}>
                                     {(i === 0 || msg[i-1].msgFrom !== message.msgFrom) && <span className="username">{message.msgFrom}</span>}
@@ -280,13 +305,13 @@ const OpenChat = () => {
                             <div>
                                 <button onClick={handleGifButtonClick} style={{marginRight : "5px"}}>GIF 선택</button>
                                 <Modal 
-                                isOpen={isModalOpen} 
-                                onRequestClose={handleCloseModal}
+                                isOpen={isGifModalOpen} 
+                                onRequestClose={handleCloseGifModal}
                                 style={customStyles}
                                 contentLabel="Gif Search Modal"
                                 >
                                 <GifSearch onImageClick={handleImageClick} />
-                                <button onClick={handleCloseModal} style={buttonStyles}>닫기</button>
+                                <button onClick={handleCloseGifModal} style={buttonStyles}>닫기</button>
                                 </Modal>
                             </div>
                             {/* 채팅 텍스트 입력칸 */}
@@ -320,6 +345,11 @@ const OpenChat = () => {
                             <button type="submit">전송</button>
                         </form>
                         {/* 종료 /// 채팅입력 폼 컨테이너 */}
+                        <Profile 
+                            isOpen={isProfModalOpen} 
+                            content={selectedUser} 
+                            isClose={closeProfModal} 
+                        />
                     </>
                 }
             </div>

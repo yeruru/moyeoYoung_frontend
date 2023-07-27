@@ -14,20 +14,18 @@ export const SettingRoom = () => {
     const inputRef = useRef();
     const [room, setRoom] = useState({})
     const [file, setFile] = useState();
-    const [modal, setModal] = useState(false);
-    // const [roomId, setRoomId] = useState();
+    const [modal, setModal] = useState(false); 
+    const [delModal, setDelModal] = useState(false);
     const [ContentText, setContentText] = useState('');
     const {roomId} = useParams();
     const accessToken = localStorage.getItem('accessToken');
 
-    const instance = axios.create({
-        baseURL: 'http://localhost:8090/room', // 기본 경로 설정
+    const axiosURL = axios.create({
+        baseURL: process.env.REACT_APP_BURL+'/room', // 기본 경로 설정
       });  
 
-    useEffect(()=>{
-        console.log(roomId);
-
-        instance.get(`/getroomMain/${roomId}`)
+    useEffect(()=>{ 
+        axiosURL.get(`/getroomMain/${roomId}`)
         .then(res=>{
             setRoom({...res.data});
             switchCateId(res.data.roomCategory);
@@ -36,9 +34,7 @@ export const SettingRoom = () => {
             
             settxtLength(txt.length);
             setContentText(txt); 
-            setImgSrc(`http://localhost:8090/room/view/${res.data.roomImage}`)
-            
-             
+            setImgSrc(process.env.REACT_APP_BURL+`/room/view/${res.data.roomImage}`)
         })
         .catch(err=>{
             console.log(err);
@@ -96,7 +92,7 @@ export const SettingRoom = () => {
         const value = e.target.value;
 
         setRoom({ ...room, [name]: value });
-    }
+    } 
 
 
     //==================================================================
@@ -114,7 +110,7 @@ export const SettingRoom = () => {
         formData.append('roomType', room.roomType);
         formData.append('file', file);
         
-        axios.post(`http://localhost:8090/room/makeRoom`, formData,{
+        axios.post(process.env.REACT_APP_BURL+`/room/settingRoom`, formData,{
             headers: {
                 'Authorization': `Bearer ${accessToken}`
               }
@@ -144,6 +140,7 @@ export const SettingRoom = () => {
             case 'b6': setRoom({ ...room, 'roomCategory': '동아리' }); break;
             case 'b7': setRoom({ ...room, 'roomCategory': '친목' }); break;
             case 'b8': setRoom({ ...room, 'roomCategory': '기타' }); break;
+            default : setRoom({ ...room, 'roomCategory': '기타' }); 
         }
 
     }
@@ -158,6 +155,7 @@ export const SettingRoom = () => {
             case '동아리': setActiveCate('b6'); break;
             case '친목': setActiveCate('b7'); break;
             case '기타': setActiveCate('b8'); break;
+            default : setActiveCate('b8');
         }
 
     }
@@ -180,8 +178,30 @@ export const SettingRoom = () => {
     const offModal = () => {
         setModal(false);
     }
-    return (
-        <>
+    
+    const deleteRoom=()=>{
+       setDelModal(true);
+    }
+    const offDeleteRoom=()=>{
+        setDelModal(false);
+     }
+
+    const delSubmit=()=>{ 
+        axiosURL.delete(`/deleteRoom`, 
+        {
+         params:{
+            roomId:roomId,
+         }   
+        })
+        .then(res => {
+            alert(res.data);
+            document.location.href=`/`; 
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+    return ( 
             <div id='make-room'>
                 <div className='wrap'>
                     <span className='bar'></span>
@@ -203,7 +223,7 @@ export const SettingRoom = () => {
                             <p className="txt1">대표사진 선택</p>
                             <div className='img-box'>
                                 <div className='select-img-div'>
-                                    <img src={imgSrc} className='select-img' name="roomImage" accept="image/**" required />
+                                    <img src={imgSrc} className='select-img' name="roomImage" accept="image/**" required alt='선택한이미지' />
                                 </div>
                                 <ul className='imgs'>
                                     {/* <div className='imgs'> */}
@@ -212,13 +232,13 @@ export const SettingRoom = () => {
                                         <p className='p5'>사진을 업로드 하세요.</p>
                                     </li>
                                     <input type='file' className='upload' name="roomImage" ref={inputRef} id='file' onChange={inputImg} />
-                                    <li><img src="/image/room_basic2.jpg" alt="" className='img selectable' name='room_basic2.jpg' onClick={basicImg} /></li>
-                                    <li><img src="/image/room_basic3.jpg" alt="" className='img selectable' name='room_basic3.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic2.jpg" alt="기본이미지2" className='img selectable' name='room_basic2.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic3.jpg" alt="기본이미지3" className='img selectable' name='room_basic3.jpg' onClick={basicImg} /></li>
                                     {/* </div> */}
                                     {/* <div className='imgs'> */}
-                                    <li><img src="/image/room_basic4.jpg" alt="" className='img selectable' name='room_basic4.jpg' onClick={basicImg} /></li>
-                                    <li><img src="/image/room_basic5.jpg" alt="" className='img selectable' name='room_basic5.jpg' onClick={basicImg} /></li>
-                                    <li><img src="/image/room_basic6.jpg" alt="" className='img selectable' name='room_basic6.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic4.jpg" alt="기본이미지4" className='img selectable' name='room_basic4.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic5.jpg" alt="기본이미지5" className='img selectable' name='room_basic5.jpg' onClick={basicImg} /></li>
+                                    <li><img src="/image/room_basic6.jpg" alt="기본이미지6" className='img selectable' name='room_basic6.jpg' onClick={basicImg} /></li>
                                     {/* </div> */}
                                 </ul>
                             </div>
@@ -247,39 +267,39 @@ export const SettingRoom = () => {
                             <div className='cate-box'>
                                 <div className='cate-btns'>
                                     <button id='b1' className={`cate-btn ${activeCate === 'b1' ? 'change' : ''}`} onClick={cateBtn} value="취업준비">
-                                        <img id='b1' src="/image/icon/icon1.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b1' src="/image/icon/icon1.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘' />
                                         <p id='b1' className='txt4' onClick={cateBtn}>취업준비</p>
                                     </button>
 
                                     <button id='b2' className={`cate-btn ${activeCate === 'b2' ? 'change' : ''}`} onClick={cateBtn} value="스터디">
-                                        <img id='b2' src="/image/icon/icon2.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b2' src="/image/icon/icon2.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b2' className='txt4' onClick={cateBtn}>스터디</p>
                                     </button>
 
                                     <button id='b3' className={`cate-btn ${activeCate === 'b3' ? 'change' : ''}`} onClick={cateBtn} value="과외/멘토">
-                                        <img id='b3' src="/image/icon/icon3.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b3' src="/image/icon/icon3.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b3' className='txt4' onClick={cateBtn}>과외/멘토</p>
                                     </button>
 
                                     <button id='b4' className={`cate-btn ${activeCate === 'b4' ? 'change' : ''}`} onClick={cateBtn} value="자기개발">
-                                        <img id='b4' src="/image/icon/icon4.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b4' src="/image/icon/icon4.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b4' className='txt4' onClick={cateBtn}>자기개발</p>
                                     </button>
                                 </div>
 
                                 <div className='cate-btns'>
                                     <button id='b5' className={`cate-btn ${activeCate === 'b5' ? 'change' : ''}`} onClick={cateBtn} value="프로젝트">
-                                        <img id='b5' src="/image/icon/icon5.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b5' src="/image/icon/icon5.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b5' className='txt4' onClick={cateBtn}>프로젝트</p>
                                     </button>
 
                                     <button id='b6' className={`cate-btn ${activeCate === 'b6' ? 'change' : ''}`} onClick={cateBtn} value="동아리">
-                                        <img id='b6' src="/image/icon/icon6.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b6' src="/image/icon/icon6.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b6' className='txt4' onClick={cateBtn}>동아리</p>
                                     </button>
 
                                     <button id='b7' className={`cate-btn ${activeCate === 'b7' ? 'change' : ''}`} onClick={cateBtn} value="친목">
-                                        <img id='b7' src="/image/icon/icon7.png" className="cate-icon" onClick={cateBtn} />
+                                        <img id='b7' src="/image/icon/icon7.png" className="cate-icon" onClick={cateBtn} alt='기본아이콘'/>
                                         <p id='b7' className='txt4' onClick={cateBtn}>친목</p>
                                     </button>
 
@@ -293,9 +313,9 @@ export const SettingRoom = () => {
                             </div>
                         </li>
                     </ul>
-                    
+                    <button onClick={deleteRoom} className='delete-room'>모임방 삭제하기</button>
                     <div className='sm-btns'>
-                    <Link to="/roomlist"><input type='button' className='back-btn smb' value='취소하기' /></Link>
+                    <Link to={`/roomMain/dashboard/${room.roomId}`}><input type='button' className='back-btn smb' value='취소하기' /></Link>
                         <input type='submit' className='submit-btn smb' value='변경하기' onClick={onModal} />
                     </div>
 
@@ -309,13 +329,25 @@ export const SettingRoom = () => {
                             <img src="/image/group 67.svg" className='modal-img' alt='메세지 보내는 그림' />
                         </div>
                         <div className="modal-btns">
-                          <button type='button' className="btn btn1" onClick={offModal}>취소하기</button>
+                            <button type='button' className="btn btn1" onClick={offModal}>취소하기</button>
                             <button type='submit' className="btn btn2" onClick={submit}>변경하기</button>
                         </div>
                     </div>
                 </div>
-            </div>
 
-        </>
+                <div id='delete-room-modal' className={`hidden ${delModal? 'play':''}`}>
+                    <div className="modal-box">
+                        <CloseIcon id="icon" onClick={offDeleteRoom} />
+                        <p className='txt'>정말로 방을 삭제하시겠습니까?<span><br/>이 작업은 취소할 수 없습니다.</span></p>
+                        <div className="modal-imgdiv">
+                            <img src="/image/group 67.svg" className='modal-img' alt='메세지 보내는 그림' />
+                        </div>
+                        <div className="modal-btns">
+                          <button type='button' className="btn btn1" onClick={offDeleteRoom}>돌아가기</button>
+                            <button type='submit' className="btn btn2" onClick={delSubmit}>삭제하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div> 
     )
 }

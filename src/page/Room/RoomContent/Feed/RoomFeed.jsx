@@ -12,11 +12,10 @@ import nothing from '../../../../images/Group 153.svg'
 import axios from 'axios';
 import RoomFeedDetail from './RoomFeedDetail';
 import ModifyFeed from './ModifyFeed.jsx';
-import {useSelector} from 'react-redux';
 import Profile from '../../../../components/Profile/Profile';
 
 
-function RoomFeed({onContentChange}) {
+function RoomFeed({onContentChange, state}) {
   const [likes, setLikes] = useState([]);
   const [modalClicked, setModalClicked] = useState(false);
   const [feed, setFeed] = useState([]);
@@ -32,6 +31,7 @@ function RoomFeed({onContentChange}) {
   let { roomId } = useParams();
 
   const accessToken = localStorage.getItem("accessToken");
+
 
   useEffect(() => {
     const handleClickOutsideModal = (event) => {
@@ -53,7 +53,7 @@ function RoomFeed({onContentChange}) {
 
   
   useEffect(()=>{
-    axios.get(`http://localhost:8090/feed/likelist`,{
+    axios.get(`${process.env.REACT_APP_BURL}/feed/likelist`,{
       headers: {
         'Authorization': `Bearer ${accessToken}`,
       }})
@@ -64,28 +64,27 @@ function RoomFeed({onContentChange}) {
 
       });
 
-    axios.get(`http://localhost:8090/feed/selectfeed/${roomId}/`)
+    axios.get(`${process.env.REACT_APP_BURL}/feed/selectfeed/${roomId}/`)
       .then(res=>{
         setFeed(res.data);
+        console.log(res.data);
       })
       .catch(err => {
 
       })
-  },[]);
-
-  useEffect(()=>{
-    axios.get(`http://localhost:8090/feed/getmemberId`,{
+      axios.get(`${process.env.REACT_APP_BURL}/feed/getmemberId`,{
         headers: {
             'Authorization': `Bearer ${accessToken}`
         }
-    })
-    .then(res=>{
-        setMemberId(res.data);
-    })
-},[]);
+      })
+      .then(res=>{
+          setMemberId(res.data);
+      })
+  },[accessToken]);
+
 
   const update = () => {
-    axios.get(`http://localhost:8090/feed/selectfeed/${roomId}/`)
+    axios.get(`${process.env.REACT_APP_BURL}/feed/selectfeed/${roomId}/`)
     .then(res=>{
       setFeed(res.data);
     })
@@ -101,50 +100,58 @@ function RoomFeed({onContentChange}) {
   };
 
   const handleClick = (feedId) => {
-    setLikes((prevLikes) => {
-      const isLiked = prevLikes.includes(feedId);
-      if(isLiked){
-        decreaseLikeCount(feedId);
-        axios.get(`http://localhost:8090/feed/delike/${feedId}`,{
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-          }
-        })
-        .then(res=>{
-          console.log(res);
-        })
-        .catch(err=>{
-          console.log(err);
-        })
-        return prevLikes.filter((id) => id !== feedId)
-      }else{
-        increaseLikeCount(feedId);
-        axios.get(`http://localhost:8090/feed/like/${feedId}`,{
-          headers: {
-            'Authorization': `Bearer ${accessToken}`,
-          }
-        })
-        .then(res=>{
-          console.log(res);
-        })
-        .catch(err=>{
-          console.log(err);
-        })
-        return [...prevLikes, feedId];
-      }
-    });
+    if(state === 'okMember'){
+      setLikes((prevLikes) => {
+        const isLiked = prevLikes.includes(feedId);
+        if(isLiked){
+          decreaseLikeCount(feedId);
+          axios.get(`${process.env.REACT_APP_BURL}/feed/delike/${feedId}`,{
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+            }
+          })
+          .then(res=>{
+            console.log(res);
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+          return prevLikes.filter((id) => id !== feedId)
+        }else{
+          increaseLikeCount(feedId);
+          axios.get(`${process.env.REACT_APP_BURL}/feed/like/${feedId}`,{
+            headers: {
+              'Authorization': `Bearer ${accessToken}`,
+            }
+          })
+          .then(res=>{
+            console.log(res);
+          })
+          .catch(err=>{
+            console.log(err);
+          })
+          return [...prevLikes, feedId];
+        }
+      });
+    }else{
+      alert("비회원이거나 방 멤버에 참여하고있지않습니다")
+    }
   };
 
   const increaseLikeCount = (feedId) => {
-    let Count = document.getElementById(`likecount${feedId}`).innerHTML;
-    Count = (Number)(Count) + 1;
-    document.getElementById(`likecount${feedId}`).innerHTML = Count;
-  }
+    setFeed((prevFeed) => {
+      return prevFeed.map((feed) =>
+        feed.feedId === feedId ? { ...feed, likeCount: feed.likeCount + 1 } : feed
+      );
+    });
+  } 
 
   const decreaseLikeCount = (feedId) => {
-    let Count = document.getElementById(`likecount${feedId}`).innerHTML;
-    Count = Count - 1;
-    document.getElementById(`likecount${feedId}`).innerHTML = Count;
+    setFeed((prevFeed) => {
+      return prevFeed.map((feed) =>
+        feed.feedId === feedId ? { ...feed, likeCount: feed.likeCount - 1 } : feed
+      );
+    });
   }
 
   const location = (content) => {
@@ -152,9 +159,14 @@ function RoomFeed({onContentChange}) {
   }
 
   const detail = (feedId) =>{
-    setFeedId(feedId);
-    setModalOpen(true);
-    document.getElementById("body").style.overflowY="hidden";
+    if(state === 'okMember'){
+      setFeedId(feedId);
+      setModalOpen(true);
+      document.getElementById("body").style.overflowY="hidden";
+    }else{
+      alert("비회원이거나 방 멤버에 참여하고있지않습니다");
+    }
+
   }
 
   const modify = (feedId) => {
@@ -192,8 +204,7 @@ function RoomFeed({onContentChange}) {
   }
 
   const deletefeed = () => { 
-    console.log(mfeedId);
-    axios.post(`http://localhost:8090/feed/deletefeed/${mfeedId}`)
+    axios.post(`${process.env.REACT_APP_BURL}/feed/deletefeed/${mfeedId}`)
     .then(res => {
       console.log(res);
       document.location.href=`/roomMain/roomFeed/${roomId}`;
@@ -214,7 +225,11 @@ function RoomFeed({onContentChange}) {
   return (
     <div className='roomfeed'>
       <div className='room-box'>
-        <div className='writeFeed' style={{cursor:'pointer'}} onClick={() => location('writefeed')}>작성하기</div> 
+        {
+            state === 'okMember' && 
+            <div className='writeFeed' style={{cursor:'pointer'}} onClick={() => location('writefeed')}>작성하기</div> 
+        }
+ 
         {
           feed.length == 0 &&
           <div className='empty-item-box'>
@@ -229,8 +244,8 @@ function RoomFeed({onContentChange}) {
               <div className='feed' key={feed.feedId}>      
                 <div className='feedHeader'>
                   <div className='userheader'>
-                    <div className='userProfile' onClick={()=>openProfile(feed.nickname)} style={{backgroundImage : `url(http://localhost:8090/room/view/${feed.profilename})`, cursor:'pointer'}}></div>
-                    <span className='username'>{feed.nickname}</span>
+                    <div className='userProfile' onClick={()=>openProfile(feed.nickname)} style={{backgroundImage : `url(${process.env.REACT_APP_BURL}/room/view/${feed.profilename})`, cursor:'pointer'}}></div>
+                    <span className='username' onClick={()=>openProfile(feed.nickname)}>{feed.nickname}</span>
                   </div>
                   <div className='drop-box'>
                     {
@@ -265,10 +280,10 @@ function RoomFeed({onContentChange}) {
                     feed.filename.split(",").length < 3 && 1 < feed.filename.split(",").length &&
                     <div className='feedimg'>
                       <div>
-                        <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
+                        <div className='bigimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[0]})`}}></div>
                       </div>
                       <div className='feedimg2'>
-                        <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
+                        <div className='smallimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[1]})`}}></div>
                         <div className='otherimg'  onClick={() => detail(`${feed.feedId}`)}  key={feed.feedId} style={{ cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
                       </div>
                   </div>
@@ -277,11 +292,11 @@ function RoomFeed({onContentChange}) {
                     feed.filename.split(",").length > 3 && 
                     <div className='feedimg'>
                       <div>
-                        <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
+                        <div className='bigimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[0]})`}}></div>
                       </div>
                       <div className='feedimg2'>
-                        <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
-                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+{feed.filename.split(",").length-3}</em></div>
+                        <div className='smallimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[1]})`}}></div>
+                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+{feed.filename.split(",").length-3}</em></div>
                       </div>
                   </div>
                   }
@@ -289,11 +304,11 @@ function RoomFeed({onContentChange}) {
                     feed.filename.split(",").length == 3 && 
                     <div className='feedimg'>
                       <div>
-                        <div className='bigimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`}}></div>
+                        <div className='bigimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[0]})`}}></div>
                       </div>
                       <div className='feedimg2'>
-                        <div className='smallimg' style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[1]})`}}></div>
-                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
+                        <div className='smallimg' style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[1]})`}}></div>
+                        <div className='otherimg' onClick={() => detail(`${feed.feedId}`)} key={feed.feedId}  style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[2]})`, cursor : 'pointer'}}><em className='num'>+ 더보기</em></div>
                       </div>
                   </div>
                   }
@@ -301,7 +316,7 @@ function RoomFeed({onContentChange}) {
                     feed.filename.split(",").length  == 1 && 
                     <div className='feedimg'>
                     <div>
-                      <div className='bigimg' onClick={() => detail(`${feed.feedId}`)} style={{backgroundImage: `url(http://localhost:8090/room/view/${feed.filename.split(",")[0]})`, cursor : 'pointer',
+                      <div className='bigimg' onClick={() => detail(`${feed.feedId}`)} style={{backgroundImage: `url(${process.env.REACT_APP_BURL}/room/view/${feed.filename.split(",")[0]})`, cursor : 'pointer',
                         height: 'auto',
                         minHeight: '250px',
                         width:'500px',

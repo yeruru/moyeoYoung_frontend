@@ -10,6 +10,8 @@ const styles = {
         borderRadius: '10px',
         boxShadow: '0px 0px 10px 2px rgba(0,0,0,0.1)',
         marginTop: '2rem',
+        background: '#fff',
+        fontFamily: 'inherit'
     },
     title: {
         fontSize: '2rem',
@@ -38,9 +40,11 @@ const styles = {
     },
     deleteButton: {
         background: 'red',
+        fontFamily: 'inherit'
     },
     editButton: {
         background: 'blue',
+        fontFamily: 'inherit'
     },
     buttonContainer: {
       display: 'flex',
@@ -55,13 +59,18 @@ const styles = {
       color: 'white',
   },
   deleteButton: {
-      background: 'red',
+        color: '#515151;',  
+      fontFamily: 'inherit'
   },
   editButton: {
-      background: 'blue',
+      background: '#fff',
+      color: '#515151;',
+      fontFamily: 'inherit'
   },
   backButton: {
-      background: 'green',
+      background: '#fff',
+      color: '#515151;',
+      fontFamily: 'inherit'
   },
 };
 
@@ -73,7 +82,7 @@ const styles = {
 
     useEffect(() => {
         if (!isNaN(annoId) && !isNaN(roomId)) {
-            axios.get(`http://localhost:8090/rooms/${roomId}/notices/${annoId}`)
+            axios.get(process.env.REACT_APP_BURL+`/rooms/${roomId}/notices/${annoId}`)
                 .then(response => {
                     setNotice(response.data);
                     console.log(response.data);
@@ -86,7 +95,7 @@ const styles = {
             const accessToken = localStorage.getItem('accessToken');
             if (accessToken) {
                 try {
-                    const response = await fetch('http://localhost:8090/member/mypage', {
+                    const response = await fetch(process.env.REACT_APP_BURL+'/member/mypage', {
                         headers: {
                             'Authorization': `Bearer ${accessToken}`
                         }
@@ -122,7 +131,7 @@ const styles = {
     
       const confirmDelete = window.confirm('정말 삭제하시겠습니까?');
       if (confirmDelete) {
-        axios.delete(`http://localhost:8090/rooms/${roomId}/notices/${annoId}`)
+        axios.delete(process.env.REACT_APP_BURL+`/rooms/${roomId}/notices/${annoId}`)
           .then(response => {
             navigate(`/roomMain/roomAnno/${roomId}`);
           });
@@ -147,25 +156,25 @@ const styles = {
     };
 
     return (
-          <div style={styles.container}>
-              {notice && (
-                  <>
-                      <div style={styles.title}>{notice.title}</div>
-                      <div style={styles.authorAndDate}>
-                          작성자: {notice.nickname} <br/>
-                          {notice.updatedAt ? `수정일: ${formatDate(notice.updatedAt)}` : `작성일: ${formatDate(notice.createdAt)}`}
-                      </div>
-                      <div style={styles.content}>{notice.content}</div>
-                      <div style={styles.buttonContainer}>
-                          <button style={{...styles.button, ...styles.backButton}} onClick={handleBackToList}>목록으로</button>
-                          <div>
-                              <button style={{...styles.button, ...styles.editButton}} onClick={handleEdit}>수정하기</button>
-                              <button style={{...styles.button, ...styles.deleteButton}} onClick={handleDelete}>삭제하기</button>
-                          </div>
-                      </div>
-                  </>
-              )}
-          </div>
+        <div style={styles.container}>
+          {notice && (
+            <>
+              <div style={styles.title}>{notice.title}</div>
+              <div style={styles.authorAndDate}>
+                작성자: {notice.nickname} <br/>
+                {notice.updatedAt ? `수정일: ${formatDate(notice.updatedAt)}` : `작성일: ${formatDate(notice.createdAt)}`}
+              </div>
+              <div style={styles.content} dangerouslySetInnerHTML={{ __html: notice.content }}></div>
+              <div style={styles.buttonContainer}>
+                <button style={{...styles.button, ...styles.backButton}} onClick={handleBackToList}>목록으로</button>
+                <div>
+                  <button style={{...styles.button, ...styles.editButton}} onClick={handleEdit}>수정하기</button>
+                  <button style={{...styles.button, ...styles.deleteButton}} onClick={handleDelete}>삭제하기</button>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
       );
     }
 export default DetailAnno;

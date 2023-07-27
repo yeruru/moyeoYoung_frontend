@@ -4,14 +4,16 @@ import './RoomCard.css';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link,useNavigate  } from 'react-router-dom';
+import HttpsIcon from '@mui/icons-material/Https';
+
 export const RoomCard = ({ isBookmark, item }) => { 
-  const [backColor, setBackColor] = useState('');
-  const [detail, setDetail] = useState(item.roomContent.replace(/<br\/>/g, ''));
-  const instance = axios.create({
-    baseURL: 'http://localhost:8090/room', // 기본 경로 설정
+  const [backColor, setBackColor] = useState(''); 
+  const axiosURL = axios.create({
+    baseURL: `${process.env.REACT_APP_BURL}/room`, // 기본 경로 설정
   });
   const [bookmark, setBookmark] = useState(isBookmark);
   const navigate  = useNavigate();
+  const [isClosed,setIsClosed] = useState();
 
   useEffect(() => {
     switch (item.roomCategory) {
@@ -23,6 +25,12 @@ export const RoomCard = ({ isBookmark, item }) => {
       case '동아리': setBackColor('pink'); break;
       case '친목': setBackColor('yellow'); break;
       case '기타': setBackColor('gray'); break;
+      default :setBackColor('gray'); 
+    }
+    if(item.roomType==='close'){
+      setIsClosed(true);
+    }else{
+      setIsClosed(false);
     }
   }, [])
 
@@ -34,7 +42,7 @@ export const RoomCard = ({ isBookmark, item }) => {
       navigate('/login');
   } 
   e.preventDefault();
-    instance.get(`/bookmark/${e.target.id}`, {
+    axiosURL.get(`/bookmark/${e.target.id}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
     }
@@ -58,16 +66,18 @@ export const RoomCard = ({ isBookmark, item }) => {
  
           bookmark
         </span></button>
-        <img src={`http://localhost:8090/room/view/${item.roomImage}`} className='card-img' />
-        <p className='p2'>{item.roomTitle}</p>
-        <p className="intro">{detail}</p>
+        <img src={`${process.env.REACT_APP_BURL}/room/view/${item.roomImage}`} className='card-img' alt='방 썸네일 사진' />
+       <p className='p2'>{item.roomTitle}</p>
+        <p className="intro">{item.roomContent}</p>
 
         <div className='mini-sec'>
           <p className={`p3 ${backColor}`}>#{item.roomCategory}</p>
-          <div className='mini-sec2'>
+          <div className='mini-sec2'> 
+            { isClosed &&
+              <HttpsIcon className='httpsIcon'/>}
             <span className="material-symbols-outlined group-icon">
               group
-            </span><span className='p4'>{item.roomUserCnt}</span>
+            </span><span className='p4'>{item.roomUserCnt}</span> 
           </div>
         </div> 
         </Link> 

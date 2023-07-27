@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import axios from 'axios';
 import Timer from "./Timer";
+import Profile from '../../../../components/Profile/Profile';
 
 const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => { 
     const [feedDetail, setFeedDetail] = useState({title:'', content:'' ,userId : 0,  filename : '', roomcreateDate : ''});
@@ -16,6 +17,8 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
     const [modal, setModal] = useState(false);
     const [commentId, setCommentId] = useState();
     const [memberId, setMemberId] = useState();
+    const [nickname, setNickname] = useState('');
+    const [profileModal, setProfileModal] = useState(false);
 
     const handleModalClick = (event) => {
         event.stopPropagation();
@@ -27,7 +30,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
     };
 
     useEffect(()=>{
-        axios.get(`http://localhost:8090/feed/getmemberId`,{
+        axios.get(`${process.env.REACT_APP_BURL}/feed/getmemberId`,{
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }
@@ -39,7 +42,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
 
     useEffect(()=>{
         if(isOpen==true){
-            axios.get(`http://localhost:8090/feed/detailfeed/${content}`)
+            axios.get(`${process.env.REACT_APP_BURL}/feed/detailfeed/${content}`)
             .then(res=>{
                 setFeedDetail(prevFeedDetail => ({
                     ...prevFeedDetail,
@@ -53,7 +56,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
     
             });
 
-            axios.get(`http://localhost:8090/feed/selectcomment/${content}`,{
+            axios.get(`${process.env.REACT_APP_BURL}/feed/selectcomment/${content}`,{
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
                 }   
@@ -68,7 +71,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
     },[content, isOpen]);
 
     const fetchComment = () => {
-            axios.get(`http://localhost:8090/feed/selectcomment/${content}`,{
+            axios.get(`${process.env.REACT_APP_BURL}/feed/selectcomment/${content}`,{
                 headers: {
                     'Authorization': `Bearer ${accessToken}`
                 }   
@@ -86,13 +89,14 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
         e.preventDefault();
         const formData = new FormData();
         formData.append("comment", commentword);
-        axios.post(`http://localhost:8090/feed/writecomment/${content}`, formData, {
+        axios.post(`${process.env.REACT_APP_BURL}/feed/writecomment/${content}`, formData, {
             headers: {
                 'Authorization': `Bearer ${accessToken}`
             }   
         })
         .then(res=>{
             fetchComment();
+            document.getElementById("writecomment").value = '';
         })
         .catch(err=>{
         })
@@ -112,7 +116,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
     }
 
     const deletecomment = () => {
-        axios.post(`http://localhost:8090/feed/deletecomment/${commentId}`)
+        axios.post(`${process.env.REACT_APP_BURL}/feed/deletecomment/${commentId}`)
         .then(res => {
             setModal(!modal);
             fetchComment();
@@ -121,10 +125,15 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
 
         })
     };
-// console.log(comment[0].memberId);
-// console.log(memberId);
 
+    const openProfile = (feednickname) => {
+        setNickname(feednickname);
+        setProfileModal(!profileModal);
+    }
 
+    const ProfileCloseModal = () => {
+    setProfileModal(!profileModal);
+    }
     return(
         <div className="roomfeeddetail">
             <div className={`detailfeed ${isOpen ? 'show' : ''}`} onClick={onClose}>
@@ -140,7 +149,7 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
                     {
                         feedDetail.filename.split(",").map((item) => (
                             <SwiperSlide key={item}>
-                                <div className='feeddetailImg' style={{backgroundImage:`url(http://localhost:8090/room/view/${item})`}}></div>
+                                <div className='feeddetailImg' style={{backgroundImage:`url(${process.env.REACT_APP_BURL}/room/view/${item})`}}></div>
                             </SwiperSlide>
                         ))
                     }
@@ -154,10 +163,10 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
                     {
                         comment.map((item)=>(
                             <div className='comments' key={item.commentId}>
-                                <div className='profileimg' style={{backgroundImage:`url(http://localhost:8090/room/view/${item.profilename})`}}></div>
+                                <div className='profileimg' onClick={()=>openProfile(item.nickname)} style={{backgroundImage:`url(${process.env.REACT_APP_BURL}/room/view/${item.profilename})`}}></div>
                                 <div className='commentbox'>  
                                         <div className='username' >
-                                            <span>{item.nickname}</span>
+                                            <span  style={{cursor:'pointer'}}onClick={()=>openProfile(item.nickname)}>{item.nickname}</span>
                                             <Timer commentCreateDate={item.commentCreateDate} />
                                             {
                                                 item.memberId == memberId && 
@@ -180,13 +189,18 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
                     }
                     </div>
                     <div className='commentInput'>
-                        <input className="writecomment" type='text' placeholder='댓글을 작성해주세요' onChange={commentChange}/>
+                        <input id="writecomment" className="writecomment" type='text' placeholder='댓글을 작성해주세요' onChange={commentChange}/>
                         <input className="commentsubmit" type='submit' onClick={commentSubmit}></input>
                     </div>
 
                 </div>
                 </div>
             </div>
+            <Profile
+                isOpen={profileModal}
+                content={nickname}
+                isClose={ProfileCloseModal}
+            />
       </div>
     )
 }

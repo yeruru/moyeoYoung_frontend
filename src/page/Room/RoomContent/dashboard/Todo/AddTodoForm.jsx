@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { TextField, InputAdornment, Box, Button } from '@mui/material';
 
-function AddTodoForm({ addTodo }) {
+function AddTodoForm({ addTodo, state }) {
   const [content, setContent] = useState('');
   const [placeholder, setPlaceholder] = useState("추가할 항목을 작성하세요");
 
@@ -16,7 +16,7 @@ function AddTodoForm({ addTodo }) {
   const handleFocus = () => setPlaceholder("입력중...");
   const handleBlur = () => setPlaceholder("추가할 항목을 작성하세요");
 
-  return (
+  return (state ==='okMember' &&
     <Box component="form" onSubmit={handleSubmit} sx={{ border: '1px solid #ddd', width: '400px', mt: 1, mb: 2 }}>
       <TextField
         variant="outlined"
@@ -38,6 +38,7 @@ function AddTodoForm({ addTodo }) {
             },
           },
         }}
+      
         InputProps={{
           endAdornment: (
             <InputAdornment position="end">

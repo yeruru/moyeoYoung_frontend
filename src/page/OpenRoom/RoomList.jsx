@@ -17,8 +17,8 @@ function RoomList() {
   const [cateWord, setCateWord] = useState('');
   const containRoomCnt = (roomList.length) % 4;
   const emptyRoomCnt = 4 - containRoomCnt;
-  const instance = axios.create({
-    baseURL: 'http://localhost:8090/room', // 기본 경로 설정 
+  const axiosURL = axios.create({
+    baseURL:process.env.REACT_APP_BURL+'/room', // 기본 경로 설정 
   });
   const [isBookmarks, setIsBookmarks] = useState([]);
   const navigate = useNavigate();
@@ -32,7 +32,7 @@ function RoomList() {
     setSearchWord(false); 
 
 
-    instance.get(`/roomList/${p_page}`, {
+    axiosURL.get(`/roomList/${p_page}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }
@@ -67,7 +67,7 @@ function RoomList() {
     setSearchCate(true);
     setSearchWord(false);
 
-    instance.get(`/roomListByCate/${p_page}`, {
+    axiosURL.get(`/roomListByCate/${p_page}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       },
@@ -99,7 +99,7 @@ function RoomList() {
     setSearchCate(false);
     setSearchWord(true);
 
-    instance.get(`/roomListByWord/${p_page}`, {
+    axiosURL.get(`/roomListByWord/${p_page}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`
       }, params: {
@@ -150,7 +150,7 @@ function RoomList() {
     <div id='room-list'>
       <div className='wrap'>
         <div className='search-box'>
-          <img src='/image/Group 14.svg' className='center-img' />
+          <img src='/image/Group 14.svg' className='center-img' alt='기본이미지'/>
           <div className='search-position'><input type='text' className='search-text' name='word' placeholder='모임을 검색해 보세요.' onChange={(e) => setWord(e.target.value)} />
             <button type='button' onClick={callWord}><span className="material-symbols-outlined search-icon">
               search
@@ -185,7 +185,7 @@ function RoomList() {
               {roomList.length === 0 &&
                 <div className='empty-item-box'>
                   <div className='empty-img-box'>
-                    <img src={nothing} /></div>
+                    <img src={nothing} alt='기본이미지'/></div>
                   <p className='empty-p'>모임방이 존재하지 않습니다!</p>
                 </div>
               }

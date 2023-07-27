@@ -2,8 +2,6 @@ import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import './GifSearch.css'; // 추가 - CSS 파일
 
-let ipmod = 1 ? 'http://localhost:8090/search-gifs' : 'http://211.108.241.185:8090/search-gifs'
-
 
 const GifSearch = ({ onImageClick }) => {
   const [term, setTerm] = useState('');
@@ -19,7 +17,7 @@ const GifSearch = ({ onImageClick }) => {
 
   const searchGifs = async (term) => {
     if (term !== '') {
-      const response = await axios.get(ipmod, {
+      const response = await axios.get(process.env.REACT_APP_BURL+'/search-gifs', {
         params: {
           q: term
         },

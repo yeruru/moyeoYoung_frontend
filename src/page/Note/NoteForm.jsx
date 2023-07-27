@@ -30,9 +30,6 @@ function NoteForm() {
   const accessToken = localStorage.getItem("accessToken");
   const location = useLocation();
 
-  console.log(location);
-
-  // const { receiverNickname } = location.state;
 
   useEffect(()=>{
     const encodedNickname = location.pathname.split("/")[2];
@@ -42,7 +39,9 @@ function NoteForm() {
     const decodedNickname = decodeURIComponent(encodedNickname);
     setNickname(decodedNickname);
   },[location]);
- 
+
+
+
   // const receivedNickname = useState("");
   // const content = useState("");
   const [note, setNote] = useState({
@@ -61,9 +60,13 @@ function NoteForm() {
     e.preventDefault();
     const formData = new FormData();
     formData.append("receiverNickname", recivername);
-    formData.append("content", note.content);
+    if(note.content.length===0){
+      alert('내용을 입력해 주세요.');
+      return false;
+    }
+    formData.append("content", note.content); 
     axios
-      .post("http://localhost:8090/note/send", formData, {
+      .post(`${process.env.REACT_APP_BURL}/note/send`, formData, {
         headers: {
           Authorization: `Bearer ${accessToken}`,
         },

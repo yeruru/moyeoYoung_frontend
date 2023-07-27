@@ -32,10 +32,13 @@ const MyPage = () => {
   const [profileModal,setProfileModal] = useState(false);
   const [nickname, setNickname] = useState("");
   const navigate = useNavigate();
+  const [previewImage, setPreviewImage] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const fileInputRef = useRef(null);
   useEffect(() => {
     // 유저 정보 가져오기
     axios
-      .get("http://localhost:8090/member/mypage", {
+      .get(`${process.env.REACT_APP_BURL}/member/mypage`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         },
@@ -50,17 +53,12 @@ const MyPage = () => {
           profileContent: res.data.profileContent,
           regdate: res.data.regdate,
         });
-        setPreviewImage(`http://localhost:8090/room/view/${res.data.fileName}`);
+        setPreviewImage(`${process.env.REACT_APP_BURL}/room/view/${res.data.fileName}`);
       })
       .catch((err) => {
-        console.log(err);
       });
     console.log(accessToken);
   }, [accessToken]);
-
-  const [previewImage, setPreviewImage] = useState(null);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const fileInputRef = useRef(null);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -77,11 +75,8 @@ const MyPage = () => {
       file: file,
       };
     });
-    console.log(file);
     setPreviewImage(URL.createObjectURL(file));
   };
-
-  console.log(formData);
 
 
   const handleModalOpen = () => {
@@ -90,6 +85,7 @@ const MyPage = () => {
 
   const handleModalClose = () => {
     setIsModalOpen(false);
+    window.location.reload(); 
   };
 
   const handleProfileUpdate = () => {
@@ -106,7 +102,7 @@ const MyPage = () => {
     console.log(formData.fileName);
     console.log(formData.file);
     axios
-    .post(`http://localhost:8090/member/update/${memberId}`, form,{
+    .post(`${process.env.REACT_APP_BURL}/member/update/${memberId}`, form,{
       headers: {
         "Content-Type" : "multipart/form-data; charset= UTF-8",
       },
@@ -127,13 +123,17 @@ const MyPage = () => {
 
   // 닉네임 중복 체크
   const handleChange = (event) => {
-    const { name, value } = event.target;
+
+    const value = event.target.value;
+    const name = event.target.name;
     setFormData({ ...formData, [name]: value });
+
   };
+  
   const [isNicknameDuplicated, setIsNicknameDuplicated] = useState(false);
   const handleNicknameCheck = () => {
     axios
-      .get(`http://localhost:8090/auth/checkednick?nickname=${formData.nickname}`)
+      .get(`${process.env.REACT_APP_BURL}/auth/checkednick?nickname=${formData.nickname}`)
       .then((response) => {
         setIsNicknameDuplicated(response.data);
       })
@@ -166,7 +166,7 @@ const MyPage = () => {
       }
     };
 
-    axios.delete(`http://localhost:8090/member/delete/${memberId}`, config)
+    axios.delete(`${process.env.REACT_APP_BURL}/member/delete/${memberId}`, config)
       .then((response) => {
         alert('회원 탈퇴가 완료되었습니다.');
         localStorage.removeItem('accessToken');

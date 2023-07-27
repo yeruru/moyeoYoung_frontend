@@ -28,7 +28,7 @@ function MyActivityNav() {
 
   const accessToken = localStorage.getItem("accessToken");
   useEffect(()=>{
-    axios.get(`http://localhost:8090/feed/getmemberId`,  {
+    axios.get(`${process.env.REACT_APP_BURL}/feed/getmemberId`,  {
       headers: {
         Authorization: `Bearer ${accessToken}`
       },
@@ -54,16 +54,16 @@ function MyActivityNav() {
             <a href={`/myroom/${memberId}`} className={`note-a ${isAllVaild === 'myroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myroom')}>내 모임방
             </a>
           </li>
-          <li>
-            <a href="/myjoinroom" className={`note-a ${isAllVaild === 'myjoinroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myjoinroom')}>내 참여방
+          <li> 
+            <a href={`/myjoinroom/${memberId}`}className={`note-a ${isAllVaild === 'myjoinroom' ? 'click' : ''}`} onClick={() => handleBtnClick('myjoinroom')}>내 참여방
             </a>
           </li>
           <li>
-            <a href="/myfeed" className={`note-a ${isAllVaild === 'myfeed' ? 'click' : ''}`} onClick={() => handleBtnClick('myfeed')}>피드 목록
+            <a href={`/myfeed/${memberId}`} className={`note-a ${isAllVaild === 'myfeed' ? 'click' : ''}`} onClick={() => handleBtnClick('myfeed')}>피드 목록
             </a>
           </li>
           <li>
-            <a href="/mybookmark" className={`note-a ${isAllVaild === 'mybookmark' ? 'click' : ''}`} onClick={() => handleBtnClick('mybookmark')}>관심 목록
+            <a href={`/mybookmark/${memberId}`} className={`note-a ${isAllVaild === 'mybookmark' ? 'click' : ''}`} onClick={() => handleBtnClick('mybookmark')}>관심 목록
             </a>
           </li>
         </ul>
