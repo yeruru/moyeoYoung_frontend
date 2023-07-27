@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import logo from '../../logo.svg';
+import CleaningServicesOutlinedIcon from '@mui/icons-material/CleaningServicesOutlined';
 import './Header.css';
+import { IconButton } from '@mui/material';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import MailIcon from '@mui/icons-material/Mail';
 import styled from 'styled-components';
@@ -13,8 +15,13 @@ import "../../images/member/normal.png"
 import { assertConditionalExpression } from '@babel/types';
 
 import Profile from '../../components/Profile/Profile';
+import { current } from '@reduxjs/toolkit';
 
 function Header() {
+
+  // SSE 연결 객체를 저장할 상태
+  
+
   const accessToken = localStorage.getItem("accessToken");
   const [isDropdownOpen, setDropdownOpen] = useState(false);
   const [isAlarmBoxOpen, setAlarmBoxOpen] = useState(false);
@@ -33,7 +40,9 @@ function Header() {
   const memberId = useSelector((state) => state.memberId);
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
+  const [isProBoxOpen, setProBoxOpen] = useState(false);
+  const [isMouseInsideProBox, setMouseInsideProBox] = useState(false);
+  const [selectedButton, setSelectedButton] = useState('');
 
   const [fileName, setFileName] = useState('normal.png');
   const [previewImage, setPreviewImage] = useState(null);
@@ -65,6 +74,7 @@ function Header() {
     };
   
     // 유저 정보 가져오기
+
     const fetchUserInfo = () => {
       axios
         .get(`${process.env.REACT_APP_BURL}/member/mypage`, {
@@ -73,9 +83,7 @@ function Header() {
           },
         })
         .then((res) => {
-          setFileName({
-            fileName: res.data.fileName
-          });
+           setFileName(res.data.fileName);
           setPreviewImage(`${process.env.REACT_APP_BURL}/room/view/${res.data.fileName}`);
         })
         .catch((err) => {
@@ -86,11 +94,13 @@ function Header() {
     // 토큰이 변경될 때마다 유저 정보를 가져옵니다.
     fetchUserInfo();
   
-    // 유효성 검사를 시작하고 1분마다 반복합니다.
-    const intervalId = setInterval(checkTokenExpiration, 6000);
+    // 유효성 검사를 시작하고 31.2분마다 반복합니다.
+    const intervalId = setInterval(checkTokenExpiration, 190000);
   
     // useEffect cleanup function에서 interval을 clear합니다.
     return () => clearInterval(intervalId);
+   // 알림 리스트 불러오기
+    fetchNotifications();
   }, [accessToken]); // accessToken을 종속성 배열에 추가
   
 
@@ -119,6 +129,7 @@ function Header() {
   
   // 모달
   const handleNoteIconClick = () => {
+    console.log(notifications);
     setAlarmBoxOpen(!isAlarmBoxOpen);
   };
 
@@ -135,8 +146,7 @@ function Header() {
 
   
   // 프로필 모달
-  const [isProBoxOpen, setProBoxOpen] = useState(false);
-  const [isMouseInsideProBox, setMouseInsideProBox] = useState(false);
+  
 
   const handleProMouseEnter = () => {
     setProBoxOpen(true);
@@ -150,15 +160,143 @@ function Header() {
     }, 300);
   };
 
-  const [selectedButton, setSelectedButton] = useState('');
 
-  //프로필 하다가 말았음 
-  const [comment, setComment] = useState([]);
+useEffect(() => {
+  // SSE 연결 시도
+  let eventSource = null;
+  if (isLoggedIn) {
+    const connectSSE = () => {
+    const eventSource = new EventSource('http://localhost:8090/notification/connect?accessToken=' + accessToken);
+
+    eventSource.onopen = () => {
+      console.log("SSE connected");
+      // 알림 가져오기
+      fetchNotifications();
+    };
+
+    eventSource.onmessage = (event) => {
+      const newNotification = JSON.parse(event.data);
+      const newTimestamp = new Date(newNotification.registeredAt).getTime();
+      newNotification.timestamp = newTimestamp;
+      setNotifications((prevNotifications) => [newNotification, ...prevNotifications]);
+      console.log("newNotification"+newNotification);
+      //updateElapsedTime();
+       // 읽지 않은 알림 개수 갱신
+       fetchNotifications(); // 알림 목록을 다시 불러옴
+    };
+
+    eventSource.onerror = (error) => {
+      console.error("Error occurred while connecting to SSE.", error);
+      connectSSE();
+    };
+  };
+
+    // 경과 시간 업데이트 함수
+    // const updateElapsedTime = () => {
+    //   setNotifications((prevNotifications) =>
+    //     prevNotifications.map((notification) => ({
+    //       ...notification,
+    //       elapsedTime: getElapsedTime(notification.timestamp)
+    //     }))
+    //   );
+    // };
+
+    
+
+    // 컴포넌트가 언마운트될 때 SSE 연결 종료 및 인터벌 해제
+    return () => {
+      eventSource.close();
+      //clearInterval(interval);
+    };
+  }
+}, [isLoggedIn, accessToken]);
+// 알람조회
+
+const [notifications, setNotifications] = useState([]);
+// 읽지 않은 알림 개수 상태
+const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
+ // 알림 목록을 가져오는 API 호출
+ const fetchNotifications = async () => {
+  try {
+    const response = await axios.get('http://localhost:8090/notification/list', {
+      headers: {
+        Authorization: `Bearer ${accessToken}` // 헤더에 토큰을 추가
+      }
+    });
+    setNotifications(response.data);
+    // 읽지 않은 알림 개수 계산
+    setUnreadNotificationCount(response.data.filter((notification) => !notification.isRead).length);
+
+    console.log(response.data); // 확인용 로그: 알림 데이터를 로그로 출력
+  } catch (error) {
+    console.error('Error fetching notifications:', error);
+  }
+};
 
 
+// 알림을 읽은 상태로 업데이트하는 함수
+const markNotificationAsRead = async (notificationId) => {
+  try {
+    setNotifications((prevNotifications) =>
+      prevNotifications.map((notification) =>
+        notification.id === notificationId ? { ...notification, isRead: true } : notification
+      )
+    );
+    await axios.put(`http://localhost:8090/notification/read/${notificationId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}` // 헤더에 토큰을 추가
+      }
+    });
+    console.log("알림을 읽은 상태로 업데이트되었습니다.");
 
-  //알람기능
-  
+  } catch (error) {
+    console.error('Error updating notification:', error);
+    // 에러 처리 로직 추가
+  }
+};
+
+const handleRead=  (notificationId) => {
+  markNotificationAsRead(notificationId);
+};
+// 알림 삭제 API 호출 함수
+const handleDeleteNotification = async (notificationId) => {
+  try {
+    await axios.delete(`http://localhost:8090/notification/delete/${notificationId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    });
+
+    // 삭제 성공시 알림 목록을 갱신합니다.
+    fetchNotifications();
+  } catch (error) {
+    console.error('Error deleting notification:', error);
+  }
+};
+
+// 알림 목록에서 알림 삭제 함수
+const handleNotificationDelete = (notificationId) => {
+  handleDeleteNotification(notificationId);
+};
+
+const getElapsedTime = (timestampString) => {
+  const currentTime = new Date().getTime(); // 현재 시간
+  // const registeredTime = new Date(timestampString).getTime();
+  const registeredTime = Date.parse(timestampString);
+  console.log(registeredTime);
+  const elapsedTime = currentTime - registeredTime;
+  console.log(elapsedTime);
+
+  const seconds = Math.floor(elapsedTime / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const hours = Math.floor(minutes / 60);
+  const days = Math.floor(hours / 24);
+
+  if (days > 0) return `${days}일 전`;
+  if (hours > 0) return `${hours}시간 전`;
+  if (minutes > 0) return `${minutes}분 전`;
+  return '방금 전';
+};
 
   return (
     <div className='mo-header' id='mo-header'>
@@ -208,61 +346,39 @@ function Header() {
             </li>
             {isLoggedIn && (
               <li className={`noteLi ${isAlarmBoxOpen ? 'selected' : ''}`}>
-              <AlarmIconContainer onClick={handleNoteIconClick}>
-                <NotificationsIcon style={{ color: isAlarmBoxOpen ? 'var(--mo)' : 'inherit' }} />
-              </AlarmIconContainer>
+                <AlarmIconContainer onClick={handleNoteIconClick}>
+                  <NotificationsIcon style={{ color: isAlarmBoxOpen ? 'var(--mo)' : 'inherit' }} />
+                  {/* 읽지 않은 알림 개수 표시 */}
+                  {unreadNotificationCount > 0 && (
+                    <NotificationCount className="notification-count" >{unreadNotificationCount}</NotificationCount>
+                  )}
+                </AlarmIconContainer>
                 {isAlarmBoxOpen && (
                   <AlarmBox className='alarm-containe'>
                     <ClearIcon onClick={handleNoteIconClick} style={{ float: 'right', top: '-20px', position: 'relative' }} />
-                    {/* 알람이 없을경우 */}
-                    <p>알림이 없습니다</p>
-
-                    {/* 알람이 있을경우*/}
-                    <div className='alarm-modal'>
-                      <div>
-                        <p><em className='alarm-nick'>이예림닉네임이 이렇게 길어버리면 어쩔</em> 님이 모임에 가입했습니다. 환영해주세요!🎉</p>
-                        <div className='alarm-sub'>
-                          <em>이예림과 함께하는 CSS모임방</em>
-                          <p className='alarm-modal-date'>8시간 전</p>
+                    {/* 알람이 없을 경우 */}
+                    {notifications.length === 0 ? (
+                      <p>알림이 없습니다</p>
+                    ) : (
+                      /* 알람이 있을 경우*/
+                      notifications.map((notification) =>  (
+                        <div className='alarm-modal' key={notification.id} onClick={() => handleRead(notification.id)}>
+                          <div>
+                            <p>
+                              <em className='alarm-nick'>{notification.type}</em>
+                              <IconButton className='alarm_btn' size='small' color='inherit' onClick={() => handleNotificationDelete(notification.id)}>
+                                <CleaningServicesOutlinedIcon  />
+                              </IconButton><br/>
+                              {notification.message}
+                            </p>
+                            <div className='alarm-sub'>
+                              <em>  {notification.senderNickname}</em>
+                              <p className='alarm-modal-date'>{getElapsedTime(notification.registerAt)}</p>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-                    <div className='alarm-modal'>
-                      <div>
-                        <p><em className='alarm-nick'>옆집아저씨</em> 님이 모임에 가입했습니다. 환영해주세요!🎉</p>
-                        <div className='alarm-sub'>
-                          <em>이예림과 함께하는 CSS모임방이름이 이렇게 길어버리면 어쩔껀데</em>
-                          <p className='alarm-modal-date'>8시간 전</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='alarm-modal'>
-                      <div>
-                        <p><em className='alarm-nick'>정세피티</em> 님이 모임에 가입했습니다. 환영해주세요!🎉</p>
-                        <div className='alarm-sub'>
-                          <em>이예림과 함께하는 CSS모임방</em>
-                          <p className='alarm-modal-date'>8시간 전</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='alarm-modal'>
-                      <div>
-                        <p><em className='alarm-nick'>천승현띠</em> 님이 모임에 가입했습니다. 환영해주세요!🎉</p>
-                        <div className='alarm-sub'>
-                          <em>이예림과 함께하는 CSS모임방</em>
-                          <p className='alarm-modal-date'>8시간 전</p>
-                        </div>
-                      </div>
-                    </div>
-                    <div className='alarm-modal'>
-                      <div>
-                        <p><em className='alarm-nick'>비누누</em> 님이 모임에 가입했습니다. 환영해주세요!🎉</p>
-                        <div className='alarm-sub'>
-                          <em>이예림과 함께하는 CSS모임방</em>
-                          <p className='alarm-modal-date'>8시간 전</p>
-                        </div>
-                      </div>
-                    </div>
+                      )).reverse()
+                    )}
                   </AlarmBox>
                 )}
               </li>
@@ -361,4 +477,19 @@ const ProBox = styled.div`
 
 const LiSt = styled.li`
   color: ${(props) => (props.selected ? 'var(--mo)' : '#868686')};
+`;
+
+const NotificationCount = styled.span`
+  position: absolute;
+  top: -8px;
+  right: 4px;
+  font-size: 12px;
+  background-color: red;
+  color: #fff;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
 `;

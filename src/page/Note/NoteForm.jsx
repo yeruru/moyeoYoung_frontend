@@ -30,6 +30,7 @@ function NoteForm() {
   const accessToken = localStorage.getItem("accessToken");
   const location = useLocation();
 
+
   useEffect(()=>{
     const encodedNickname = location.pathname.split("/")[2];
     if(encodedNickname == undefined){
