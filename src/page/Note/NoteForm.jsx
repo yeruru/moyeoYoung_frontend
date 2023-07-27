@@ -32,10 +32,15 @@ function NoteForm() {
 
   console.log(location);
 
-  const { receiverNickname } = location.state;
+  // const { receiverNickname } = location.state;
 
   useEffect(()=>{
-    setNickname(location.pathname.split("/")[2]);
+    const encodedNickname = location.pathname.split("/")[2];
+    if(encodedNickname == undefined){
+      return;
+    }
+    const decodedNickname = decodeURIComponent(encodedNickname);
+    setNickname(decodedNickname);
   },[location]);
  
   // const receivedNickname = useState("");
