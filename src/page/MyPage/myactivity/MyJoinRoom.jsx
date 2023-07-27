@@ -103,9 +103,7 @@ function MyJoinRoom() {
                   })}
                 {containRoomCnt !== 0 && Array(emptyRoomCnt).fill().map((_, index) => (
                   <li className='hidden-li' key={index}></li>))
-                }
-
-                
+                } 
               </ul>
             </div>
           </div>
