@@ -225,10 +225,10 @@ function RoomMain() {
         </div>
         { 
         (room.roomType==='close' && userState !== 'okMember' && selectedContent !=='dashboard') &&
-         <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
+        <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
           <div className='w-p'> 
-           <img src='/image/Group 51.svg' alt="No access" width="600" height="200" />
-           <p className='not-access'>멤버에게만 공개된 방입니다!</p> 
+          <img src='/image/Group 51.svg' alt="No access" width="600" height="200" />
+          <p className='not-access'>멤버에게만 공개된 방입니다!</p> 
           </div>
           </div>
         } 
@@ -238,7 +238,7 @@ function RoomMain() {
             <Dashboard roomId={roomId} room={room} state={userState} roomstate={room.roomType}/>
           </div>
         }
-         
+        
         { (room.roomType==='open' || userState === 'okMember') &&
           <div className='content' style={{ width: '700px', backgroundColor: '#f5f5f5', padding: '20px', boxSizing: 'border-box' }}>
           {selectedContent === 'dashboard' && <Dashboard roomId={roomId} room={room} state={userState} roomstate={room.roomType}/>} {/* 대시보드 컴포넌트 추가 */}
@@ -250,7 +250,7 @@ function RoomMain() {
           {selectedContent === 'writeAnno' && <WriteAnno />}
           {selectedContent === 'detailAnno' && <DetailAnno />}
           {selectedContent === 'editAnno' && <EditAnno />}
- 
+
           {selectedContent === 'writefeed' && <WriteFeed roomId={roomId} />}
           {selectedContent === 'modifyfeed' && <ModifyFeed />}
 
