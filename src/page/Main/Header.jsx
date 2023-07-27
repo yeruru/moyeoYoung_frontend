@@ -251,7 +251,7 @@ function Header() {
                           </Link>
                         </li>
                         <li>
-                          <Link to={'/mypage'} className='header-link'>
+                          <Link to={`/myroom/${memberId}`} className='header-link'>
                             내 모임
                           </Link>
                         </li>
