@@ -15,7 +15,7 @@ export const MemberList = ({memberList,hostId}) => {
   const [loginMemberId, setLoginMemberId] = useState(0);
   let { roomId } = useParams();
   const axiosURL = axios.create({
-    baseURL: process.env.REACT_APP_BURL+'/room', // 기본 경로 설정
+    baseURL: process.env.REACT_APP_BURL, // 기본 경로 설정
   });
 
 
@@ -30,6 +30,7 @@ export const MemberList = ({memberList,hostId}) => {
     .then(res=>{
       setLoginMemberId(res.data);
     })
+
     if (memberList.length > 0) {
       setKingMember(memberList[0]);
     }

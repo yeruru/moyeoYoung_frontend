@@ -7,6 +7,7 @@ import 'swiper/css/navigation';
 import 'swiper/css/pagination';
 import axios from 'axios';
 import Timer from "./Timer";
+import Profile from '../../../../components/Profile/Profile';
 
 const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => { 
     const [feedDetail, setFeedDetail] = useState({title:'', content:'' ,userId : 0,  filename : '', roomcreateDate : ''});
@@ -16,6 +17,8 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
     const [modal, setModal] = useState(false);
     const [commentId, setCommentId] = useState();
     const [memberId, setMemberId] = useState();
+    const [nickname, setNickname] = useState('');
+    const [profileModal, setProfileModal] = useState(false);
 
     const handleModalClick = (event) => {
         event.stopPropagation();
@@ -116,13 +119,21 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
         axios.post(`${process.env.REACT_APP_BURL}/feed/deletecomment/${commentId}`)
         .then(res => {
             setModal(!modal);
-            document.getElementById("writecomment").value = '';
+            fetchComment();
         })
         .catch(err => {
 
         })
     };
 
+    const openProfile = (feednickname) => {
+        setNickname(feednickname);
+        setProfileModal(!profileModal);
+    }
+
+    const ProfileCloseModal = () => {
+    setProfileModal(!profileModal);
+    }
     return(
         <div className="roomfeeddetail">
             <div className={`detailfeed ${isOpen ? 'show' : ''}`} onClick={onClose}>
@@ -152,10 +163,10 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
                     {
                         comment.map((item)=>(
                             <div className='comments' key={item.commentId}>
-                                <div className='profileimg' style={{backgroundImage:`url(${process.env.REACT_APP_BURL}/room/view/${item.profilename})`}}></div>
+                                <div className='profileimg' onClick={()=>openProfile(item.nickname)} style={{backgroundImage:`url(${process.env.REACT_APP_BURL}/room/view/${item.profilename})`}}></div>
                                 <div className='commentbox'>  
                                         <div className='username' >
-                                            <span>{item.nickname}</span>
+                                            <span  style={{cursor:'pointer'}}onClick={()=>openProfile(item.nickname)}>{item.nickname}</span>
                                             <Timer commentCreateDate={item.commentCreateDate} />
                                             {
                                                 item.memberId == memberId && 
@@ -185,6 +196,11 @@ const RoomFeedDetail = ({isOpen, onClose, content, accessToken}) => {
                 </div>
                 </div>
             </div>
+            <Profile
+                isOpen={profileModal}
+                content={nickname}
+                isClose={ProfileCloseModal}
+            />
       </div>
     )
 }
