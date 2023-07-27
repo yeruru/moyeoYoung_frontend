@@ -97,7 +97,10 @@ export const MemberList = ({memberList,hostId,isWaitingOk}) => {
     if (memberId) {
       axiosURL.post(`/room/deletemember/${memberId}/${roomId}`)
       .then(res=>{  
-        document.location.href=`/roomMain/roomFeed/${roomId}`;
+        alert("강퇴했습니다.");
+        // document.location.href=`/roomMain/roomFeed/${roomId}`;
+        getMemberList(false);
+        setDeleteModal(false);
       })
       .catch(err=>{
         console.log(err);
