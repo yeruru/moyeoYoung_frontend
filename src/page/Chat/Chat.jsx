@@ -24,7 +24,6 @@ const Chat = () => {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setProfile(res.data.fileName);
         setName(res.data.nickname);
       })
@@ -33,7 +32,6 @@ const Chat = () => {
       });
   }, []);
 
-  console.log(name);
   let prevName = '';
 
   const msgBox = chatt.map((item, idx) => {
@@ -75,9 +73,7 @@ const Chat = () => {
 
   useEffect(() => {
     if (socketData !== undefined) {
-      console.log(socketData);
       const tempData = chatt.concat(socketData);
-      console.log(tempData);
       setChatt(tempData);
     }
   }, [socketData]);
@@ -93,7 +89,6 @@ const Chat = () => {
   }, []);
 
   const onText = event => {
-    console.log(event.target.value);
     setMsg(event.target.value);
   }
 

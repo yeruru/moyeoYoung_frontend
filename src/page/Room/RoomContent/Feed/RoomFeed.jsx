@@ -67,7 +67,6 @@ function RoomFeed({onContentChange, state}) {
     axios.get(`${process.env.REACT_APP_BURL}/feed/selectfeed/${roomId}/`)
       .then(res=>{
         setFeed(res.data);
-        console.log(res.data);
       })
       .catch(err => {
 

@@ -26,7 +26,6 @@ function Note() {
         },
       })
       .then((res) => {
-        console.log(res.data);
         setNoteData(res.data.notes);
         setTotalPages(res.data.totalPages); // 총 페이지 수 설정
         setNoteId(res.data.notes[0].noteId);
@@ -50,7 +49,6 @@ const noteStatus = (noteId) => {
     })
     .then((res) => {
       setNoteData(res.data.notes);
-      console.log(res.data);
     })
     .catch((err) => {
       console.log(err);

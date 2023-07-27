@@ -27,6 +27,7 @@ export const MemberList = ({memberList,hostId,isWaitingOk}) => {
   });
   const [notWaiting,setNotWaiting] = useState(false);
   const [isWaiting, setIsWaiting] = useState(isWaitingOk);
+  const [p_status, setp_status] = useState(false);
   
   useEffect(() => {
     axiosURL.get(`/feed/getmemberId`,{
@@ -44,7 +45,7 @@ export const MemberList = ({memberList,hostId,isWaitingOk}) => {
   }, [list, accessToken]);
 
   //멤버리스트 받아오기 
-  const getMemberList =(p_status)=>{
+  const getMemberList = (p_status)=>{
     axiosURL.get(`/room/memberList/${roomId}`, {
       headers: {
         'Authorization': `Bearer ${accessToken}`

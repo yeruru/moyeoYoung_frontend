@@ -189,8 +189,6 @@ function RoomMain() {
 
   }
 
-  console.log(userState);
-
   return (
     <div className='roomh'>
       { isView && ( <>

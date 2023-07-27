@@ -55,11 +55,6 @@ function Header() {
       const token = localStorage.getItem('accessToken');
       const expirationTime = localStorage.getItem('accessTokenExpiresIn');
       const currentTime = new Date().getTime();
-  
-      
-      // console.log("이게 token",token);
-      // console.log("이게 curTime",currentTime);
-      // console.log("이게 expireTime",expirationTime);
       if (token && expirationTime && currentTime > expirationTime) {
         // 토큰이 만료된 경우
         dispatch(clearTokens());
@@ -93,14 +88,14 @@ function Header() {
   
     // 토큰이 변경될 때마다 유저 정보를 가져옵니다.
     fetchUserInfo();
+    // 알림 리스트 불러오기
+     fetchNotifications();
   
     // 유효성 검사를 시작하고 31.2분마다 반복합니다.
     const intervalId = setInterval(checkTokenExpiration, 190000);
   
     // useEffect cleanup function에서 interval을 clear합니다.
     return () => clearInterval(intervalId);
-   // 알림 리스트 불러오기
-    fetchNotifications();
   }, [accessToken]); // accessToken을 종속성 배열에 추가
   
 
@@ -129,14 +124,12 @@ function Header() {
   
   // 모달
   const handleNoteIconClick = () => {
-    console.log(notifications);
     setAlarmBoxOpen(!isAlarmBoxOpen);
   };
 
   // 로그아웃
   const logout = () => {
     dispatch(clearTokens()); // clearTokens 액션을 디스패치하여 로그아웃 처리
-    console.log('====로그아웃 되었습니다====');
     localStorage.removeItem('accessToken'); // 로컬 스토리지에서 토큰 제거
     localStorage.removeItem('refreshToken');
     navigate('/login');
@@ -166,10 +159,9 @@ useEffect(() => {
   let eventSource = null;
   if (isLoggedIn) {
     const connectSSE = () => {
-    const eventSource = new EventSource('http://localhost:8090/notification/connect?accessToken=' + accessToken);
+    const eventSource = new EventSource(`${process.env.REACT_APP_BURL}/notification/connect?accessToken=` + accessToken);
 
     eventSource.onopen = () => {
-      console.log("SSE connected");
       // 알림 가져오기
       fetchNotifications();
     };
@@ -179,7 +171,6 @@ useEffect(() => {
       const newTimestamp = new Date(newNotification.registeredAt).getTime();
       newNotification.timestamp = newTimestamp;
       setNotifications((prevNotifications) => [newNotification, ...prevNotifications]);
-      console.log("newNotification"+newNotification);
       //updateElapsedTime();
        // 읽지 않은 알림 개수 갱신
        fetchNotifications(); // 알림 목록을 다시 불러옴
@@ -218,7 +209,7 @@ const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
  // 알림 목록을 가져오는 API 호출
  const fetchNotifications = async () => {
   try {
-    const response = await axios.get('http://localhost:8090/notification/list', {
+    const response = await axios.get(`${process.env.REACT_APP_BURL}/notification/list`, {
       headers: {
         Authorization: `Bearer ${accessToken}` // 헤더에 토큰을 추가
       }
@@ -227,7 +218,7 @@ const [unreadNotificationCount, setUnreadNotificationCount] = useState(0);
     // 읽지 않은 알림 개수 계산
     setUnreadNotificationCount(response.data.filter((notification) => !notification.isRead).length);
 
-    console.log(response.data); // 확인용 로그: 알림 데이터를 로그로 출력
+    // 확인용 로그: 알림 데이터를 로그로 출력
   } catch (error) {
     console.error('Error fetching notifications:', error);
   }
@@ -242,12 +233,11 @@ const markNotificationAsRead = async (notificationId) => {
         notification.id === notificationId ? { ...notification, isRead: true } : notification
       )
     );
-    await axios.put(`http://localhost:8090/notification/read/${notificationId}`, {
+    await axios.put(`${process.env.REACT_APP_BURL}/notification/read/${notificationId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}` // 헤더에 토큰을 추가
       }
     });
-    console.log("알림을 읽은 상태로 업데이트되었습니다.");
 
   } catch (error) {
     console.error('Error updating notification:', error);
@@ -261,7 +251,7 @@ const handleRead=  (notificationId) => {
 // 알림 삭제 API 호출 함수
 const handleDeleteNotification = async (notificationId) => {
   try {
-    await axios.delete(`http://localhost:8090/notification/delete/${notificationId}`, {
+    await axios.delete(`${process.env.REACT_APP_BURL}/notification/delete/${notificationId}`, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
       },
@@ -283,9 +273,7 @@ const getElapsedTime = (timestampString) => {
   const currentTime = new Date().getTime(); // 현재 시간
   // const registeredTime = new Date(timestampString).getTime();
   const registeredTime = Date.parse(timestampString);
-  console.log(registeredTime);
   const elapsedTime = currentTime - registeredTime;
-  console.log(elapsedTime);
 
   const seconds = Math.floor(elapsedTime / 1000);
   const minutes = Math.floor(seconds / 60);

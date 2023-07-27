@@ -13,7 +13,6 @@ export const YouthSpaceDetail = () => {
   const [imgURLs , setImgURLs] = useState([]);
 
   useEffect(()=>{
-    console.log(spaceId);
     axios.get(process.env.REACT_APP_BURL+`/youth/youthSpaceDetail/${spaceId}`)
     .then(res=>{
       setSpace(res.data.space);  

@@ -85,7 +85,6 @@ const styles = {
             axios.get(process.env.REACT_APP_BURL+`/rooms/${roomId}/notices/${annoId}`)
                 .then(response => {
                     setNotice(response.data);
-                    console.log(response.data);
                 });
             }
     }, [annoId, roomId]);

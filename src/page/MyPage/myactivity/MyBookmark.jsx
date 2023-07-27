@@ -28,7 +28,6 @@ function MyBookmark() {
         }
       })
       .catch(err => {
-        console.log(err);
       })
   },[])
   return (

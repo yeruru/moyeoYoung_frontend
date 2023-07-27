@@ -20,14 +20,10 @@ function MyFeed() {
     axios.get(`${process.env.REACT_APP_BURL}/feed/selectfeeds/${memberId}`)
     .then(res=>{
       setFeed(res.data);
-      console.log(res.data);
     })
     .catch(err=>{
-      console.log(err);
     })
 },[memberId])
-
-console.log(feed);
 
   return (
     <div className='wrap' id='myfeed'>

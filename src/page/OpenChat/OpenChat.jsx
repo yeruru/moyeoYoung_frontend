@@ -221,7 +221,6 @@ const OpenChat = () => {
     
       async function fetchMemberInfo(token) {
         try {
-            console.log("시도중");
             // Provide full URL to the endpoint
             const response = await fetch(process.env.REACT_APP_BURL+'/member/mypage', {
                 headers: {
@@ -236,8 +235,6 @@ const OpenChat = () => {
             const text = await response.text();
             // Now attempt to parse it as JSON
             const data = JSON.parse(text);
-            console.log(text);
-            console.log(data);
 
     
             return data;
@@ -250,7 +247,7 @@ const OpenChat = () => {
     // JSX를 반환합니다.
     return (
         <div className='wrap'>
-            <img src="/image/openchat/청년talk_배너.png" style={{ width: '400px', display: 'block', margin: '0 auto' }} />
+            <img src="/image/openchat/청년talk_배너.png" style={{ width: '440px', display: 'block', margin: '0 auto' }} />
             <div className="chat-container">
                 <div className="chat-room-buttons">
                     <button className="menu-button" onClick={() => handleRoomChange("room1")}>청년공간 같이가실분</button>

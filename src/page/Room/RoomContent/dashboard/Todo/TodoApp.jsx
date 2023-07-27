@@ -100,7 +100,7 @@ function TodoApp({roomId, state}) {
           
           <FilterButtons setFilter={setFilter} />
           <AddTodoForm addTodo={addTodo} state={state}/>
-          <TodoList todos={filteredTodos} toggleComplete={toggleComplete} removeTodo={removeTodo} updateTodo={updateTodo}/>
+          <TodoList todos={filteredTodos} toggleComplete={toggleComplete} removeTodo={removeTodo} updateTodo={updateTodo} state={state}/>
         </div>
         
     </>

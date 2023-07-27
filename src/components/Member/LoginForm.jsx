@@ -87,7 +87,6 @@ const LoginForm = () => {
       .get(`${process.env.REACT_APP_BURL}/auth/checkedemail?email=${formData.email}`)
       .then((response) => {
         const isEmailExist = response.data;
-        console.log(formData.email);
         if (isEmailExist) {
           handleSendVerificationCode();
         } else {
@@ -111,7 +110,6 @@ const LoginForm = () => {
           generatedCode: response.data,
           verificationCode: "",
         });
-        console.log("인증코드: ", verificationCode);
         alert("인증번호를 이메일로 발송했습니다.");
         setVerificationCode(verificationCode);
       })
@@ -160,9 +158,6 @@ const LoginForm = () => {
         setIsModalOpen(false);
       })
       .catch((err) => {
-        console.log(formData.email);
-        console.log(formData.newPassword);
-        console.log(err);
         alert("비밀번호 재설정에 실패하였습니다.");
       });
   };

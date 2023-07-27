@@ -44,9 +44,7 @@ const MyPage = () => {
         },
       })
       .then((res) => {
-        console.log(res.data.memberId);
         setMemberId(res.data.memberId);
-        console.log(res.data.email);
         setFormData({
           fileName: res.data.fileName,
           nickname: res.data.nickname,
@@ -57,7 +55,6 @@ const MyPage = () => {
       })
       .catch((err) => {
       });
-    console.log(accessToken);
   }, [accessToken]);
 
   const handleInputChange = (event) => {
@@ -99,8 +96,6 @@ const MyPage = () => {
     form.append("profileContent", formData.profileContent);
     form.append("fileName", formData.fileName);
     form.append("file", formData.file); // 파일 데이터 추가
-    console.log(formData.fileName);
-    console.log(formData.file);
     axios
     .post(`${process.env.REACT_APP_BURL}/member/update/${memberId}`, form,{
       headers: {
@@ -108,12 +103,10 @@ const MyPage = () => {
       },
     })
       .then((response) => {
-        console.log("프로필 업데이트 성공:", response.data);
         handleModalClose();
         window.location.reload(); 
       })
       .catch((error) => {
-        console.log(formData.file);
         console.error("프로필 업데이트 실패:", error);
         // 업데이트 실패에 대한 처리를 진행합니다.
       });

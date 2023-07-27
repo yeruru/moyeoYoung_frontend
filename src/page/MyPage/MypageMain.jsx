@@ -23,7 +23,6 @@ function MypageMain() {
       setMemberId(res.data);
     })
     .catch(err=>{
-      console.log(err);
     })
   },[accessToken])
 

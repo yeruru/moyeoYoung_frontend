@@ -160,7 +160,7 @@ function RoomList() {
             <div className='tags'>
               <button type="button" className='tag' value="취업준비" onClick={callCate}># 취업준비</button>
               <button type="button" className='tag' value="스터디" onClick={callCate}># 스터디</button>
-              <button type="button" className='tag' value="과외/면접" onClick={callCate}># 과외/면접</button>
+              <button type="button" className='tag' value="과외/멘토" onClick={callCate}># 과외/멘토</button>
               <button type="button" className='tag' value="친목" onClick={callCate}># 친목</button>
             </div>
             <div className='tags'>

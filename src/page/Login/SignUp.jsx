@@ -40,8 +40,8 @@ const SignUp = () => {
     axios
       .post(`${process.env.REACT_APP_BURL}/auth/mailConfirm?email=${formData.email}`)
       .then((response) => {
-        console.log('이메일 전송 성공:', response.data);
         setFormData({ ...formData, generatedCode: response.data, verificationCode: '' });
+        console.log(response.data);
         setIsEmailSent(true);
       })
       .catch((error) => {
@@ -116,12 +116,10 @@ const SignUp = () => {
         provider: formData.provider,
       })
       .then((response) => {
-        console.log('회원가입 성공:', response.data);
         alert('회원가입이 완료되었습니다.');
         document.location.href = '/login';
       })
       .catch((error) => {
-        console.error('회원가입 실패:', error.response.data);
         alert('회원가입에 실패하였습니다.');
       });
   };

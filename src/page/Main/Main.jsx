@@ -251,10 +251,10 @@ const searchByWord = (p_page) => {
               <em>청년TALK</em>
               <h4>청년공간에 같이 갈 친구가<br />필요하다면?</h4>
               <p>모임에 참여하기 부담스럽다면<br />청년톡에서 대화를 나누어 보세요 </p>
-              <a href="ws-chat" className='youth-btn'>청년톡 참여하기</a>
+              <a href="/ws-chat" className='youth-btn'>청년톡 참여하기</a>
             </div>
             <div>
-              <a href="#">
+              <a href="/ws-chat">
                 <img src={youthLogo} alt='청년TALK 청년TALK에 참여하여 다양한 이야기를 나눠보세요!' />
               </a>
             </div>
