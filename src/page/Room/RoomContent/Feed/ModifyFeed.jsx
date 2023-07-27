@@ -96,7 +96,6 @@ function ModifyFeed ({isOpen, content, onClose, roomId}) {
         formData.append('filename', feed.filename);
         axios.post(`${process.env.REACT_APP_BURL}/feed/modifyfeed/${feed.feedId}`, formData)
         .then(res => {
-            console.log(res);
             document.location.href=`/roomMain/roomFeed/${roomId}`; 
         })
         .catch(err => {

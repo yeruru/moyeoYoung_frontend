@@ -72,11 +72,9 @@ function NoteForm() {
         },
       })
       .then((response) => {
-        console.log(response.data);
         navigate("/sendnote");
       })
       .catch((error) => {
-        console.log(error.data);
         console.error(error);
         alert("보내는 사람 닉네임을 정확하게 입력해주세요!");
         document.location.href = "/noteform";

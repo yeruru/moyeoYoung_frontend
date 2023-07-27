@@ -65,7 +65,6 @@ function RoomHeader({ onContentChange }) {
   const handleLinkClick = (content) => {
     setSelectedButton(content);
     onContentChange(content);
-    console.log(content);
   };
 
   return (

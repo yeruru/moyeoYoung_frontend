@@ -104,8 +104,6 @@ function WriteFeed ({roomId}){
             setShow(!show);
         }
     };
-
-    console.log(accessToken);
     
     const submit = (e) => {
         e.preventDefault();
@@ -123,7 +121,6 @@ function WriteFeed ({roomId}){
                 }
         })
         .then(res => {
-            console.log(res);
             document.location.href=`/roomMain/roomFeed/${roomId}`; 
         })
         .catch(err => {

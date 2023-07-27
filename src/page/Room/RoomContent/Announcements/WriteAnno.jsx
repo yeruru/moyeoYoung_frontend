@@ -64,7 +64,6 @@ function WriteAnno() {
             imageUrl: imageUrl,
             roomId: roomId,
         };
-        console.log(notice);
         axios.post(process.env.REACT_APP_BURL+`/rooms/${Number(roomId)}/notices`, notice)
             .then(response => {
                 navigate(`/roomMain/roomAnno/${roomId}`)

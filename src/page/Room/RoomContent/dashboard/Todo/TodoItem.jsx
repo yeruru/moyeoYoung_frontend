@@ -3,13 +3,12 @@ import { Checkbox, IconButton, Typography, Grid, Menu, MenuItem, Box } from '@mu
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import UpdateTodoForm from './UpdateTodoForm';
 
-function TodoItem({ todo, toggleComplete, removeTodo, updateTodo }) {
+function TodoItem({ todo, toggleComplete, removeTodo, updateTodo, state }) {
   const [anchorEl, setAnchorEl] = useState(null);
   const [isEditing, setIsEditing] = useState(false);
   
   function handleCheckboxClick() {
     toggleComplete(todo.id);
-    
   }
 
   function handleRemoveClick() {
@@ -50,7 +49,9 @@ function TodoItem({ todo, toggleComplete, removeTodo, updateTodo }) {
             {todo.content}
           </Typography>
         </Grid>
-        <Grid item xs={1}>
+        { state === 'okMember' &&
+          <>
+          <Grid item xs={1}>
           <Checkbox
             checked={todo.completed===1 ? true : false}
             onClick={handleCheckboxClick}
@@ -71,6 +72,9 @@ function TodoItem({ todo, toggleComplete, removeTodo, updateTodo }) {
             <MenuItem onClick={handleRemoveClick}>삭제</MenuItem>
           </Menu>
         </Grid>
+        </>
+        }
+        
       </Grid>
     </Box>
   );

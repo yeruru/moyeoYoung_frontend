@@ -3,8 +3,6 @@ import './Dashboard.css';
 import TodoApp from './Todo/TodoApp';
 
 function Dashboard({roomId, room, state, roomstate}){
-  // console.log(state);
-  // console.log(roomstate);
     return (
       
       <>

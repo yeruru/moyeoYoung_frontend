@@ -55,7 +55,6 @@ export const RoomCard = ({ isBookmark, item }) => {
         setBookmark(!bookmark);
       })
       .catch(err => {
-        console.log(err);
       })
 
   }

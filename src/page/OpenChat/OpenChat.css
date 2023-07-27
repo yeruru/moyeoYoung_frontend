@@ -55,12 +55,12 @@ wrap
 
 
 .chat-container {
-  width: 400px;
+  width: 440px;
   height: 600px; /* 세로 크기 설정 */
   margin: 20px auto;
   border: 1px solid #ccc;
   border-radius: 10px;
-  overflow: auto;
+  overflow: hidden;
   background: #fff;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15); 
   display: flex;
@@ -72,11 +72,11 @@ wrap
 
 .chat-room-buttons {
   display: flex;
-  justify-content: space-between;
+  justify-content: space-around;
   padding: 10px;
   background: #f1f0f0;
   border-bottom: 1px solid #ccc;
-  
+  width: 100%;
 }
 
 .chat-room-buttons button {

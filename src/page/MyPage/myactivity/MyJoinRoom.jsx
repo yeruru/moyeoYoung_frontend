@@ -51,7 +51,6 @@ function MyJoinRoom() {
         
       })
       .catch(err => {
-        console.log(err);
       })
   }
   const clickMemberList =()=>{

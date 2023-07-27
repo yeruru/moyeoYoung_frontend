@@ -100,7 +100,7 @@ export const YouthSpaceList = () => {
     }
 
     const searchByLoc=(p_page)=>{
-        console.log(loc, place);
+
         axiosURL.get(`/searchSpaceListByLoc/${p_page}`,{
             params:{
                 loc:loc,

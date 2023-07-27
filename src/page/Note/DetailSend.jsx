@@ -17,8 +17,6 @@ function DetailSent() {
     sendDate : '',
     status : ''
   });
-
-  console.log(note)
   useEffect(() =>{
     //보낸쪽지함
     axios.get(`${process.env.REACT_APP_BURL}/note/received/detail/${noteId}`, {
@@ -32,7 +30,6 @@ function DetailSent() {
     .catch((err) => {
       console.log(err);
     });
-    console.log(accessToken);
 },[accessToken]);
 
 const handleDeleteNote = () => {

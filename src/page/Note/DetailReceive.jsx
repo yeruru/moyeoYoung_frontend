@@ -33,7 +33,6 @@ function DetailReceive() {
     .catch((err) => {
       console.log(err);
     });
-    console.log(accessToken);
 },[accessToken]);
 
   // TODO : 닉네임 넣어서 답장하기
