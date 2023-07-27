@@ -110,7 +110,7 @@ export const SettingRoom = () => {
         formData.append('roomType', room.roomType);
         formData.append('file', file);
         
-        axios.post(process.env.REACT_APP_BURL+`/room/makeRoom`, formData,{
+        axios.post(process.env.REACT_APP_BURL+`/room/settingRoom`, formData,{
             headers: {
                 'Authorization': `Bearer ${accessToken}`
               }
