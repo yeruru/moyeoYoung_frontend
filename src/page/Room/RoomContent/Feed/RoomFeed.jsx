@@ -245,7 +245,7 @@ function RoomFeed({onContentChange, state}) {
                 <div className='feedHeader'>
                   <div className='userheader'>
                     <div className='userProfile' onClick={()=>openProfile(feed.nickname)} style={{backgroundImage : `url(${process.env.REACT_APP_BURL}/room/view/${feed.profilename})`, cursor:'pointer'}}></div>
-                    <span className='username'>{feed.nickname}</span>
+                    <span className='username' onClick={()=>openProfile(feed.nickname)}>{feed.nickname}</span>
                   </div>
                   <div className='drop-box'>
                     {

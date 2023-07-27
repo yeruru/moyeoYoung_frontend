@@ -11,10 +11,13 @@ function RoomAnno({state, room}) {
 
     const [notices, setNotices] = useState([]);
     const [page, setPage] = useState(1);
+    const [loginMemberId, setLoginMemberId] = useState(0);
+    const [kingmember, setKingMember]= useState(0);
     const { roomId } = useParams();
+    const accessToken = localStorage.getItem("accessToken");
 
     useEffect(() => {
-        axios.get(process.env.REACT_APP_BURL+`/rooms/${roomId}/notices`)
+        axios.get(`${process.env.REACT_APP_BURL}/rooms/${roomId}/notices`)
             .then(response => {
                 setNotices(response.data);
             });
@@ -39,6 +42,25 @@ function RoomAnno({state, room}) {
             return `${diffDays}일 전`;
         }
     };
+
+    useEffect(() => {
+        axios.get(`${process.env.REACT_APP_BURL}/feed/getmemberId`,{
+          headers: {
+              'Authorization': `Bearer ${accessToken}`
+          }
+        })
+        .then(res=>{
+          setLoginMemberId(res.data);
+        })
+
+        axios.get(`${process.env.REACT_APP_BURL}/room/getroomMain/${roomId}`)
+        .then(res=>{
+            setKingMember(res.data.memberId);
+        })
+        .catch(err=>{
+            console.log(err);
+        })
+    },[accessToken, roomId]);
 
     const handlePageChange = (event, value) => {
       setPage(value);
@@ -109,7 +131,7 @@ function RoomAnno({state, room}) {
             <div style={style.title}>
                 <h2 style={{ visibility: notices.length === 0 ? 'hidden' : 'visible' }}>모임방 공지사항</h2>
                 {
-                    state === 'okMember' && 
+                    loginMemberId === kingmember &&
                     <div style={style.button} onClick={() => navigate(`/roomMain/writeAnno/${roomId}`)}>
                         글쓰기
                     </div>

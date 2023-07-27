@@ -37,6 +37,7 @@ export const MemberList = ({memberList,hostId,isWaitingOk}) => {
     .then(res=>{
       setLoginMemberId(res.data);
     })
+
     if (memberList.length > 0) {
       setKingMember(memberList[0]);
     }
