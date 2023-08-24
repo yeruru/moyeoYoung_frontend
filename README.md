@@ -7,7 +7,7 @@
 <img width="722" alt="image" src="https://github.com/yeruru/moyeoYoung_frontend/assets/116954890/bcf5955a-e4c6-490b-bbfa-96731a1e9fb9">
 
 ## 🛠️개발환경
-backend : `#spring boot``#JAVA``#websockets` </br>
+backend : `#spring boot` `#JAVA` `#websockets` </br>
 frontend : `#React` `HTMLㆍCSSㆍJS`</br>
 Tools : `#vsCode` `#eclipse` `#MySOL` `#GitHub` `#ERD`</br>
 etc : `#Figma` `Notion` `google drive`
